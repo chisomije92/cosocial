@@ -1,0 +1,83 @@
+/** @format */
+
+.inputSearch [class*="p-inputtext"] {
+	
+  width: 35vw;
+  height: 5vh;
+
+}
+
+/*@media only screen and (max-width: 700px) {
+  .inputSearch {
+   display: none
+  }
+}*/
+
+@media only screen and (max-width: 960px) {
+  .logoContainer {
+   position: absolute;
+   /*left:;
+   490px*/
+   
+   left: 40vw;
+   top:12px;
+   
+}
+
+/*.menuBar [class*="p-menuitem-text"] {
+  color: #495057 !important;
+  
+  
+}*/
+
+
+}
+
+ .menubar, [class*="p-menubar"]
+{
+  background: rgb(14, 14, 71);
+  
+}
+
+/*.p-inputtext{
+  width: 40vw;
+}*/
+
+.home{
+  color: red;
+  /*display: none;*/
+  background: red;
+}
+
+/*.p-menubar{
+background: #000;
+}*/
+
+/*.p-menubar-mobile-active{
+  display: none
+
+}*/
+
+
+/*.p-menubar .p-menubar-button{
+  display: none;
+}*/
+
+[class*="p-menuitem-text"]{
+  color: white !important;
+  font-size: larger;
+}
+
+.endDiv [class*='p-badge']{
+  font-size: 0.7rem;
+ max-width: 0px;
+
+}
+
+.endDiv [class*="p-avatar"]{
+  transform: translateY(6px);
+  -webkit-transform: translateY(6px);
+  -moz-transform: translateY(6px);
+  -ms-transform: translateY(6px);
+  -o-transform: translateY(6px);
+}
