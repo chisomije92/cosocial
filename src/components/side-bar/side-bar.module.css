@@ -1,0 +1,29 @@
+.sideBar{
+flex: 3;
+/*overflow-y: scroll;*/
+}
+
+.sideBar::-webkit-scrollbar{
+  width: 6px;
+}
+
+
+.sideBar::-webkit-scrollbar-track {
+  background-color: rgb(234, 232, 232);
+ 
+}
+
+.sideBar::-webkit-scrollbar-thumb {
+ background: grey;
+ margin-bottom: 10px;
+
+}
+
+
+.friendList img {
+  object-fit: cover;
+}
+
+.friendList li {
+  margin-bottom: 15px;
+}

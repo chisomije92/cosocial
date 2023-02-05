@@ -1,7 +1,8 @@
 /** @format */
 
 import React from "react";
+import classes from "./right-bar.module.css";
 
 export default function RightBar() {
-	return <div>RightBar</div>;
+	return <div className={`${classes.rightBar}`}>RightBar</div>;
 }
