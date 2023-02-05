@@ -1,53 +1,36 @@
 body {
   margin: 0;
-  /*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;*/
   font-family: "Roboto", sans-serif;
 }
 
-/*code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+/*@media screen and (max-width: 962px) {
+  .p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+    margin-top: 0px;
+}
 }*/
 
-@media screen and (max-width: 960px) {
-  .p-menubar.p-menubar-mobile-active .p-menubar-root-list {
-    background: rgb(14, 14, 71);
-}
 
-
- 
-}
 .p-menubar .p-menubar-root-list > .p-menuitem> .p-menuitem-link:not(.p-disabled):hover{
   background: none !important;
   color: black !important;
  }
 
  .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-   color: gold !important; 
- }
+    color: gold !important;
+    transition: color 0.7s ease 0.5s;
+    -webkit-transition: color 0.7s ease 0.5s;
+    -moz-transition: color 0.7s ease 0.5s;
+    -ms-transition: color 0.7s ease 0.5s;
+    -o-transition: color 0.7s ease 0.5s;
+}
 
-    /*.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-text:hover {
-      color: green !important;
-    }*/
 
- /*.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link .p-menuitem-text {
-  color:red !important;
-  transition: color 9s ease 1s ;
-  -webkit-transition: color 9s ease 1s ;
-  -moz-transition: color 9s ease 1s ;
-  -ms-transition: color 9s ease 1s ;
-  -o-transition: color 9s ease 1s ;
-}*/
+ .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled) .p-menuitem-text {
+  transition: color 0.5s ease 0.5s ;
+  -webkit-transition: color 0.5s ease 0.5s ;
+  -moz-transition: color 0.5s ease 0.5s ;
+  -ms-transition: color 0.5s ease 0.5s ;
+  -o-transition: color 0.5s ease 0.5s ;
+}
 
-/*.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-  color:red !important;
-  transition: color 9s ease 1s ;
-  -webkit-transition: color 9s ease 1s ;
-  -moz-transition: color 9s ease 1s ;
-  -ms-transition: color 9s ease 1s ;
-  -o-transition: color 9s ease 1s ;
-}*/

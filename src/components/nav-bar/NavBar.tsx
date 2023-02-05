@@ -56,22 +56,36 @@ export default function NavBar() {
 	);
 
 	const end = (
-		<div className={classes.endDiv}>
+		<div
+			className={`${classes.endDiv} flex align-content-center justify-content-between -mb-3`}
+		>
+			<i
+				className="pi pi-sun cursor-pointer mr-5"
+				style={{ fontSize: "1.3rem", cursor: "pointer" }}
+			></i>
+			{/*<i
+				className="pi pi-moon cursor-pointer mr-5"
+				style={{ fontSize: "1.3rem", cursor: "pointer" }}
+			></i>*/}
 			<i
 				className="pi pi-bell p-overlay-badge mx-2"
-				style={{ fontSize: "1.4rem", cursor: "pointer" }}
+				style={{ fontSize: "1.3rem", cursor: "pointer" }}
 			>
 				<Badge value="2" severity="danger"></Badge>
 			</i>
 			<i
 				className="pi pi-envelope p-overlay-badge mx-2"
-				style={{ fontSize: "1.4rem", cursor: "pointer" }}
+				style={{ fontSize: "1.3rem", cursor: "pointer" }}
 			>
-				<Badge severity="danger"></Badge>
+				{/*<Badge severity="danger"></Badge>*/}
+				<i
+					className="pi pi-circle-fill text-red-500 absolute -ml-1 -mt-1"
+					style={{ fontSize: "0.5rem", cursor: "pointer" }}
+				></i>
 			</i>
 			<i
 				className="pi pi-user p-overlay-badge mx-2"
-				style={{ fontSize: "1.4rem", cursor: "pointer" }}
+				style={{ fontSize: "1.3rem", cursor: "pointer" }}
 			>
 				<Badge value="5+" severity="danger"></Badge>
 			</i>
@@ -81,14 +95,14 @@ export default function NavBar() {
 				image={headshot}
 				size="large"
 				shape="circle"
-				className="ml-4 top-50"
+				className="ml-4 -mt-3"
 			/>
 		</div>
 	);
 
 	return (
 		<Menubar
-			className={`${classes.menuBar} min-w-screen border-0 text-white transition-colors transition-duration-900`}
+			className={`${classes.menuBar} text-white h-5rem`}
 			start={start}
 			model={items}
 			end={end}
