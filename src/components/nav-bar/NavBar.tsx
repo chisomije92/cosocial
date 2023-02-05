@@ -43,12 +43,17 @@ export default function NavBar() {
 	];
 
 	const start = (
-		<div className={`mr-8 ${classes.logoContainer} hidden sm:block`}>
+		<div className={`mr-8 ${classes.logoContainer}`}>
 			<div className="flex justify-content-between">
 				<div>
-					<img alt="logo" src={cosocialImg} height="40"></img>
+					<img
+						alt="logo"
+						src={cosocialImg}
+						height="40"
+						className="hidden sm:block"
+					></img>
 				</div>
-				<div className="-mt-2">
+				<div className={`-mt-2 ${classes.brandName}`}>
 					<h3>COSOCIAL</h3>
 				</div>
 			</div>
