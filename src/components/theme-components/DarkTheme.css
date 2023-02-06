@@ -22,3 +22,8 @@
     color: black !important;
   }
 }
+
+.p-chip-text {
+  color: var(--text-color) !important;
+
+}

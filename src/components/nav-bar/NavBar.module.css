@@ -1,12 +1,13 @@
 /** @format */
 
 .container {
-  min-width: 51rem;
+  min-width: max(95vw, 1200px)
+ 
 }
 
-.inputSearch{
+/*.inputSearch{
    margin-left: 60px !important;
-}
+}*/
 
 .inputSearch [class*="p-inputtext"] {
 	

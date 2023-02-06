@@ -13,6 +13,7 @@ import EventIcon from "@mui/icons-material/Event";
 import SchoolIcon from "@mui/icons-material/School";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
+import { Chip } from "primereact/chip";
 
 export default function SideBar() {
 	return (
@@ -61,7 +62,7 @@ export default function SideBar() {
 				</Button>
 				<hr className="my-2 mx-0" />
 				<ul className={`list-none ${classes.friendList} `}>
-					<li className="-ml-5 flex">
+					{/*<li className="-ml-5 flex">
 						<img
 							src="/assets/person/2.jpeg"
 							alt=""
@@ -70,127 +71,27 @@ export default function SideBar() {
 							className="border-circle"
 						/>
 						<span className="inline-block ml-2 mt-1">Jane Doe</span>
+					</li>*/}
+					<li className="-ml-5 flex">
+						<Chip
+							label="Amy Elsner"
+							image="/assets/person/2.jpeg"
+							className="bg-primary-reverse"
+						/>
 					</li>
 					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
+						<Chip
+							label="Amy Elsner"
+							image="/assets/person/2.jpeg"
+							className="bg-primary-reverse"
 						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
 					</li>
 					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
+						<Chip
+							label="Amy Elsner"
+							image="/assets/person/2.jpeg"
+							className="bg-primary-reverse"
 						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>
-					<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
-						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
 					</li>
 				</ul>
 			</div>

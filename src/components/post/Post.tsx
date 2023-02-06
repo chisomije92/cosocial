@@ -45,14 +45,14 @@ export default function Post() {
 					src="/assets/post/1.jpeg"
 					alt="Image"
 					width="650"
-					className="ml-3"
+					className="mx-3"
 					preview
 				/>
 			</div>
 			<div className="flex justify-content-between">
 				<div>
 					<Avatar
-						icon="pi pi-thumbs-down-fill"
+						icon="pi pi-thumbs-up-fill"
 						shape="circle"
 						className="mr-1 ml-3 my-3 bg-blue-500 text-white border-circle"
 					/>

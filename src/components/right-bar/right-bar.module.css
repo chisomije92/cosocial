@@ -1,3 +1,7 @@
 .rightBar{
   flex: 3
 }
+
+.rightBar img {
+  object-fit: cover;
+}
