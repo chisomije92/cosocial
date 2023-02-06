@@ -107,7 +107,7 @@ export default function NavBar() {
 
 	return (
 		<Menubar
-			className={`${classes.menuBar} text-white h-5rem`}
+			className={`${classes.menuBar} text-white h-5rem min-w-screen`}
 			start={start}
 			model={items}
 			end={end}

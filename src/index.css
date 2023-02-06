@@ -34,3 +34,7 @@ body {
   -o-transition: color 0.5s ease 0.5s ;
 }
 
+
+.p-inputtext:enabled:focus{
+  box-shadow: 0 0 0 0 !important
+}
