@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import LabelIcon from "@mui/icons-material/Label";
 import RoomIcon from "@mui/icons-material/Room";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import { Avatar } from "primereact/avatar";
 
 export default function Share() {
 	return (
@@ -14,16 +15,15 @@ export default function Share() {
 			className={`card ${classes.container}  h-14rem xl:h-10rem w-full border-round-md shadow-4 min-w-min`}
 		>
 			<div className="flex gap-0 -ml-3">
-				<img
-					src="/assets/person/1.jpeg"
-					alt=""
-					width="40"
-					height="40"
+				<Avatar
+					image="/assets/person/1.jpeg"
+					size="large"
+					shape="circle"
 					className="mx-4 -mb-2 mt-2"
 				/>
 				<InputText
 					placeholder="Share your thoughts"
-					className="border-0 mt-1 -ml-3 w-10 p-0"
+					className="border-0 mt-1 -ml-3 w-10 p-2 h-4rem"
 				/>
 			</div>
 			<hr className="mx-4 mt-4 surface-300 opacity-30" />

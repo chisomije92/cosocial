@@ -1,9 +1,18 @@
 /** @format */
 
+.container {
+  min-width: 51rem;
+}
+
+.inputSearch{
+   margin-left: 60px !important;
+}
+
 .inputSearch [class*="p-inputtext"] {
 	
   width: 35vw;
   height: 5vh;
+ 
 }
 
 

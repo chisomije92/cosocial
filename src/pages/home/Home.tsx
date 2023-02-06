@@ -21,7 +21,14 @@ export default function Home() {
 			</>
 		</LightTheme>
 		//<DarkTheme className="App">
-		//	<NavBar />
+		//	<>
+		//		<NavBar />
+		//		<div className="flex w-full">
+		//			<SideBar />
+		//			<Feeds />
+		//			<RightBar />
+		//		</div>
+		//	</>
 		//</DarkTheme>
 	);
 }

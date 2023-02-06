@@ -17,11 +17,7 @@ export default function NavBar() {
 				<div className={`${classes.inputSearch}`}>
 					<span className="p-input-icon-left">
 						<i className="pi pi-search" />
-						<InputText
-							placeholder="Search"
-							//className="inputSearch"
-							//className={classes.inputSearch}
-						/>
+						<InputText placeholder="Search" />
 					</span>
 				</div>
 			),
@@ -43,7 +39,7 @@ export default function NavBar() {
 	];
 
 	const start = (
-		<div className={`mr-8 ${classes.logoContainer}`}>
+		<div className={`mr-8 ml-2 ${classes.logoContainer}`}>
 			<div className="flex justify-content-between">
 				<div>
 					<img
@@ -106,11 +102,13 @@ export default function NavBar() {
 	);
 
 	return (
-		<Menubar
-			className={`${classes.menuBar} text-white h-5rem min-w-screen`}
-			start={start}
-			model={items}
-			end={end}
-		/>
+		<nav className={`${classes.container}`}>
+			<Menubar
+				className={`${classes.menuBar} text-white h-5rem w-12`}
+				start={start}
+				model={items}
+				end={end}
+			/>
+		</nav>
 	);
 }
