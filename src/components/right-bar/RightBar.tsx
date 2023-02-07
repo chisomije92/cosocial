@@ -3,6 +3,8 @@
 import { Avatar } from "primereact/avatar";
 import { Chip } from "primereact/chip";
 import { Image } from "primereact/image";
+import { Users } from "../../data/dummy-data";
+import OnlineFriends from "../online-friends/OnlineFriends";
 import classes from "./right-bar.module.css";
 
 export default function RightBar() {
@@ -30,63 +32,13 @@ export default function RightBar() {
 			<div className="ml-3">
 				<h3>Cosocials Online:</h3>
 				<ul>
-					<li className="-ml-5 flex relative mb-3">
-						<Chip
-							label="Amy Elsner"
-							image="/assets/person/2.jpeg"
-							className="bg-primary-reverse font-bold"
+					{Users.map(user => (
+						<OnlineFriends
+							key={user.id}
+							name={user.username}
+							imageSrc={user.profilePicture}
 						/>
-						<i
-							className="pi pi-circle-fill absolute text-green-300 border-2"
-							style={{
-								fontSize: "0.8rem",
-								cursor: "pointer",
-								position: "absolute",
-								right: "376px",
-								bottom: "25px",
-								borderRadius: "60%",
-								borderColor: "white",
-							}}
-						></i>
-					</li>
-					<li className="-ml-5 mb-3 flex relative">
-						<Chip
-							label="Amy Elsner"
-							image="/assets/person/2.jpeg"
-							className="bg-primary-reverse font-bold"
-						/>
-						<i
-							className="pi pi-circle-fill absolute text-green-300 border-2"
-							style={{
-								fontSize: "0.8rem",
-								cursor: "pointer",
-								position: "absolute",
-								right: "23.4rem",
-								bottom: "1.5rem",
-								borderRadius: "60%",
-								borderColor: "white",
-							}}
-						></i>
-					</li>
-					<li className="-ml-5 mb-3 flex relative">
-						<Chip
-							label="Amy Elsner"
-							image="/assets/person/2.jpeg"
-							className="bg-primary-reverse font-bold"
-						/>
-						<i
-							className="pi pi-circle-fill absolute text-green-300 border-2"
-							style={{
-								fontSize: "0.8rem",
-								cursor: "pointer",
-								position: "absolute",
-								right: "376px",
-								bottom: "25px",
-								borderRadius: "60%",
-								borderColor: "white",
-							}}
-						></i>
-					</li>
+					))}
 				</ul>
 			</div>
 		</div>

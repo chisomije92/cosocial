@@ -2,24 +2,34 @@
 
 import classes from "./post.module.css";
 import { Avatar } from "primereact/avatar";
-import { useRef } from "react";
+import { FC, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
+import { Users } from "../../data/dummy-data";
 
-export default function Post() {
+const Post: FC<{ post: any }> = ({ post }) => {
 	const op = useRef<any>(null);
+	const [like, setLike] = useState(post.like);
+	const [isLiked, setIsLiked] = useState(false);
+
+	const handleLike = () => {
+		setLike(isLiked ? like - 1 : like + 1);
+		setIsLiked(!isLiked);
+	};
 	return (
 		<div className={`card mt-3 ${classes.container} shadow-1 border-round-sm`}>
 			<div>
 				<div className="flex">
 					<Avatar
-						image="/assets/person/1.jpeg"
+						image={Users.filter(u => u.id === post?.userId)[0].profilePicture}
 						size="normal"
 						shape="circle"
 						className="mx-2 my-2"
 					/>
-					<span className="mx-1 my-2 font-semibold">Chisom Ijeomah</span>
-					<span className="mx-1 my-2 font-light text-sm">5 minutes ago</span>
+					<span className="mx-1 my-2 font-semibold">
+						{Users.filter(u => u.id === post?.userId)[0].username}
+					</span>
+					<span className="mx-1 my-2 font-light text-sm">{post.date}</span>
 					<i
 						className="pi pi-ellipsis-v ml-auto mr-1 my-3  cursor-pointer"
 						onClick={e => op.current.toggle(e)}
@@ -41,11 +51,11 @@ export default function Post() {
 				</div>
 			</div>
 			<div className="ml-3 text-700">
-				<p>This is a sample post</p>
+				<p>{post.desc}</p>
 			</div>
 			<div className="">
 				<Image
-					src="/assets/post/1.jpeg"
+					src={post.photo}
 					alt="Image"
 					width="650"
 					className="mx-3"
@@ -55,23 +65,29 @@ export default function Post() {
 			<div className="flex justify-content-between">
 				<div>
 					<Avatar
-						icon="pi pi-thumbs-up-fill"
+						icon="pi pi-thumbs-up-fill cursor-pointer"
 						shape="circle"
 						className="mr-1 ml-3 my-3 bg-blue-500 text-white border-circle"
+						onClick={handleLike}
 					/>
 					<Avatar
-						icon="pi pi-heart-fill"
+						icon="pi pi-heart-fill cursor-pointer"
 						className="bg-red-600 text-white border-circle"
+						onClick={handleLike}
 					/>
 					<span className="opacity-70 text-sm mx-1">
-						32 cosocials liked this
+						{like} cosocials liked this
 					</span>
 				</div>
 				<div className="flex justify-content-even opacity-60">
-					<p className="border-bottom-1 mt-4 border-200">10 comments</p>
+					<p className="border-bottom-1 mt-4 border-200">
+						{post.comment} comments
+					</p>
 					<code>&nbsp;</code>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
+
+export default Post;

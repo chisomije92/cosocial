@@ -13,6 +13,8 @@ import EventIcon from "@mui/icons-material/Event";
 import SchoolIcon from "@mui/icons-material/School";
 import { Button } from "primereact/button";
 import { Chip } from "primereact/chip";
+import Mutuals from "../mutuals/Mutuals";
+import { Users } from "../../data/dummy-data";
 
 export default function SideBar() {
 	return (
@@ -61,37 +63,13 @@ export default function SideBar() {
 				</Button>
 				<hr className="my-2 mx-0" />
 				<ul className={`list-none ${classes.friendList} `}>
-					{/*<li className="-ml-5 flex">
-						<img
-							src="/assets/person/2.jpeg"
-							alt=""
-							width="30"
-							height="30"
-							className="border-circle"
+					{Users.slice(2, 8).map(user => (
+						<Mutuals
+							key={user.id}
+							name={user.username}
+							imageSrc={user.profilePicture}
 						/>
-						<span className="inline-block ml-2 mt-1">Jane Doe</span>
-					</li>*/}
-					<li className="-ml-5 flex">
-						<Chip
-							label="Amy Elsner"
-							image="/assets/person/2.jpeg"
-							className="bg-primary-reverse"
-						/>
-					</li>
-					<li className="-ml-5 flex">
-						<Chip
-							label="Amy Elsner"
-							image="/assets/person/2.jpeg"
-							className="bg-primary-reverse"
-						/>
-					</li>
-					<li className="-ml-5 flex">
-						<Chip
-							label="Amy Elsner"
-							image="/assets/person/2.jpeg"
-							className="bg-primary-reverse"
-						/>
-					</li>
+					))}
 				</ul>
 			</div>
 		</div>
