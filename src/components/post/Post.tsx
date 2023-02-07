@@ -1,7 +1,6 @@
 /** @format */
 
 import classes from "./post.module.css";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Avatar } from "primereact/avatar";
 import { useRef } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";

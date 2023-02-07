@@ -12,7 +12,6 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import EventIcon from "@mui/icons-material/Event";
 import SchoolIcon from "@mui/icons-material/School";
 import { Button } from "primereact/button";
-import { Image } from "primereact/image";
 import { Chip } from "primereact/chip";
 
 export default function SideBar() {

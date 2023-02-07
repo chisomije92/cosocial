@@ -1,10 +1,8 @@
 /** @format */
 
 import { Avatar } from "primereact/avatar";
-import { Badge } from "primereact/badge";
 import { Chip } from "primereact/chip";
 import { Image } from "primereact/image";
-import React from "react";
 import classes from "./right-bar.module.css";
 
 export default function RightBar() {
@@ -13,7 +11,7 @@ export default function RightBar() {
 			className={`${classes.rightBar} flex flex-column card shadow-1 border-round-sm mt-3 mr-2 `}
 		>
 			<div className="flex my-3">
-				<Avatar className="mr-3 ml-3 bg-white" size="large">
+				<Avatar className="mr-3 ml-3 bg-primary-reverse" size="large">
 					<Image src="/assets/gift.png" />
 				</Avatar>
 				<span className="text-600 mr-3">
@@ -63,8 +61,8 @@ export default function RightBar() {
 								fontSize: "0.8rem",
 								cursor: "pointer",
 								position: "absolute",
-								right: "376px",
-								bottom: "25px",
+								right: "23.4rem",
+								bottom: "1.5rem",
 								borderRadius: "60%",
 								borderColor: "white",
 							}}

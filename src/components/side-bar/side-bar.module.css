@@ -1,6 +1,6 @@
 .sideBar{
 flex: 3;
-/*overflow-y: scroll;*/
+
 }
 
 .sideBar::-webkit-scrollbar{
