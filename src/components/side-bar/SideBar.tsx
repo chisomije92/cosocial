@@ -57,7 +57,7 @@ export default function SideBar() {
 						<span className="ml-1 sm:ml-3">Questions</span>
 					</li>
 				</ul>
-				<Button className="surface-300 text-black-alpha-90 font-semibold border-0 border-round-sm px-6">
+				<Button className="surface-300 text-color font-semibold border-0 border-round-sm px-5 py-2">
 					Show More
 				</Button>
 				<hr className="my-2 mx-0" />
