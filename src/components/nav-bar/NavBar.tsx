@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import useLocalStorage from "use-local-storage";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
@@ -11,12 +11,15 @@ import { Badge } from "primereact/badge";
 import { Avatar } from "primereact/avatar";
 import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
+import { OverlayPanel } from "primereact/overlaypanel";
 
 export default function NavBar() {
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
+
+	const op = useRef<any>(null);
 
 	useLayoutEffect(() => {
 		let themeLink: HTMLLinkElement = document.getElementById(
@@ -79,7 +82,7 @@ export default function NavBar() {
 	);
 
 	const end = (
-		<div className="flex justify-content-around align-content-center">
+		<div className="flex justify-content-start align-content-center">
 			<DarkModeSwitch
 				className="mr-4"
 				checked={isThemeDark}
@@ -87,7 +90,7 @@ export default function NavBar() {
 				size={30}
 				sunColor={"rgb(254, 254, 11)"}
 			/>
-			<div className={`${classes.endDiv} flex justify-content-between mt-2`}>
+			<div className={`${classes.endDiv} flex justify-content-between mt-2 `}>
 				<i
 					className="pi pi-bell  p-overlay-badge mx-2"
 					style={{ fontSize: "1.3rem", cursor: "pointer" }}
@@ -124,7 +127,23 @@ export default function NavBar() {
 					size="large"
 					shape="circle"
 					className="ml-4 -mt-3"
+					onClick={e => op.current.toggle(e)}
 				/>
+				<OverlayPanel ref={op} className="mt-1 -ml-2">
+					<div
+						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer`}
+					>
+						<span>Profile</span> <i className="pi pi-user ml-2"></i>
+					</div>
+
+					<hr className="h-1 min-w-full $ -ml-3 -mr-3" />
+					<div
+						className={`flex text-red-500 ${classes.actions} font-medium cursor-pointer`}
+					>
+						<span className="-mt-1">Sign Out</span>{" "}
+						<i className="pi pi-sign-out ml-2 "></i>
+					</div>
+				</OverlayPanel>
 			</div>
 		</div>
 	);

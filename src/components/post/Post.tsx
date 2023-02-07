@@ -24,13 +24,17 @@ export default function Post() {
 						className="pi pi-ellipsis-v ml-auto mr-1 my-3  cursor-pointer"
 						onClick={e => op.current.toggle(e)}
 					></i>
-					<OverlayPanel ref={op} className="-mt-2">
-						<div className="flex text-blue-400 font-medium cursor-pointer">
+					<OverlayPanel ref={op} className="mt-2 -ml-6">
+						<div
+							className={`flex text-blue-400 font-medium ${classes.actions} cursor-pointer`}
+						>
 							<span>Edit</span> <i className="pi pi-pencil ml-2"></i>
 						</div>
 
 						<hr className="h-1 w-6rem -mr-3 -ml-3" />
-						<div className="flex text-red-500 font-medium cursor-pointer">
+						<div
+							className={`flex text-red-500 font-medium ${classes.actions} cursor-pointer`}
+						>
 							<span>Delete</span> <i className="pi pi-trash ml-2"></i>
 						</div>
 					</OverlayPanel>

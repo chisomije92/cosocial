@@ -24,7 +24,7 @@ export default function RightBar() {
 			<img
 				src="/assets/ad.png"
 				className="ml-3 mr-3 border-round-lg"
-				width="400px"
+				width="400"
 				alt=""
 			/>
 			<div className="ml-3">

@@ -50,3 +50,16 @@
  max-width: 0px
 
 }
+
+ .actions{
+  opacity: 1
+ }
+
+ .actions:hover {
+   opacity: 0.7;
+   transition: opacity 0.3s ease 0.1s;
+   -webkit-transition: opacity 0.3s ease 0.1s;
+   -moz-transition: opacity 0.3s ease 0.1s;
+   -ms-transition: opacity 0.3s ease 0.1s;
+   -o-transition: opacity 0.3s ease 0.1s;
+ }
