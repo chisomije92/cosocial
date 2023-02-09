@@ -14,7 +14,7 @@ export default function Home() {
 		<>
 			<NavBar />
 			<div className="flex w-full">
-				<SideBar />
+				{/*<SideBar />*/}
 				{/*<Feeds />*/}
 				{/*<Profile />*/}
 				<Messages />
