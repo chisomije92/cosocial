@@ -1,0 +1,7 @@
+.container{
+  flex: 5.5
+}
+
+.container img {
+  object-fit: cover;
+}

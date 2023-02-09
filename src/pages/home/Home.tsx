@@ -1,7 +1,9 @@
 /** @format */
 
+import ChatBox from "../../components/chatbox/ChatBox";
 import Feeds from "../../components/feeds/Feeds";
 import Followers from "../../components/followers/Followers";
+import Messages from "../../components/messages/Messages";
 import NavBar from "../../components/nav-bar/NavBar";
 import Profile from "../../components/profile/Profile";
 import RightBar from "../../components/right-bar/RightBar";
@@ -14,9 +16,11 @@ export default function Home() {
 			<div className="flex w-full">
 				<SideBar />
 				{/*<Feeds />*/}
-				<Profile />
+				{/*<Profile />*/}
+				<Messages />
 				{/*<RightBar />*/}
-				<Followers />
+				{/*<Followers />*/}
+				<ChatBox />
 			</div>
 		</>
 	);

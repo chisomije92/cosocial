@@ -95,10 +95,16 @@ export default function NavBar() {
 					className="pi pi-bell  p-overlay-badge mx-2"
 					style={{ fontSize: "1.3rem", cursor: "pointer" }}
 				>
-					<Badge
+					{/*<Badge
 						value="2"
 						className={`${!isThemeDark ? "bg-red-500" : "bg-green-500"}`}
-					></Badge>
+					></Badge>*/}
+					<i
+						className={`pi pi-circle-fill ${
+							!isThemeDark ? "text-red-500" : "text-green-500"
+						} absolute -ml-2 -mt-1`}
+						style={{ fontSize: "0.5rem", cursor: "pointer" }}
+					></i>
 				</i>
 				<i
 					className="pi pi-envelope p-overlay-badge mx-2"
@@ -115,10 +121,16 @@ export default function NavBar() {
 					className="pi pi-user p-overlay-badge mx-2"
 					style={{ fontSize: "1.3rem", cursor: "pointer" }}
 				>
-					<Badge
+					{/*<Badge
 						value="5"
 						className={`${!isThemeDark ? "bg-red-500" : "bg-green-500"}`}
-					></Badge>
+					></Badge>*/}
+					<i
+						className={`pi pi-circle-fill ${
+							!isThemeDark ? "text-red-500" : "text-green-500"
+						} absolute -ml-2 -mt-1`}
+						style={{ fontSize: "0.5rem", cursor: "pointer" }}
+					></i>
 				</i>
 
 				<span></span>
