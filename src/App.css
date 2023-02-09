@@ -31,3 +31,25 @@
 .p-button.p-button-success:enabled:focus {
   box-shadow: 0 0 0 0;
 }
+
+.p-button.p-button:enabled:focus {
+  box-shadow: 0 0 0 0;
+}
+
+.p-scrollpanel:active .p-scrollpanel-bar,
+.p-scrollpanel:hover .p-scrollpanel-bar{
+    background-color: var(--primary-400);
+    opacity: 1;
+    transition: all .3s ;
+    -webkit-transition: all .3s ;
+    -moz-transition: all .3s ;
+    -ms-transition: all .3s ;
+    -o-transition: all .3s ;
+}
+
+.p-scrollpanel .p-scrollpanel-bar {
+  opacity: 0.9;
+  background-color: var(--primary-300);
+}
+
+

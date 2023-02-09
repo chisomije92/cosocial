@@ -59,7 +59,7 @@ export default function NavBar() {
 			label: "Home",
 		},
 		{
-			label: "Timeline",
+			label: "Explore", // Random posts from both following and non-following
 		},
 	];
 
@@ -129,7 +129,7 @@ export default function NavBar() {
 					className="ml-4 -mt-3"
 					onClick={e => op.current.toggle(e)}
 				/>
-				<OverlayPanel ref={op} className="mt-1 -ml-2">
+				<OverlayPanel ref={op} className="mt-1 mr-2">
 					<div
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer`}
 					>
@@ -140,8 +140,9 @@ export default function NavBar() {
 					<div
 						className={`flex text-red-500 ${classes.actions} font-medium cursor-pointer`}
 					>
-						<span className="-mt-1">Sign Out</span>{" "}
-						<i className="pi pi-sign-out ml-2 "></i>
+						<span className="-mt-1">Logout</span>
+						<code>&nbsp;</code>
+						<i className="pi pi-power-off "></i>
 					</div>
 				</OverlayPanel>
 			</div>

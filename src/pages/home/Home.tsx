@@ -1,6 +1,7 @@
 /** @format */
 
 import Feeds from "../../components/feeds/Feeds";
+import Followers from "../../components/followers/Followers";
 import NavBar from "../../components/nav-bar/NavBar";
 import Profile from "../../components/profile/Profile";
 import RightBar from "../../components/right-bar/RightBar";
@@ -14,7 +15,8 @@ export default function Home() {
 				<SideBar />
 				{/*<Feeds />*/}
 				<Profile />
-				<RightBar />
+				{/*<RightBar />*/}
+				<Followers />
 			</div>
 		</>
 	);

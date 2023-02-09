@@ -1,0 +1,17 @@
+.container{
+  flex: 3
+}
+
+.container img {
+  object-fit: cover;
+}
+
+.container [classes*="p-scrollpanel"], .container [classes*="p-scrollpanel-bar"]  {
+/*border-right: 10px solid var(--surface-ground);
+display: none;*/
+background-color: red !important;
+}
+
+.container [classes*="p-chip-image"]{
+  width: 200px;
+}
