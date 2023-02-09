@@ -1,0 +1,14 @@
+.container {
+  flex: 2
+}
+
+.container input {
+  border-style: none;
+  border-bottom: 1px solid;
+  width: 100%;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+}

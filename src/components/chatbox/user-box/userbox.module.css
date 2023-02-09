@@ -16,6 +16,10 @@
     hyphens: auto;
 }
 
+.userbox img{
+  object-fit: cover;
+}
+
 
 
 

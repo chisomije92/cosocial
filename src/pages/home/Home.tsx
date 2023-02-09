@@ -7,6 +7,7 @@ import Messages from "../../components/messages/Messages";
 import NavBar from "../../components/nav-bar/NavBar";
 import Profile from "../../components/profile/Profile";
 import RightBar from "../../components/right-bar/RightBar";
+import SearchFriend from "../../components/search-friend/SearchFriend";
 import SideBar from "../../components/side-bar/SideBar";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
 			<NavBar />
 			<div className="flex w-full">
 				{/*<SideBar />*/}
+				<SearchFriend />
 				{/*<Feeds />*/}
 				{/*<Profile />*/}
 				<Messages />

@@ -1,13 +1,21 @@
 /** @format */
 
+import { Avatar } from "primereact/avatar";
 import classes from "./userbox.module.css";
 
 const UserBox = () => {
 	return (
-		<div className={`flex justify-content-end ${classes.userbox} mt-1`}>
-			<p className="px-1 border-1 border-200 border-round-md font-light text-lg">
-				Hi! This is from user
-			</p>
+		<div
+			className={`flex flex-column align-items-start ${classes.userbox} mt-1`}
+		>
+			<div className="flex gap-1">
+				<Avatar image="/assets/person/1.jpeg" shape="circle" size="large" />
+				<p className="p-2 border-1 border-200 border-round-xl font-light text-lg bg-blue-400">
+					Hi! This is from user
+				</p>
+			</div>
+
+			<p className="font-light opacity-70 -mt-3">13 minutes ago</p>
 		</div>
 	);
 };

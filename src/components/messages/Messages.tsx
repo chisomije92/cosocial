@@ -10,7 +10,7 @@ import classes from "./messages.module.css";
 const Messages = () => {
 	const chatUsers = Users.slice(1, 4);
 	return (
-		<div className={`${classes.container} flex flex-column mt-2 ml-1`}>
+		<div className={`${classes.container} flex flex-column mt-2 ml-1 h-1rem`}>
 			<ul className="list-none">
 				{chatUsers.map(u => (
 					<li className="my-2" key={u.id}>

@@ -14,13 +14,13 @@ const ChatBox = () => {
 			<Card title="Chat">
 				<FriendBox />
 				<UserBox />
-				<div className="flex justify-content-evenly flex-column xl:flex-row">
+				<div className="flex justify-content-start flex-column xl:flex-row gap-2 mt-2">
 					<span className="p-input-icon-left">
 						<i
 							className="pi pi-pencil 
 "
 						/>
-						<InputText placeholder="Send a message" className="w-12" />
+						<InputText placeholder="Send a message" className="w-17rem pr" />
 					</span>
 					<Button icon="pi pi-send" className="mt-2 xl:mt-0" />
 				</div>
