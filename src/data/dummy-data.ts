@@ -136,4 +136,22 @@ export const Posts = [
     like: 104,
     comment: 12,
   },
+  {
+    id: 11,
+    desc: "Great Love exists.",
+    photo: "assets/post/1.jpeg",
+    date: "5 mins ago",
+    userId: 1,
+    like: 32,
+    comment: 9,
+  },
+  {
+    id: 12,
+    desc: "Great hate exists.",
+    photo: "assets/post/1.jpeg",
+    date: "5 mins ago",
+    userId: 1,
+    like: 32,
+    comment: 9,
+  },
 ];

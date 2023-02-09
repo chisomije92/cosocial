@@ -16,6 +16,7 @@ const Post: FC<{ post: any }> = ({ post }) => {
 		setLike(isLiked ? like - 1 : like + 1);
 		setIsLiked(!isLiked);
 	};
+
 	return (
 		<div className={`card mt-3 ${classes.container} shadow-1 border-round-sm`}>
 			<div>
@@ -57,7 +58,7 @@ const Post: FC<{ post: any }> = ({ post }) => {
 				<Image
 					src={post.photo}
 					alt="Image"
-					width="650"
+					width="100%"
 					className="mx-3"
 					preview
 				/>

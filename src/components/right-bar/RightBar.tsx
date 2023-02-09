@@ -22,13 +22,14 @@ export default function RightBar() {
 					birthday today
 				</span>
 			</div>
-
-			<img
-				src="/assets/ad.png"
-				className="ml-3 mr-3 border-round-lg"
-				width="400"
-				alt=""
-			/>
+			<div>
+				<img
+					src="/assets/ad.png"
+					className="ml-3 border-round-lg"
+					width="90%"
+					alt=""
+				/>
+			</div>
 			<div className="ml-3">
 				<h3>Cosocials Online:</h3>
 				<ul>

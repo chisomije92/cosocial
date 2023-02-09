@@ -12,7 +12,7 @@ import { Avatar } from "primereact/avatar";
 export default function Share() {
 	return (
 		<div
-			className={`card ${classes.container}  h-14rem xl:h-10rem w-full border-round-md shadow-4 min-w-min`}
+			className={`card ${classes.container}  h-13rem xl:h-12rem w-full border-round-md shadow-4 min-w-min`}
 		>
 			<div className="flex gap-0 -ml-3">
 				<Avatar
@@ -28,7 +28,7 @@ export default function Share() {
 			</div>
 			<hr className="mx-4 mt-4 surface-300 opacity-30" />
 			<div
-				className={`${classes.options} ml-4 mt-3 flex flex-column xl:flex-row flex-wrap gap-5 sm:gap-3`}
+				className={`${classes.options} ml-4 mt-3  flex flex-column xl:flex-row flex-wrap gap-5 sm:gap-3`}
 			>
 				<div className="flex">
 					<div className="mr-3 flex">
@@ -43,15 +43,12 @@ export default function Share() {
 						<LabelIcon className="mx-1 text-blue-500" />
 						<span>Tag</span>
 					</div>
-					<div className="md:mr-7 mr-0 flex">
+					<div className="md:mr-7 mr-3 flex">
 						<RoomIcon className="mx-1 text-green-600" />
 						<span>Location</span>
 					</div>
 				</div>
-				<Button
-					label="Post"
-					className=" w-min p-button-success ml-0 xl:ml-7 py-1"
-				/>
+				<Button label="Post" className="w-min p-button-success ml-0 py-1" />
 			</div>
 		</div>
 	);

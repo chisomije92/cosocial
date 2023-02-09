@@ -1,0 +1,38 @@
+.profile {
+  flex: 5.5
+}
+
+.imgContainer img {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  object-fit: cover;
+  background-color: none;
+ 
+
+}
+
+.imgContainer [class*="p-image-preview-indicator"]{
+border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  object-fit: cover;
+  width: 240px;
+}
+
+.link {
+  opacity: 1
+}
+
+.link:hover{
+  opacity: 0.6;
+  transition: opacity 0.3s ease-in 0.1s;
+  -webkit-transition: opacity 0.3s ease-in 0.1s;
+  -moz-transition: opacity 0.3s ease-in 0.1s;
+  -ms-transition: opacity 0.3s ease-in 0.1s;
+  -o-transition: opacity 0.3s ease-in 0.1s;
+}

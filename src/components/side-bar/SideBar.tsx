@@ -12,7 +12,6 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import EventIcon from "@mui/icons-material/Event";
 import SchoolIcon from "@mui/icons-material/School";
 import { Button } from "primereact/button";
-import { Chip } from "primereact/chip";
 import Mutuals from "../mutuals/Mutuals";
 import { Users } from "../../data/dummy-data";
 
