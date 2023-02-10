@@ -2,3 +2,17 @@
   flex: 4;
 
 }
+
+.container [class*="p-panel"] {
+  background-color: var(--surface-500)
+  /*background: red;*/
+}
+
+.container [class*="p-panel-content"]{
+ background-color: var(--surface-50)
+}
+
+.container [class*="p-panel-header"] {
+ font-size: larger;
+ font-weight: 900;
+}

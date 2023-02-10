@@ -10,7 +10,7 @@ const UserBox = () => {
 		>
 			<div className="flex gap-1">
 				<Avatar image="/assets/person/1.jpeg" shape="circle" size="large" />
-				<p className="p-2 border-1 border-200 border-round-xl font-light text-lg bg-blue-400">
+				<p className="p-2 border-1 border-200 border-round-xl font-light text-lg bg-white-alpha-90 text-black-alpha-80">
 					Hi! This is from user
 				</p>
 			</div>

@@ -5,6 +5,7 @@ import Feeds from "../../components/feeds/Feeds";
 import Followers from "../../components/followers/Followers";
 import Messages from "../../components/messages/Messages";
 import NavBar from "../../components/nav-bar/NavBar";
+import Notifications from "../../components/notifications/Notifications";
 import Profile from "../../components/profile/Profile";
 import RightBar from "../../components/right-bar/RightBar";
 import SearchFriend from "../../components/search-friend/SearchFriend";
@@ -20,7 +21,8 @@ export default function Home() {
 				{/*<Feeds />*/}
 				{/*<Profile />*/}
 				<Messages />
-				{/*<RightBar />*/}
+				{/*<Notifications />
+				<RightBar />*/}
 				{/*<Followers />*/}
 				<ChatBox />
 			</div>

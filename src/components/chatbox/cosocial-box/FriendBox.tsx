@@ -9,7 +9,7 @@ const FriendBox = () => {
 		<div className={`flex flex-column align-items-end  ${classes.friendbox}`}>
 			<div className="flex gap-2">
 				<Avatar image="/assets/person/2.jpeg" shape="circle" size="large" />
-				<p className="surface-300 px-1 border-1 border-200 border-round-md  text-lg">
+				<p className="surface-400 p-2 border-1 border-200 border-round-md  text-lg">
 					Hi! this is from Friend!
 				</p>
 			</div>

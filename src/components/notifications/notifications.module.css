@@ -1,0 +1,26 @@
+.notifications {
+  flex: 5.5
+}
+
+.notifications ul {
+  /*border-bottom: 1px solid;*/
+  
+}
+
+/*.notifications li {
+  border: 1px solid ;
+  border-bottom: 0;
+}*/
+
+.notifications hr {
+  margin-top: -1px;
+}
+
+.notifications [class*="p-card-body"]{
+ border: 0.6px solid !important;
+ padding: 0px 5px 4px 7px
+}
+
+.notifications a {
+  color: var(--surface-900);
+}
