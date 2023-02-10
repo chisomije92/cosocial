@@ -2,15 +2,11 @@
   flex: 5.5
 }
 
-.notifications ul {
-  /*border-bottom: 1px solid;*/
-  
-}
 
-/*.notifications li {
-  border: 1px solid ;
-  border-bottom: 0;
-}*/
+.notifications li {
+  margin-left: -12px;
+  margin-right: 10px;
+}
 
 .notifications hr {
   margin-top: -1px;
@@ -18,9 +14,53 @@
 
 .notifications [class*="p-card-body"]{
  border: 0.6px solid !important;
- padding: 0px 5px 4px 7px
+ background-color: var(--surface-200);
+
 }
 
 .notifications a {
   color: var(--surface-900);
+  opacity: 1;
+}
+
+.notifications a:hover {
+  opacity: 0.8;
+  transition: opacity 0.3 ease 0.1s;
+  -webkit-transition: opacity 0.3 ease 0.1s;
+  -moz-transition: opacity 0.3 ease 0.1s;
+  -ms-transition: opacity 0.3 ease 0.1s;
+  -o-transition: opacity 0.3 ease 0.1s;
+}
+
+
+.notifications img {
+  object-fit: cover;
+}
+
+.timeContainer {
+ max-width: 120px;
+ margin-left: auto;
+ position: relative;
+ top: -50px;
+}
+
+.notifications li:nth-of-type(1){
+    border-color: var(--surface-400);
+   border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
+}
+
+.notifications li:nth-of-type(1n+2) {
+border-top: 1px solid;
+border-color: var(--surface-300);
+}
+
+.notifications li:nth-last-of-type(1){
+  border-bottom-right-radius: 5%;
+  border-bottom-left-radius: 5%;
+
+}
+
+.notifications ul li {
+  background-color: var(--surface-100)
 }

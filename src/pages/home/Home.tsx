@@ -20,11 +20,11 @@ export default function Home() {
 				<SearchFriend />
 				{/*<Feeds />*/}
 				{/*<Profile />*/}
-				<Messages />
-				{/*<Notifications />
-				<RightBar />*/}
+				{/*<Messages />*/}
+				<Notifications />
+				<RightBar />
 				{/*<Followers />*/}
-				<ChatBox />
+				{/*<ChatBox />*/}
 			</div>
 		</>
 	);
