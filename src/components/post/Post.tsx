@@ -72,9 +72,9 @@ const Post: FC<{ post: any }> = ({ post }) => {
 						onClick={handleLike}
 					/>
 					<Avatar
-						icon="pi pi-heart-fill cursor-pointer"
+						icon="pi pi-bookmark-fill cursor-pointer"
 						className="bg-red-600 text-white border-circle"
-						onClick={handleLike}
+						//onClick={handleLike}
 					/>
 					<span className="opacity-70 text-sm mx-1">
 						{like} cosocials liked this

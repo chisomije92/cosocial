@@ -1,8 +1,10 @@
 /** @format */
 
+import Bookmarks from "../../components/bookmarks/Bookmarks";
 import ChatBox from "../../components/chatbox/ChatBox";
 import Feeds from "../../components/feeds/Feeds";
 import Followers from "../../components/followers/Followers";
+import Likes from "../../components/likes/Likes";
 import Messages from "../../components/messages/Messages";
 import NavBar from "../../components/nav-bar/NavBar";
 import Notifications from "../../components/notifications/Notifications";
@@ -19,9 +21,11 @@ export default function Home() {
 				{/*<SideBar />*/}
 				<SearchFriend />
 				{/*<Feeds />*/}
+				{/*<Bookmarks />*/}
 				{/*<Profile />*/}
 				{/*<Messages />*/}
 				<Notifications />
+				{/*<Likes />*/}
 				<RightBar />
 				{/*<Followers />*/}
 				{/*<ChatBox />*/}

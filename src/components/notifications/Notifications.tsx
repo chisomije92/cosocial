@@ -5,6 +5,7 @@ import classes from "./notifications.module.css";
 import { Divider } from "primereact/divider";
 import { Card } from "primereact/card";
 import { Avatar } from "primereact/avatar";
+import { Button } from "primereact/button";
 
 const Notifications = () => {
 	return (
@@ -13,12 +14,13 @@ const Notifications = () => {
 				<li className="flex justify-content-between">
 					<div className="text-2xl p-4 font-bold">Notifications</div>
 					<div className="mt-4 mr-3">
-						<a href="#/" className="no-underline text-primary font-semibold">
-							Mark all as read
-						</a>
+						<Button
+							label="Mark all as read"
+							className="px-2 py-2 surface-100 text-primary font-semibold"
+						/>
 					</div>
 				</li>
-				<li className="">
+				<li className="flex">
 					<div className="flex gap-2 p-2">
 						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
 						<div>
@@ -30,11 +32,11 @@ const Notifications = () => {
 							</div>
 						</div>
 					</div>
-					<div className={`${classes.timeContainer} hidden md:block`}>
+					<div className={`${classes.timeContainer}`}>
 						<div className="opacity-70">5 minutes ago</div>
 					</div>
 				</li>
-				<li className="">
+				<li className="flex">
 					<div className="flex gap-2 p-2">
 						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
 						<div>
@@ -46,11 +48,11 @@ const Notifications = () => {
 							</div>
 						</div>
 					</div>
-					<div className={`${classes.timeContainer} hidden md:block`}>
+					<div className={`${classes.timeContainer}`}>
 						<div className="opacity-70">5 minutes ago</div>
 					</div>
 				</li>
-				<li className="">
+				<li className="flex">
 					<div className="flex gap-2 p-2">
 						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
 						<div>
@@ -62,7 +64,7 @@ const Notifications = () => {
 							</div>
 						</div>
 					</div>
-					<div className={`${classes.timeContainer} hidden md:block`}>
+					<div className={`${classes.timeContainer}`}>
 						<div className="opacity-80">5 minutes ago</div>
 					</div>
 				</li>
