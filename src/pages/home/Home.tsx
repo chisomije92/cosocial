@@ -1,5 +1,6 @@
 /** @format */
 
+import AuthForm from "../../components/Auth/AuthForm";
 import Bookmarks from "../../components/bookmarks/Bookmarks";
 import ChatBox from "../../components/chatbox/ChatBox";
 import Feeds from "../../components/feeds/Feeds";
@@ -19,16 +20,17 @@ export default function Home() {
 			<NavBar />
 			<div className="flex w-full">
 				{/*<SideBar />*/}
-				<SearchFriend />
+				{/*<SearchFriend />*/}
 				{/*<Feeds />*/}
 				{/*<Bookmarks />*/}
 				{/*<Profile />*/}
 				{/*<Messages />*/}
-				<Notifications />
+				{/*<Notifications />*/}
 				{/*<Likes />*/}
-				<RightBar />
+				{/*<RightBar />*/}
 				{/*<Followers />*/}
 				{/*<ChatBox />*/}
+				<AuthForm />
 			</div>
 		</>
 	);

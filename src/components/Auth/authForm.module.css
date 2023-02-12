@@ -1,0 +1,3 @@
+.authForm [class*="p-password"]{
+  width: 23rem;
+}

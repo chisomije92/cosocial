@@ -14,6 +14,7 @@
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "formik": "^2.2.9",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primereact": "^9.0.0-beta.1",
@@ -24,7 +25,8 @@
     "react-toggle-dark-mode": "^1.1.1",
     "typescript": "^4.9.5",
     "use-local-storage": "^2.3.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
