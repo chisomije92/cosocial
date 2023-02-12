@@ -1,3 +1,9 @@
 .authForm [class*="p-password"]{
   width: 23rem;
 }
+
+
+.authForm [class*="p-button"]:disabled {
+cursor: not-allowed;
+/*display: none;*/
+}

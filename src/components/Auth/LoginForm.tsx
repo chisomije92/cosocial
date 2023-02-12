@@ -1,24 +1,22 @@
 /** @format */
-import React from "react";
-import { InputText } from "primereact/inputtext";
 
-import { Password } from "primereact/password";
-import classes from "./authForm.module.css";
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import classes from "./authForm.module.css";
+import { LoginValues } from "../../models/authForm";
 import { classNames } from "primereact/utils";
-import { RegisterValues } from "../../models/authForm";
+import { Card } from "primereact/card";
 
-const AuthForm = () => {
-	const onSubmit = (values: RegisterValues) => {
+const LoginForm = () => {
+	const onSubmit = (values: LoginValues) => {
 		if (isValid) {
 			resetForm();
 		}
 		console.log(values);
 	};
-
 	const {
 		values,
 		errors,
@@ -32,15 +30,10 @@ const AuthForm = () => {
 		setFieldValue,
 	} = useFormik({
 		initialValues: {
-			username: "",
 			email: "",
 			password: "",
 		},
 		validationSchema: Yup.object({
-			username: Yup.string()
-				.min(4, "Minimum of 4 characters required!")
-				.max(15, "Characters must be less than 15!")
-				.required("Required"),
 			email: Yup.string()
 				.email("Input a valid email address!")
 				.required("Required"),
@@ -49,9 +42,10 @@ const AuthForm = () => {
 				.required("Required"),
 		}),
 		onSubmit,
+		validateOnChange: true,
+		validateOnBlur: true,
 	});
-
-	type ValueType = "username" | "email" | "password";
+	type ValueType = "email" | "password";
 
 	const isFormFieldInvalid = (name: ValueType) =>
 		!!(touched[name] && errors[name]);
@@ -67,43 +61,22 @@ const AuthForm = () => {
 		);
 	};
 
-	const isAllFieldTouched = () => {
-		const inputValues: ValueType[] = ["username", "email"];
-		return inputValues.every(val => touched[val]);
-	};
-
 	return (
 		<Card
 			className={`${classes.authForm} Card lg:mx-auto my-4 surface-100 ml-8`}
 		>
 			<form
-				className="flex flex-column gap-2 w-26rem p-3"
+				className="flex flex-column gap-2 w-26rem  p-3"
 				onSubmit={handleSubmit}
 				onBlur={handleBlur}
 			>
-				<div className="font-bold text-3xl">Sign Up</div>
-				<div>
-					<InputText
-						id="username"
-						name="username"
-						placeholder="Username"
-						value={values.username}
-						onChange={e => {
-							setFieldValue("username", e.target.value);
-						}}
-						className={`${classNames({
-							"p-invalid": isFormFieldInvalid("username"),
-						})} w-23rem`}
-					/>
-					{getFormErrorMessage("username")}
-				</div>
+				<div className="font-bold text-3xl ">Log In</div>
 				<div>
 					<InputText
 						id="email"
 						name="email"
 						placeholder="Email"
 						value={values.email}
-						type="email"
 						onChange={e => {
 							setFieldValue("email", e.target.value);
 						}}
@@ -113,14 +86,13 @@ const AuthForm = () => {
 					/>
 					{getFormErrorMessage("email")}
 				</div>
-
 				<div>
 					<Password
 						id="password"
 						name="password"
 						feedback={false}
-						placeholder="Password"
 						value={values.password}
+						placeholder="Password"
 						onChange={e => {
 							setFieldValue("password", e.target.value);
 						}}
@@ -133,15 +105,13 @@ const AuthForm = () => {
 
 				<Button
 					label="Sign up"
-					disabled={isSubmitting || !isValid || !isAllFieldTouched()}
-					className="w-23rem font-bold my-2"
-					type="submit"
+					className="w-23rem font-bold"
+					disabled={isSubmitting || !isValid || !touched.email}
 				/>
 				<div className="flex gap-1">
-					<span>Registered already?</span>
-
+					<span>Not a registered user yet?</span>
 					<a href="#/" className="no-underline">
-						Log in
+						Sign up
 					</a>
 				</div>
 			</form>
@@ -149,4 +119,4 @@ const AuthForm = () => {
 	);
 };
 
-export default AuthForm;
+export default LoginForm;

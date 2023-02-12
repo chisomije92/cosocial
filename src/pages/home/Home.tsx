@@ -1,6 +1,7 @@
 /** @format */
 
 import AuthForm from "../../components/Auth/AuthForm";
+import LoginForm from "../../components/Auth/LoginForm";
 import Bookmarks from "../../components/bookmarks/Bookmarks";
 import ChatBox from "../../components/chatbox/ChatBox";
 import Feeds from "../../components/feeds/Feeds";
@@ -30,7 +31,8 @@ export default function Home() {
 				{/*<RightBar />*/}
 				{/*<Followers />*/}
 				{/*<ChatBox />*/}
-				<AuthForm />
+				{/*<AuthForm />*/}
+				<LoginForm />
 			</div>
 		</>
 	);
