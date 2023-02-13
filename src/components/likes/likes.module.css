@@ -1,5 +1,8 @@
 .likesContainer {
-  flex: 4
+  /*flex: 4*/
+  width: 100%;
+  height: 19rem;
+  overflow-x: hidden;
 }
 
 .likesContainer img {
@@ -42,5 +45,21 @@
 }
 
 .likesContainer ul li {
-  background-color: var(--surface-100)
+  /*background-color: var(--surface-100)*/
+}
+
+.likesContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.likesContainer::-webkit-scrollbar-track {
+  background-color: rgb(234, 232, 232);
+
+}
+
+.likesContainer::-webkit-scrollbar-thumb {
+  background: grey;
+  margin-bottom: 10px;
+
 }

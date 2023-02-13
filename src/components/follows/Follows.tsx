@@ -1,16 +1,18 @@
 /** @format */
 
 import { Card } from "primereact/card";
-import React from "react";
-import classes from "./followers.module.css";
+import React, { FC } from "react";
+import classes from "./follows.module.css";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { Users } from "../../data/dummy-data";
 import { Avatar } from "primereact/avatar";
 
-const Followers = () => {
+const Follows: FC<{
+	follows?: string;
+}> = ({ follows }) => {
 	return (
 		<div className={`${classes.container} card mt-3`}>
-			<Card className="" title="Followers">
+			<Card className="capitalize" title={follows}>
 				<ScrollPanel
 					style={{ width: "100%", height: "350px" }}
 					className={`${classes.customBar}`}
@@ -31,4 +33,4 @@ const Followers = () => {
 	);
 };
 
-export default Followers;
+export default Follows;

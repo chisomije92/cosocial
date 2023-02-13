@@ -14,7 +14,7 @@ export default function Profile() {
 
 	return (
 		<div className={`${classes.profile} mx-3 mt-2`}>
-			<Card className="flex flex-column justify-content-center align-items-center card mt-2">
+			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
 				<div className={`${classes.imgContainer}`}>
 					<Image
 						src="/assets/person/1.jpeg"

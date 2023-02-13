@@ -9,7 +9,9 @@ import { Button } from "primereact/button";
 
 const Notifications = () => {
 	return (
-		<div className={`${classes.notifications} mr-3 mt-2 flex flex-column`}>
+		<div
+			className={`${classes.notifications} md:ml-auto ml-8  flex flex-column`}
+		>
 			<ul className="list-none ">
 				<li className="flex justify-content-between">
 					<div className="text-2xl p-4 font-bold">Notifications</div>

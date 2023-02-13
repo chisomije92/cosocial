@@ -12,6 +12,9 @@ import { Avatar } from "primereact/avatar";
 import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
+import { Link } from "react-router-dom";
+import { Button } from "primereact/button";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
 	const [theme, setTheme] = useLocalStorage<any>(
@@ -20,6 +23,16 @@ export default function NavBar() {
 	);
 
 	const op = useRef<any>(null);
+
+	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
+		return `text-white no-underline m-3 text-xl ${
+			isActive ? "opacity-90" : ""
+		}`;
+	};
+
+	const iconLinksCssClasses = ({ isActive }: { isActive: boolean }): string => {
+		return `text-white ${isActive ? "opacity-90" : ""}`;
+	};
 
 	useLayoutEffect(() => {
 		let themeLink: HTMLLinkElement = document.getElementById(
@@ -56,15 +69,29 @@ export default function NavBar() {
 			),
 		},
 		{
-			label: "Home",
+			//label: "Home",
+			template: (
+				<>
+					<NavLink to="" className={navLinkCssClasses}>
+						Home
+					</NavLink>
+				</>
+			),
 		},
 		{
-			label: "Explore", // Random posts from both following and non-following
+			//label: "Explore", // Random posts from both following and non-following
+			template: (
+				<>
+					<NavLink to="profile" className={navLinkCssClasses}>
+						Profile
+					</NavLink>
+				</>
+			),
 		},
 	];
 
 	const start = (
-		<div className={`mr-8 ml-2 ${classes.logoContainer}`}>
+		<div className={`mr-8 ml-2 ${classes.logoContainer} flex`}>
 			<div className="flex justify-content-between">
 				<div>
 					<img
@@ -91,36 +118,43 @@ export default function NavBar() {
 				sunColor={"rgb(254, 254, 11)"}
 			/>
 			<div className={`${classes.endDiv} flex justify-content-between mt-2 `}>
-				<i
-					className="pi pi-bell  p-overlay-badge mx-2"
-					style={{ fontSize: "1.3rem", cursor: "pointer" }}
-				>
+				<NavLink to="notifications" className={iconLinksCssClasses}>
 					<i
-						className={`pi pi-circle-fill ${
-							!isThemeDark ? "text-red-500" : "text-green-500"
-						} absolute -ml-2 -mt-1`}
-						style={{ fontSize: "0.5rem", cursor: "pointer" }}
-					></i>
-				</i>
-				<i
-					className="pi pi-envelope p-overlay-badge mx-2"
-					style={{ fontSize: "1.3rem", cursor: "pointer" }}
-				>
+						className="pi pi-bell  p-overlay-badge mx-2"
+						style={{ fontSize: "1.3rem", cursor: "pointer" }}
+					>
+						<i
+							className={`pi pi-circle-fill ${
+								!isThemeDark ? "text-red-500" : "text-green-500"
+							} absolute -ml-2 -mt-1`}
+							style={{ fontSize: "0.5rem", cursor: "pointer" }}
+						></i>
+					</i>
+				</NavLink>
+
+				<NavLink to="messages" className={iconLinksCssClasses}>
 					<i
-						className={`pi pi-circle-fill ${
-							!isThemeDark ? "text-red-500" : "text-green-500"
-						} absolute -ml-1 -mt-1`}
-						style={{ fontSize: "0.5rem", cursor: "pointer" }}
-					></i>
-				</i>
+						className="pi pi-envelope p-overlay-badge mx-2"
+						style={{ fontSize: "1.3rem", cursor: "pointer" }}
+					>
+						<i
+							className={`pi pi-circle-fill ${
+								!isThemeDark ? "text-red-500" : "text-green-500"
+							} absolute -ml-1 -mt-1`}
+							style={{ fontSize: "0.5rem", cursor: "pointer" }}
+						></i>
+					</i>
+				</NavLink>
+
 				<span></span>
-				<Avatar
-					image={headshot}
-					size="large"
-					shape="circle"
-					className="ml-4 -mt-3"
+				<div
+					className="flex flex-column ml-4 -mt-3 cursor-pointer"
 					onClick={e => op.current.toggle(e)}
-				/>
+				>
+					<Avatar image={headshot} shape="circle" className="mx-auto" />
+					<div className="text-sm">Test user</div>
+				</div>
+
 				<OverlayPanel ref={op} className="mt-1 mr-2">
 					<div
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer`}
