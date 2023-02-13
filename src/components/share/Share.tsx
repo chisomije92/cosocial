@@ -8,6 +8,7 @@ import LabelIcon from "@mui/icons-material/Label";
 import RoomIcon from "@mui/icons-material/Room";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
+import { InputTextarea } from "primereact/inputtextarea";
 
 export default function Share() {
 	return (
@@ -21,14 +22,17 @@ export default function Share() {
 					shape="circle"
 					className="mx-4 -mb-2 mt-2"
 				/>
-				<InputText
+				<InputTextarea
 					placeholder="Share your thoughts"
-					className="border-0 mt-1 -ml-3 w-10 p-2 h-4rem"
+					className="border-0 mt-1 -ml-3 w-10  h-5rem"
+					rows={8}
+					cols={30}
+					autoResize
 				/>
 			</div>
-			<hr className="mx-4 mt-4 surface-300 opacity-30" />
+			<hr className="w-11 mr-1 lg:mr-4 mt-2 surface-300 opacity-30" />
 			<div
-				className={`${classes.options} ml-4 mt-3  flex flex-column xl:flex-row flex-wrap gap-5 sm:gap-3`}
+				className={`${classes.options} ml-4 mt-2  flex flex-column xl:flex-row flex-wrap gap-5 sm:gap-3`}
 			>
 				<div className="flex">
 					<div className="mr-3 flex">

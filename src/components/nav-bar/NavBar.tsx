@@ -15,6 +15,7 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
 	const [theme, setTheme] = useLocalStorage<any>(
@@ -23,6 +24,8 @@ export default function NavBar() {
 	);
 
 	const op = useRef<any>(null);
+	const navigate = useNavigate();
+	const handleClick = () => navigate("/profile");
 
 	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
 		return `text-white no-underline m-3 text-xl ${
@@ -158,6 +161,7 @@ export default function NavBar() {
 				<OverlayPanel ref={op} className="mt-1 mr-2">
 					<div
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer`}
+						onClick={handleClick}
 					>
 						<span>Profile</span> <i className="pi pi-user ml-2"></i>
 					</div>
