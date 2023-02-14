@@ -12,7 +12,7 @@ export default function Feeds() {
 			<div className="p-4">
 				<Share />
 				{Posts.map(p => (
-					<Post post={p} key={p.id} />
+					<Post post={p} key={p.id} showComments={true} />
 				))}
 			</div>
 		</div>

@@ -60,6 +60,24 @@ export const Posts = [
     userId: 1,
     like: 32,
     comment: 9,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 1.",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 3,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 1",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 7,
+      }
+    ]
   },
   {
     id: 2,
@@ -68,6 +86,24 @@ export const Posts = [
     userId: 2,
     like: 2,
     comment: 1,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 2.",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 3,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 2",
+        photo: "assets/post/1.jpeg",
+        date: "5 mins ago",
+        userId: 1,
+        like: 7,
+      }
+    ]
   },
   {
     id: 3,
@@ -77,6 +113,24 @@ export const Posts = [
     userId: 3,
     like: 61,
     comment: 2,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 3.",
+        photo: "assets/post/4.jpeg",
+        date: "5 mins ago",
+        userId: 4,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 3",
+        photo: "assets/post/2.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 7,
+      }
+    ]
   },
   {
     id: 4,
@@ -85,6 +139,24 @@ export const Posts = [
     userId: 4,
     like: 7,
     comment: 3,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 4.",
+        photo: "assets/post/1.jpeg",
+        date: "5 mins ago",
+        userId: 1,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 4",
+        photo: "assets/post/2.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 7,
+      }
+    ]
   },
   {
     id: 5,
@@ -93,6 +165,24 @@ export const Posts = [
     userId: 5,
     like: 23,
     comment: 5,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 5.",
+        photo: "assets/post/2.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 5",
+        photo: "assets/post/1.jpeg",
+        date: "5 mins ago",
+        userId: 1,
+        like: 7,
+      }
+    ]
   },
   {
     id: 6,
@@ -101,6 +191,24 @@ export const Posts = [
     userId: 6,
     like: 44,
     comment: 6,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 6.",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 3,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 6",
+        photo: "assets/post/1.jpeg",
+        date: "5 mins ago",
+        userId: 1,
+        like: 7,
+      }
+    ]
   },
   {
     id: 7,
@@ -110,6 +218,24 @@ export const Posts = [
     userId: 7,
     like: 52,
     comment: 3,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 7.",
+        photo: "assets/post/1.jpeg",
+        date: "5 mins ago",
+        userId: 1,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 2",
+        photo: "assets/post/4.jpeg",
+        date: "5 mins ago",
+        userId: 4,
+        like: 7,
+      }
+    ]
   },
   {
     id: 8,
@@ -118,6 +244,24 @@ export const Posts = [
     userId: 8,
     like: 15,
     comment: 1,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 8.",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 3,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 8",
+        photo: "assets/post/1.jpeg",
+        date: "5 mins ago",
+        userId: 1,
+        like: 7,
+      }
+    ]
   },
   {
     id: 9,
@@ -127,6 +271,24 @@ export const Posts = [
     userId: 9,
     like: 11,
     comment: 2,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 9.",
+        photo: "assets/post/2.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 9",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 3,
+        like: 7,
+      }
+    ]
   },
   {
     id: 10,
@@ -135,6 +297,24 @@ export const Posts = [
     userId: 10,
     like: 104,
     comment: 12,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 10.",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 3,
+        like: 9,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 10",
+        photo: "assets/post/2.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 7,
+      }
+    ]
   },
   {
     id: 11,
@@ -144,6 +324,24 @@ export const Posts = [
     userId: 1,
     like: 32,
     comment: 9,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 11.",
+        photo: "assets/post/3.jpeg",
+        date: "5 mins ago",
+        userId: 3,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 11",
+        photo: "assets/post/1.jpeg",
+        date: "5 mins ago",
+        userId: 1,
+        like: 7,
+      }
+    ]
   },
   {
     id: 12,
@@ -153,5 +351,23 @@ export const Posts = [
     userId: 1,
     like: 32,
     comment: 9,
+    replies: [
+      {
+        id: 1,
+        desc: "This is a reply to the post with id 12.",
+        photo: "assets/post/2.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 8,
+      },
+      {
+        id: 2,
+        desc: "2nd Reply to post with id 12",
+        photo: "assets/post/2.jpeg",
+        date: "5 mins ago",
+        userId: 2,
+        like: 7,
+      }
+    ]
   },
 ];

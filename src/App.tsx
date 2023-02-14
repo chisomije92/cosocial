@@ -24,6 +24,9 @@ import ErrorPage from "./pages/error-page/ErrorPage";
 import BookmarkPage from "./pages/bookmarks-page/BookmarkPage";
 import LoginPage from "./pages/login-page.tsx/LoginPage";
 import SignUpPage from "./pages/sign-up-page/SignUpPage";
+import SinglePostPage, {
+	loader as singlePostLoader,
+} from "./pages/single-post-page/SinglePostPage";
 
 function App() {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -47,6 +50,12 @@ function App() {
 				<Route path="/bookmarks" element={<BookmarkPage />} />
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
+				<Route
+					path="/post/:id"
+					element={<SinglePostPage />}
+					loader={singlePostLoader}
+					errorElement={<h3>An Error Occurred</h3>}
+				/>
 			</Route>
 		)
 	);

@@ -8,8 +8,12 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
 import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
+import { Link } from "react-router-dom";
 
-const Post: FC<{ post: any }> = ({ post }) => {
+const Post: FC<{ post: any; showComments?: boolean }> = ({
+	post,
+	showComments,
+}) => {
 	const op = useRef<any>(null);
 	const [like, setLike] = useState(post.like);
 	const [isLiked, setIsLiked] = useState(false);
@@ -100,9 +104,14 @@ const Post: FC<{ post: any }> = ({ post }) => {
 						</span>
 					</div>
 					<div className="flex justify-content-even opacity-60">
-						<p className="border-bottom-1 mt-4 border-200">
-							{post.comment} comments
-						</p>
+						{showComments ? (
+							<Link to={`post/${post.id}`} className="no-underline text-800">
+								<p className=" mt-4 border-200">{post.comment} comments</p>
+							</Link>
+						) : (
+							<p className=" mt-4 border-200">{post.comment} comments</p>
+						)}
+
 						<code>&nbsp;</code>
 					</div>
 				</div>
