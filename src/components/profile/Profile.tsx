@@ -53,7 +53,7 @@ export default function Profile() {
 
 			<div className="">
 				{userPosts.map(p => (
-					<Post key={p.id} post={p} />
+					<Post key={p.id} post={p} showComments />
 				))}
 			</div>
 		</div>

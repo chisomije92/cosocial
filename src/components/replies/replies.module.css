@@ -3,3 +3,7 @@
 .replies img {
 object-fit: cover;
 }
+
+.inputContainer {
+  margin-left: 3rem;
+}

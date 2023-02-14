@@ -1,6 +1,8 @@
 /** @format */
 
+import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import { InputTextarea } from "primereact/inputtextarea";
 import React, { useState, FC } from "react";
 import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
@@ -23,7 +25,15 @@ const Replies: FC<{
 		</Dialog>
 	);
 	return (
-		<div className={`${classes.replies} card`}>
+		<div className={`${classes.replies} card mt-2`}>
+			<div className={`${classes.inputContainer}`}>
+				<InputTextarea
+					className="w-12 h-5rem p-2 border-1"
+					placeholder="Add a comment"
+					autoResize
+				/>
+				<Button label="Comment" className="p-2" />
+			</div>
 			<ul className="list-none">
 				{replies.map((reply: any) => (
 					<Reply

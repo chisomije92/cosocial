@@ -24,7 +24,7 @@ const Post: FC<{ post: any; showComments?: boolean }> = ({
 		setIsLiked(!isLiked);
 	};
 
-	const LikesDialogue = (
+	const likesDialogue = (
 		<Dialog
 			header="Cosocials who liked this post:"
 			visible={visible}
@@ -105,7 +105,7 @@ const Post: FC<{ post: any; showComments?: boolean }> = ({
 					</div>
 					<div className="flex justify-content-even opacity-60">
 						{showComments ? (
-							<Link to={`post/${post.id}`} className="no-underline text-800">
+							<Link to={`/post/${post.id}`} className="no-underline text-900">
 								<p className=" mt-4 border-200">{post.comment} comments</p>
 							</Link>
 						) : (
@@ -116,7 +116,7 @@ const Post: FC<{ post: any; showComments?: boolean }> = ({
 					</div>
 				</div>
 			</div>
-			{LikesDialogue}
+			{likesDialogue}
 		</>
 	);
 };

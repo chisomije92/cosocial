@@ -7,13 +7,10 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { Menubar } from "primereact/menubar";
 import { InputText } from "primereact/inputtext";
 import classes from "./NavBar.module.css";
-import { Badge } from "primereact/badge";
 import { Avatar } from "primereact/avatar";
 import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { Link } from "react-router-dom";
-import { Button } from "primereact/button";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
