@@ -10,6 +10,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import EditProfile from "./EditProfile";
 import ChangePassword from "../change-password/ChangePassword";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
 	const [visible, setVisible] = useState(false);
@@ -53,10 +54,20 @@ export default function Profile() {
 						<span className="font-semibold opacity-90">{userPosts.length}</span>
 					</div>
 					<div>
-						Following: <span className="font-semibold opacity-90">44</span>
+						<Link
+							to="/profile?cosocials=following"
+							className={`${classes.link} no-underline text-color`}
+						>
+							Following: <span className="font-semibold opacity-90">44</span>
+						</Link>
 					</div>
 					<div>
-						Followers: <span className="font-semibold opacity-90">100</span>
+						<Link
+							to="/profile?cosocials=followers"
+							className={`${classes.link} no-underline text-color`}
+						>
+							Followers: <span className="font-semibold opacity-90">100</span>
+						</Link>
 					</div>
 				</div>
 				<div className="flex mt-1 ">

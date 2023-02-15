@@ -6,7 +6,6 @@ import { classNames } from "primereact/utils";
 import { useFormik } from "formik";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
-import { Card } from "@mui/material";
 import { PasswordValues } from "../../models/password";
 
 const ChangePassword = () => {
@@ -86,6 +85,9 @@ const ChangePassword = () => {
 						onChange={e => {
 							setFieldValue("oldPassword", e.target.value);
 						}}
+						className={`${classNames({
+							"p-invalid": isFormFieldInvalid("oldPassword"),
+						})}`}
 						toggleMask
 					/>
 
@@ -100,6 +102,9 @@ const ChangePassword = () => {
 						onChange={e => {
 							setFieldValue("newPassword", e.target.value);
 						}}
+						className={`${classNames({
+							"p-invalid": isFormFieldInvalid("newPassword"),
+						})}`}
 						toggleMask
 					/>
 					{getFormErrorMessage("newPassword")}

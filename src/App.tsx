@@ -13,7 +13,7 @@ import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import "./App.css";
 
-import Home from "./pages/home/Home";
+import Home, { loader as homePostsLoader } from "./pages/home/Home";
 import Error from "./components/error/Error";
 import RootLayout from "./pages/root-layout/RootLayout";
 import ProfilePage from "./pages/profile-page/ProfilePage";
@@ -43,7 +43,7 @@ function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
 			<Route path="/" errorElement={<ErrorPage />} element={<RootLayout />}>
-				<Route index element={<Home />} />
+				<Route index element={<Home />} loader={homePostsLoader} />
 				<Route path="/profile" element={<ProfilePage />} />
 				<Route path="/notifications" element={<NotificationsPage />} />
 				<Route path="/messages" element={<MessagesPage />} />
@@ -54,7 +54,6 @@ function App() {
 					path="/post/:id"
 					element={<SinglePostPage />}
 					loader={singlePostLoader}
-					errorElement={<h3>An Error Occurred</h3>}
 				/>
 			</Route>
 		)
