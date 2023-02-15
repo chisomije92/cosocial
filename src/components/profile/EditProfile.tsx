@@ -16,9 +16,6 @@ const EditProfile = () => {
 		return email === "" && username === "" && image === "" && desc === "";
 	};
 
-	//const emailIsValid =
-	//	/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && email !== "";
-
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const values = {

@@ -7,25 +7,26 @@ import Post from "../post/Post";
 import classes from "./profile.module.css";
 import { Image } from "primereact/image";
 import { Dialog } from "primereact/dialog";
-import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import EditProfile from "./EditProfile";
+import ChangePassword from "../change-password/ChangePassword";
 
 export default function Profile() {
 	const [visible, setVisible] = useState(false);
+	const [showForm, setShowForm] = useState(1);
 
 	const userId = Users[0].id;
 	const user = Users[0];
 	const userPosts = Posts.filter(p => p.userId === userId);
-	const EditProfileForm = (
+	const editProfileForm = (
 		<Dialog
-			header="Edit Profile"
+			header={`${showForm === 1 ? "Edit Profile" : "Change Password"}`}
 			visible={visible}
 			style={{ width: "50vw" }}
 			onHide={() => setVisible(false)}
 			className="w-27rem"
 		>
-			<EditProfile />
+			{showForm === 1 ? <EditProfile /> : <ChangePassword />}
 		</Dialog>
 	);
 
@@ -64,11 +65,21 @@ export default function Profile() {
 						className="p-2 m-auto surface-50 border-0 text-primary border-50"
 						onClick={() => {
 							setVisible(true);
+							setShowForm(1);
+						}}
+					/>
+					<Button
+						label="Change password"
+						className="p-2 m-auto surface-50 border-0 text-primary border-50"
+						onClick={() => {
+							setVisible(true);
+							setShowForm(2);
 						}}
 					/>
 				</div>
 			</Card>
-			{EditProfileForm}
+			{editProfileForm}
+
 			<div className="">
 				{userPosts.map(p => (
 					<Post key={p.id} post={p} showComments />
