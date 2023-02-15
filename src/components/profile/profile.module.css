@@ -24,6 +24,20 @@ border-radius: 50%;
   width: 240px;
 }
 
+.profile button {
+  opacity: 1;
+}
+
+.profile button:hover, .profile button:focus{
+  opacity: 0.8;
+  text-decoration: underline;
+  transition: all 0.4s ease 0.2s;
+  -webkit-transition: all 0.4s ease 0.2s;
+  -moz-transition: all 0.4s ease 0.2s;
+  -ms-transition: all 0.4s ease 0.2s;
+  -o-transition: all 0.4s ease 0.2s;
+}
+
 .link {
   opacity: 1
 }

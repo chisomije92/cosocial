@@ -8,7 +8,7 @@ import SearchFriend from "../../components/search-friend/SearchFriend";
 
 const ProfilePage = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
-	const follows = searchParams.get("follows");
+	const follows = searchParams.get("cosocials");
 	return (
 		<>
 			<SearchFriend />

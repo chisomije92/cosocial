@@ -1,22 +1,14 @@
 /** @format */
 
 import { Avatar } from "primereact/avatar";
-import { Dialog } from "primereact/dialog";
-import React, { FC, useState } from "react";
+
+import React, { FC } from "react";
 import classes from "./likes.module.css";
 
 const Likes: FC<{
 	users: any;
 }> = ({ users }) => {
-	const [visible, setVisible] = useState(false);
-
 	return (
-		//<Dialog
-		//	header="Cosocials who liked this post:"
-		//	visible={visible}
-		//	style={{ width: "50vw" }}
-		//	onHide={() => setVisible(false)}
-		//>
 		<div className={`${classes.likesContainer}  m-0  overflow-x-hidden `}>
 			<ul className="list-none w-11">
 				{users.map((user: any) => (
@@ -32,7 +24,6 @@ const Likes: FC<{
 				))}
 			</ul>
 		</div>
-		//</Dialog>
 	);
 };
 

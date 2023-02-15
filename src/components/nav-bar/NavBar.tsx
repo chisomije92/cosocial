@@ -82,7 +82,10 @@ export default function NavBar() {
 			//label: "Explore", // Random posts from both following and non-following
 			template: (
 				<>
-					<NavLink to="profile" className={navLinkCssClasses}>
+					<NavLink
+						to="profile?cosocials=followers"
+						className={navLinkCssClasses}
+					>
 						Profile
 					</NavLink>
 				</>
@@ -156,14 +159,15 @@ export default function NavBar() {
 				</div>
 
 				<OverlayPanel ref={op} className="mt-1 mr-2">
-					<div
+					{/*<div
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer`}
 						onClick={handleClick}
 					>
-						<span>Profile</span> <i className="pi pi-user ml-2"></i>
-					</div>
+						<span className="text-sm">Change</span>{" "}
+						<i className="pi pi-user ml-2 text-sm"></i>
+					</div>*/}
 
-					<hr className="h-1 min-w-full $ -ml-3 -mr-3" />
+					{/*<hr className="h-1 min-w-full $ -ml-3 -mr-3" />*/}
 					<div
 						className={`flex text-red-500 ${classes.actions} font-medium cursor-pointer`}
 					>

@@ -26,7 +26,6 @@ const AuthForm = () => {
 		isSubmitting,
 		isValid,
 		handleBlur,
-		handleChange,
 		handleSubmit,
 		resetForm,
 		setFieldValue,

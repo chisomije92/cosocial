@@ -1,16 +1,33 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "primereact/card";
 import { Posts, Users } from "../../data/dummy-data";
 import Post from "../post/Post";
 import classes from "./profile.module.css";
 import { Image } from "primereact/image";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import EditProfile from "./EditProfile";
 
 export default function Profile() {
+	const [visible, setVisible] = useState(false);
+
 	const userId = Users[0].id;
 	const user = Users[0];
 	const userPosts = Posts.filter(p => p.userId === userId);
+	const EditProfileForm = (
+		<Dialog
+			header="Edit Profile"
+			visible={visible}
+			style={{ width: "50vw" }}
+			onHide={() => setVisible(false)}
+			className="w-27rem"
+		>
+			<EditProfile />
+		</Dialog>
+	);
 
 	return (
 		<div className={`${classes.profile} mx-3 mt-2`}>
@@ -41,16 +58,17 @@ export default function Profile() {
 						Followers: <span className="font-semibold opacity-90">100</span>
 					</div>
 				</div>
-				<div className="flex mt-1">
-					<a
-						href="#/"
-						className={`${classes.link} m-auto text-color no-underline font-semibold`}
-					>
-						Edit Profile
-					</a>
+				<div className="flex mt-1 ">
+					<Button
+						label="Edit profile"
+						className="p-2 m-auto surface-50 border-0 text-primary border-50"
+						onClick={() => {
+							setVisible(true);
+						}}
+					/>
 				</div>
 			</Card>
-
+			{EditProfileForm}
 			<div className="">
 				{userPosts.map(p => (
 					<Post key={p.id} post={p} showComments />
