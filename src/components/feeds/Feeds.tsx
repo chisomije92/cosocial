@@ -8,11 +8,12 @@ import classes from "./feeds.module.css";
 
 const Feeds: FC<{
 	posts: any;
-}> = ({ posts }) => {
+	isExploring?: boolean;
+}> = ({ posts, isExploring }) => {
 	return (
 		<div className={`${classes.feeds}`}>
 			<div className="p-4">
-				<Share />
+				{!isExploring && <Share />}
 				{posts.map((p: any) => (
 					<Post post={p} key={p.id} showComments={true} />
 				))}

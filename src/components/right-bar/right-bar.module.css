@@ -1,5 +1,6 @@
 .rightBar{
-  flex: 3
+  flex: 3;
+  height: min-content
 }
 
 .rightBar img {

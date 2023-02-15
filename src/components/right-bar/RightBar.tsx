@@ -1,7 +1,6 @@
 /** @format */
 
 import { Avatar } from "primereact/avatar";
-import { Chip } from "primereact/chip";
 import { Image } from "primereact/image";
 import { Users } from "../../data/dummy-data";
 import OnlineFriends from "../online-friends/OnlineFriends";

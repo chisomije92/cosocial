@@ -11,8 +11,7 @@ import { Avatar } from "primereact/avatar";
 import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function NavBar() {
 	const [theme, setTheme] = useLocalStorage<any>(
@@ -21,8 +20,6 @@ export default function NavBar() {
 	);
 
 	const op = useRef<any>(null);
-	const navigate = useNavigate();
-	const handleClick = () => navigate("/profile");
 
 	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
 		return `text-white no-underline m-3 text-xl ${
@@ -69,7 +66,6 @@ export default function NavBar() {
 			),
 		},
 		{
-			//label: "Home",
 			template: (
 				<>
 					<NavLink to="" className={navLinkCssClasses}>
@@ -79,14 +75,10 @@ export default function NavBar() {
 			),
 		},
 		{
-			//label: "Explore", // Random posts from both following and non-following
 			template: (
 				<>
-					<NavLink
-						to="profile?cosocials=followers"
-						className={navLinkCssClasses}
-					>
-						Profile
+					<NavLink to="explore" className={navLinkCssClasses}>
+						Explore
 					</NavLink>
 				</>
 			),
@@ -159,15 +151,15 @@ export default function NavBar() {
 				</div>
 
 				<OverlayPanel ref={op} className="mt-1 mr-2">
-					{/*<div
-						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer`}
-						onClick={handleClick}
+					<Link
+						to="profile?cosocials=followers"
+						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer no-underline`}
 					>
-						<span className="text-sm">Change</span>{" "}
+						<span className="text-sm">Profile</span>{" "}
 						<i className="pi pi-user ml-2 text-sm"></i>
-					</div>*/}
+					</Link>
 
-					{/*<hr className="h-1 min-w-full $ -ml-3 -mr-3" />*/}
+					<hr className="h-1 min-w-full $ -ml-3 -mr-3" />
 					<div
 						className={`flex text-red-500 ${classes.actions} font-medium cursor-pointer`}
 					>

@@ -1,10 +1,9 @@
 /** @format */
 
-import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { FileUpload } from "primereact/fileupload";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
 

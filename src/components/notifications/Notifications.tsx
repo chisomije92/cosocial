@@ -2,8 +2,6 @@
 
 import React from "react";
 import classes from "./notifications.module.css";
-import { Divider } from "primereact/divider";
-import { Card } from "primereact/card";
 import { Avatar } from "primereact/avatar";
 import { Button } from "primereact/button";
 
