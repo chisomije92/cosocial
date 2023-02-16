@@ -21,11 +21,34 @@ const EditProfile = () => {
 		);
 	};
 
+	type requestObjType = {
+		description?: string;
+		image?: string;
+		username?: string;
+		email?: string;
+	};
+
 	const onSubmit = (values: Profile) => {
+		const requestObj: requestObjType = {};
 		if (isValid) {
 			resetForm();
 		}
-		console.log(values);
+		if (values.desc !== "") {
+			requestObj["description"] = values.desc;
+		}
+
+		if (values.email !== "") {
+			requestObj["email"] = values.email;
+		}
+
+		if (values.username !== "") {
+			requestObj["username"] = values.username;
+		}
+
+		if (values.image !== "") {
+			requestObj["image"] = values.image;
+		}
+		console.log(requestObj);
 	};
 
 	const {
