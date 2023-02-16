@@ -9,6 +9,8 @@ import classes from "./authForm.module.css";
 import { LoginValues } from "../../models/authForm";
 import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
+import cosocialImg from "../../images/CO-1.png";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
 	const onSubmit = (values: LoginValues) => {
@@ -61,60 +63,75 @@ const LoginForm = () => {
 	};
 
 	return (
-		<Card
-			className={`${classes.authForm} Card lg:mx-auto my-4 surface-100 ml-8`}
-		>
-			<form
-				className="flex flex-column gap-2 w-26rem  p-3"
-				onSubmit={handleSubmit}
-				onBlur={handleBlur}
+		<div className="flex flex-column m-auto">
+			<Card
+				className={`${classes.authForm} Card lg:mx-auto my-4 surface-100 ml-8`}
 			>
-				<div className="font-bold text-3xl ">Log In</div>
-				<div>
-					<InputText
-						id="email"
-						name="email"
-						placeholder="Email"
-						value={values.email}
-						onChange={e => {
-							setFieldValue("email", e.target.value);
-						}}
-						className={`${classNames({
-							"p-invalid": isFormFieldInvalid("email"),
-						})} w-23rem`}
-					/>
-					{getFormErrorMessage("email")}
+				<div className={`${classes.brandName} flex gap-1 ml-8`}>
+					<div className={`${classes.logoContainer} border-1 border-circle`}>
+						<img
+							alt="logo"
+							src={cosocialImg}
+							height="40"
+							className=" text-red-400"
+						></img>
+					</div>
+					<div className={`mt-1 ${classes.brandName}`}>
+						<span className="text-3xl font-bold">COSOCIAL</span>
+					</div>
 				</div>
-				<div>
-					<Password
-						id="password"
-						name="password"
-						feedback={false}
-						value={values.password}
-						placeholder="Password"
-						onChange={e => {
-							setFieldValue("password", e.target.value);
-						}}
-						className={`${classNames({
-							"p-invalid": isFormFieldInvalid("password"),
-						})} w-23rem`}
-					/>
-					{getFormErrorMessage("password")}
-				</div>
+				<form
+					className="flex flex-column gap-2 w-26rem  p-3"
+					onSubmit={handleSubmit}
+					onBlur={handleBlur}
+				>
+					<div className="font-bold text-3xl ">Log In</div>
+					<div>
+						<InputText
+							id="email"
+							name="email"
+							placeholder="Email"
+							value={values.email}
+							onChange={e => {
+								setFieldValue("email", e.target.value);
+							}}
+							className={`${classNames({
+								"p-invalid": isFormFieldInvalid("email"),
+							})} w-23rem`}
+						/>
+						{getFormErrorMessage("email")}
+					</div>
+					<div>
+						<Password
+							id="password"
+							name="password"
+							feedback={false}
+							value={values.password}
+							placeholder="Password"
+							onChange={e => {
+								setFieldValue("password", e.target.value);
+							}}
+							className={`${classNames({
+								"p-invalid": isFormFieldInvalid("password"),
+							})} w-23rem`}
+						/>
+						{getFormErrorMessage("password")}
+					</div>
 
-				<Button
-					label="Sign up"
-					className="w-23rem font-bold"
-					disabled={isSubmitting || !isValid || !touched.email}
-				/>
-				<div className="flex gap-1">
-					<span>Not a registered user yet?</span>
-					<a href="#/" className="no-underline">
-						Sign up
-					</a>
-				</div>
-			</form>
-		</Card>
+					<Button
+						label="Login"
+						className="w-23rem font-bold"
+						disabled={isSubmitting || !isValid || !touched.email}
+					/>
+					<div className="flex gap-1">
+						<span>Not a registered user yet?</span>
+						<Link to="/sign-up" className="no-underline">
+							Sign up
+						</Link>
+					</div>
+				</form>
+			</Card>
+		</div>
 	);
 };
 

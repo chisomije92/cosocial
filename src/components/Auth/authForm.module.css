@@ -5,5 +5,20 @@
 
 .authForm [class*="p-button"]:disabled {
 cursor: not-allowed;
-/*display: none;*/
+}
+/*
+.brandName {
+  margin-left: 2rem;
+}*/
+
+.logoContainer{
+  height: 38px;
+  border: 0;
+  background-color: rgb(81, 79, 79);
+
+}
+
+.logoContainer img {
+object-fit: cover;
+margin: auto;
 }

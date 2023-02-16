@@ -11,13 +11,18 @@ import { Avatar } from "primereact/avatar";
 import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
+	const navigate = useNavigate();
+
+	const logOut = () => {
+		navigate("login");
+	};
 
 	const op = useRef<any>(null);
 
@@ -162,6 +167,7 @@ export default function NavBar() {
 					<hr className="h-1 min-w-full $ -ml-3 -mr-3" />
 					<div
 						className={`flex text-red-500 ${classes.actions} font-medium cursor-pointer`}
+						onClick={logOut}
 					>
 						<span className="-mt-1">Logout</span>
 						<code>&nbsp;</code>

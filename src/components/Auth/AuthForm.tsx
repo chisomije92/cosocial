@@ -10,6 +10,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { classNames } from "primereact/utils";
 import { RegisterValues } from "../../models/authForm";
+import cosocialImg from "../../images/CO-1.png";
+import { Link } from "react-router-dom";
 
 const AuthForm = () => {
 	const onSubmit = (values: RegisterValues) => {
@@ -72,79 +74,94 @@ const AuthForm = () => {
 	};
 
 	return (
-		<Card
-			className={`${classes.authForm} Card lg:mx-auto my-4 surface-100 ml-8`}
-		>
-			<form
-				className="flex flex-column gap-2 w-26rem p-3"
-				onSubmit={handleSubmit}
-				onBlur={handleBlur}
+		<div className="flex flex-column m-auto">
+			<Card
+				className={`${classes.authForm} Card lg:mx-auto my-4 surface-100 ml-8`}
 			>
-				<div className="font-bold text-3xl">Sign Up</div>
-				<div>
-					<InputText
-						id="username"
-						name="username"
-						placeholder="Username"
-						value={values.username}
-						onChange={e => {
-							setFieldValue("username", e.target.value);
-						}}
-						className={`${classNames({
-							"p-invalid": isFormFieldInvalid("username"),
-						})} w-23rem`}
-					/>
-					{getFormErrorMessage("username")}
+				<div className={`${classes.brandName} flex gap-1 ml-8`}>
+					<div className={`${classes.logoContainer} border-1 border-circle`}>
+						<img
+							alt="logo"
+							src={cosocialImg}
+							height="40"
+							className=" text-red-400"
+						></img>
+					</div>
+					<div className={`mt-1 ${classes.brandName}`}>
+						<span className="text-3xl font-bold">COSOCIAL</span>
+					</div>
 				</div>
-				<div>
-					<InputText
-						id="email"
-						name="email"
-						placeholder="Email"
-						value={values.email}
-						type="email"
-						onChange={e => {
-							setFieldValue("email", e.target.value);
-						}}
-						className={`${classNames({
-							"p-invalid": isFormFieldInvalid("email"),
-						})} w-23rem`}
-					/>
-					{getFormErrorMessage("email")}
-				</div>
+				<form
+					className="flex flex-column gap-2 w-26rem p-3"
+					onSubmit={handleSubmit}
+					onBlur={handleBlur}
+				>
+					<div className="font-bold text-3xl">Sign Up</div>
+					<div>
+						<InputText
+							id="username"
+							name="username"
+							placeholder="Username"
+							value={values.username}
+							onChange={e => {
+								setFieldValue("username", e.target.value);
+							}}
+							className={`${classNames({
+								"p-invalid": isFormFieldInvalid("username"),
+							})} w-23rem`}
+						/>
+						{getFormErrorMessage("username")}
+					</div>
+					<div>
+						<InputText
+							id="email"
+							name="email"
+							placeholder="Email"
+							value={values.email}
+							type="email"
+							onChange={e => {
+								setFieldValue("email", e.target.value);
+							}}
+							className={`${classNames({
+								"p-invalid": isFormFieldInvalid("email"),
+							})} w-23rem`}
+						/>
+						{getFormErrorMessage("email")}
+					</div>
 
-				<div>
-					<Password
-						id="password"
-						name="password"
-						feedback={false}
-						placeholder="Password"
-						value={values.password}
-						onChange={e => {
-							setFieldValue("password", e.target.value);
-						}}
-						className={`${classNames({
-							"p-invalid": isFormFieldInvalid("password"),
-						})} w-23rem`}
+					<div>
+						<Password
+							id="password"
+							name="password"
+							feedback={false}
+							placeholder="Password"
+							value={values.password}
+							onChange={e => {
+								setFieldValue("password", e.target.value);
+							}}
+							className={`${classNames({
+								"p-invalid": isFormFieldInvalid("password"),
+							})} w-23rem`}
+						/>
+						{getFormErrorMessage("password")}
+					</div>
+
+					<Button
+						label="Sign up"
+						disabled={isSubmitting || !isValid || !isAllFieldTouched()}
+						className="w-23rem font-bold my-2"
+						type="submit"
 					/>
-					{getFormErrorMessage("password")}
-				</div>
+					<div className="flex gap-1">
+						<span>Registered already?</span>
 
-				<Button
-					label="Sign up"
-					disabled={isSubmitting || !isValid || !isAllFieldTouched()}
-					className="w-23rem font-bold my-2"
-					type="submit"
-				/>
-				<div className="flex gap-1">
-					<span>Registered already?</span>
-
-					<a href="#/" className="no-underline">
-						Log in
-					</a>
-				</div>
-			</form>
-		</Card>
+						<Link to="/login" className="no-underline">
+							Log in
+						</Link>
+					</div>
+				</form>
+			</Card>
+		</div>
 	);
 };
 
