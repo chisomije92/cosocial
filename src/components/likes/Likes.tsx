@@ -3,6 +3,7 @@
 import { Avatar } from "primereact/avatar";
 
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 import classes from "./likes.module.css";
 
 const Likes: FC<{
@@ -17,9 +18,12 @@ const Likes: FC<{
 							<Avatar size="large" image={user.profilePicture} shape="circle" />
 							<p className="font-semibold">{user.username}</p>
 						</div>
-						<a href="/3" className="ml-auto mt-3 no-underline text-primary">
+						<Link
+							to="/profile"
+							className="ml-auto mt-3 no-underline text-primary"
+						>
 							View Profile
-						</a>
+						</Link>
 					</li>
 				))}
 			</ul>
