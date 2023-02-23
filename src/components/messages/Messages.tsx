@@ -27,7 +27,7 @@ const Messages = () => {
 									</div>
 								</div>
 
-								<div className=" border-1 border-100 p-1">
+								<div className=" border-1 border-100 p-1 surface-300 border-round">
 									<p className="ml-2">This is a new Message</p>{" "}
 								</div>
 							</div>

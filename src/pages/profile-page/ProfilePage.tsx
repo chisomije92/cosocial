@@ -13,7 +13,11 @@ const ProfilePage = () => {
 		<>
 			<SearchFriend />
 			<Profile />
-			{follows && <Follows follows={follows} />}
+			{follows ? (
+				<Follows follows={follows} />
+			) : (
+				<Follows follows={"followers"} />
+			)}
 		</>
 	);
 };
