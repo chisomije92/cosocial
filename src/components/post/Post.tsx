@@ -10,18 +10,23 @@ import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
 import { Link } from "react-router-dom";
 
-const Post: FC<{ post: any; showComments?: boolean }> = ({
-	post,
-	showComments,
-}) => {
+const Post: FC<{
+	post: any;
+	showComments?: boolean;
+}> = ({ post, showComments }) => {
 	const op = useRef<any>(null);
 	const [like, setLike] = useState(post.like);
+	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
 
 	const handleLike = () => {
 		setLike(isLiked ? like - 1 : like + 1);
 		setIsLiked(!isLiked);
+	};
+
+	const handleBookmark = () => {
+		setIsBookmarked(prev => !prev);
 	};
 
 	const likesDialogue = (
@@ -89,12 +94,17 @@ const Post: FC<{ post: any; showComments?: boolean }> = ({
 						<Avatar
 							icon="pi pi-thumbs-up-fill cursor-pointer"
 							shape="circle"
-							className="mr-1 ml-3 my-3 bg-blue-500 text-white border-circle"
+							className={`mr-1 ml-3 my-3 bg-blue-500 
+							${isLiked ? "text-color" : "text-white"}
+							border-circle`}
 							onClick={handleLike}
 						/>
 						<Avatar
 							icon="pi pi-bookmark-fill cursor-pointer"
-							className="bg-red-600 text-white border-circle"
+							className={`bg-red-600 ${
+								isBookmarked ? "text-color" : "text-white"
+							} border-circle`}
+							onClick={handleBookmark}
 						/>
 						<span
 							className="opacity-70 text-sm mx-1 cursor-pointer"
