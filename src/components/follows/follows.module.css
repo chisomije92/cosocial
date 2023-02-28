@@ -1,5 +1,5 @@
 .container{
-  flex: 3
+  
 }
 
 .container img {
@@ -7,11 +7,35 @@
 }
 
 .container [classes*="p-scrollpanel"], .container [classes*="p-scrollpanel-bar"]  {
-/*border-right: 10px solid var(--surface-ground);
-display: none;*/
 background-color: red !important;
+}
+
+.container ul {
+  height: 500px;
+    overflow-y: scroll;
 }
 
 .container [classes*="p-chip-image"]{
   width: 200px;
+}
+
+.container ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.container ul::-webkit-scrollbar-track {
+  background-color: rgb(234, 232, 232);
+
+}
+
+.container ul::-webkit-scrollbar-thumb {
+  background: grey;
+  margin-bottom: 10px;
+
+}
+
+.container li:hover {
+background-color: var(--surface-300);
+cursor: pointer;
 }

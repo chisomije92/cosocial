@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Card } from "primereact/card";
 import { Posts, Users } from "../../data/dummy-data";
 import Post from "../post/Post";
@@ -10,11 +10,23 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import EditProfile from "./EditProfile";
 import ChangePassword from "../change-password/ChangePassword";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
+import Follows from "../follows/Follows";
 
-export default function Profile() {
+const Profile: FC<{
+	follows: string | null;
+}> = ({ follows }) => {
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
+	const [showFollow, setShowFollow] = useState(false);
+
+	const navigate = useNavigate();
+
+	const navigateToFollows = (followQuery: string) => {
+		setShowFollow(true);
+		navigate(`/profile?cosocials=${followQuery}`);
+	};
 
 	const userId = Users[0].id;
 	const user = Users[0];
@@ -31,6 +43,21 @@ export default function Profile() {
 		</Dialog>
 	);
 
+	const showFollowers = (
+		<Dialog
+			header={`${
+				follows !== null
+					? follows[0]?.toUpperCase() + follows.slice(1)
+					: follows
+			}`}
+			visible={showFollow}
+			style={{ width: "50vw" }}
+			onHide={() => setShowFollow(false)}
+			className="w-27rem"
+		>
+			<Follows />
+		</Dialog>
+	);
 	return (
 		<div className={`${classes.profile} mx-3 mt-2`}>
 			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
@@ -54,21 +81,25 @@ export default function Profile() {
 						<span className="font-semibold opacity-90">{userPosts.length}</span>
 					</div>
 					<div>
-						<Link
-							to="/profile?cosocials=following"
-							className={`${classes.link} no-underline text-color`}
+						<span
+							className="flex gap-2 cursor-pointer"
+							onClick={() => navigateToFollows("following")}
 						>
-							Following: <span className="font-semibold opacity-90">44</span>
-						</Link>
+							<span>Following:</span>
+							<span className="font-semibold opacity-90">100</span>
+						</span>
 					</div>
 					<div>
-						<Link
-							to="/profile?cosocials=followers"
-							className={`${classes.link} no-underline text-color`}
+						<span
+							className="flex gap-2 cursor-pointer"
+							onClick={() => navigateToFollows("followers")}
 						>
-							Followers: <span className="font-semibold opacity-90">100</span>
-						</Link>
+							<span>Followers:</span>
+							<span className="font-semibold opacity-90">100</span>
+						</span>
 					</div>
+
+					{showFollow && showFollowers}
 				</div>
 				<div className="flex mt-1 ">
 					<Button
@@ -88,6 +119,18 @@ export default function Profile() {
 						}}
 					/>
 				</div>
+				<div className="flex flex-row justify-content-around ">
+					<Button
+						label="Follow"
+						className={`${classes.followBtn} p-2  border-50 text-center w-4`}
+						onClick={() => {}}
+					/>
+
+					<Link to="/messages/1" className="flex no-underline gap-1">
+						<ChatRoundedIcon />
+						<span>Chat</span>
+					</Link>
+				</div>
 			</Card>
 			{editProfileForm}
 
@@ -98,4 +141,6 @@ export default function Profile() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default Profile;

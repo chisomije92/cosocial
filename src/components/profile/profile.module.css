@@ -1,5 +1,6 @@
 .profile {
-  flex: 5.5
+  /*flex: 5.5*/
+  max-width: 100%
 }
 
 .imgContainer img {
@@ -31,6 +32,20 @@ border-radius: 50%;
 .profile button:hover, .profile button:focus{
   opacity: 0.8;
   text-decoration: underline;
+  transition: all 0.4s ease 0.2s;
+  -webkit-transition: all 0.4s ease 0.2s;
+  -moz-transition: all 0.4s ease 0.2s;
+  -ms-transition: all 0.4s ease 0.2s;
+  -o-transition: all 0.4s ease 0.2s;
+}
+
+.followBtn {
+  opacity: 1;
+}
+
+.profile .followBtn:hover, .profile .followBtn:focus {
+opacity: 0.8;
+  text-decoration: none ;
   transition: all 0.4s ease 0.2s;
   -webkit-transition: all 0.4s ease 0.2s;
   -moz-transition: all 0.4s ease 0.2s;

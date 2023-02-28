@@ -1,8 +1,7 @@
 /** @format */
 
 .container {
-  min-width: max(100vw, 610px);
- /*min-width: 100vw*/
+  min-width: max(100vw, 640px);
  flex: 12
 }
 
