@@ -11,7 +11,7 @@ const Feeds: FC<{
 }> = ({ posts, isExploring }) => {
 	return (
 		<div className={`${classes.feeds}`}>
-			<div className="p-4">
+			<div className="p-4 flex flex-column">
 				{!isExploring && <Share />}
 				{posts.map((p: any) => (
 					<Post post={p} key={p.id} showComments={true} />

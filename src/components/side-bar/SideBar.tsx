@@ -2,64 +2,72 @@
 
 import React from "react";
 import classes from "./side-bar.module.css";
-import RssFeedIcon from "@mui/icons-material/RssFeed";
+
 import ChatIcon from "@mui/icons-material/Chat";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import GroupsIcon from "@mui/icons-material/Groups";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import HelpIcon from "@mui/icons-material/Help";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import EventIcon from "@mui/icons-material/Event";
-import SchoolIcon from "@mui/icons-material/School";
-import { Button } from "primereact/button";
+
+import PersonIcon from "@mui/icons-material/Person";
+import ExploreIcon from "@mui/icons-material/Explore";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import Mutuals from "../mutuals/Mutuals";
 import { Users } from "../../data/dummy-data";
+import { NavLink } from "react-router-dom";
 
 export default function SideBar() {
+	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
+		return `text-color no-underline text-lg ${isActive ? "opacity-70" : ""}`;
+	};
 	return (
-		<div className={`${classes.sideBar} h-screen overflow-y-scroll`}>
+		<div className={`${classes.sideBar} h-screen `}>
 			<div className="p-3 ">
 				<ul className="list-none p-0 m-0">
-					<li className="mb-4">
-						<RssFeedIcon className="-mb-1" />
-						<span className="ml-3">Feed</span>
+					<li className="mb-4 flex">
+						<NavLink to="/explore" className={navLinkCssClasses}>
+							<ExploreIcon className="-mb-1" />
+							<span className="ml-3">Explore</span>
+						</NavLink>
 					</li>
-					<li className="mb-4">
-						<ChatIcon className="-mb-1" />
-						<span className="ml-1 sm:ml-3">Chats</span>
+					<li className="mb-4 flex">
+						<NavLink to="/messages" className={navLinkCssClasses}>
+							<ChatIcon className="-mb-1" />
+							<span className="ml-3">Chats</span>
+						</NavLink>
 					</li>
-					<li className="mb-4">
+					<li className="mb-4 flex">
+						<NavLink to="/profile" className={navLinkCssClasses}>
+							<PersonIcon className="-mb-1" />
+							<span className="ml-3">Profile</span>
+						</NavLink>
+					</li>
+					<li className="mb-4 flex">
+						<NavLink to="/bookmarks" className={navLinkCssClasses}>
+							<BookmarkIcon className="-mb-1" />
+							<span className="ml-3">Bookmarks</span>
+						</NavLink>
+					</li>
+					<li className="mb-4 flex">
+						<NavLink to="/notifications" className={navLinkCssClasses}>
+							<NotificationsNoneIcon className="-mb-1" />
+							<span className="ml-3">Notifications</span>
+						</NavLink>
+					</li>
+					<li className="mb-4 flex">
 						<GroupsIcon className="-mb-1" />
-						<span className="ml-1 sm:ml-3">Groups</span>
+						<span className="ml-3">Groups</span>
 					</li>
-					<li className="mb-4">
+
+					<li className="mb-4 flex">
 						<PlayCircleFilledIcon className="-mb-1" />
-						<span className="ml-1 sm:ml-3">Video</span>
+						<span className="ml-3">Video</span>
 					</li>
-					<li className="mb-4">
-						<BookmarkIcon className="-mb-1" />
-						<span className="ml-0 sm:ml-3">Bookmarks</span>
-					</li>
-					<li className="mb-4">
-						<EventIcon className="-mb-1" />
-						<span className="ml-0 sm:ml-3">Event</span>
-					</li>
-					<li className="mb-4">
-						<WorkOutlineIcon className="-mb-1" />
-						<span className="ml-1 sm:ml-3">Jobs</span>
-					</li>
-					<li className="mb-4">
-						<SchoolIcon className="-mb-1" />
-						<span className="ml-1 sm:ml-3">Courses</span>
-					</li>
-					<li className="mb-4">
+					<li className="mb-4 flex">
 						<HelpIcon className="-mb-1" />
-						<span className="ml-1 sm:ml-3">Questions</span>
+						<span className="ml-3 sm:ml-3 hidden md:block">Questions</span>
 					</li>
 				</ul>
-				<Button className="surface-300 text-color font-semibold border-0 border-round-sm px-5 py-2">
-					Show More
-				</Button>
 				<hr className="my-2 mx-0" />
 				<ul className={`list-none ${classes.friendList} `}>
 					{Users.slice(2, 8).map(user => (

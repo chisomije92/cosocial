@@ -43,7 +43,7 @@ const Post: FC<{
 	return (
 		<>
 			<div
-				className={`card mt-3 ${classes.container} shadow-1 border-round-sm`}
+				className={`card mt-3 ${classes.container} shadow-1 border-round-sm w-12`}
 			>
 				<div>
 					<div className="flex">
@@ -90,28 +90,34 @@ const Post: FC<{
 					/>
 				</div>
 				<div className="flex justify-content-between">
-					<div>
-						<Avatar
-							icon="pi pi-thumbs-up-fill cursor-pointer"
-							shape="circle"
-							className={`mr-1 ml-3 my-3 bg-blue-500 
+					<div className="flex mt-2 md:flex-row">
+						<div>
+							<Avatar
+								icon="pi pi-thumbs-up-fill cursor-pointer"
+								shape="circle"
+								className={`mr-1 ml-3 bg-blue-500 
 							${isLiked ? "text-color" : "text-white"}
 							border-circle`}
-							onClick={handleLike}
-						/>
-						<Avatar
-							icon="pi pi-bookmark-fill cursor-pointer"
-							className={`bg-red-600 ${
-								isBookmarked ? "text-color" : "text-white"
-							} border-circle`}
-							onClick={handleBookmark}
-						/>
-						<span
-							className="opacity-70 text-sm mx-1 cursor-pointer"
-							onClick={() => setVisible(true)}
-						>
-							{like} cosocials liked this
-						</span>
+								onClick={handleLike}
+							/>
+						</div>
+						<div>
+							<Avatar
+								icon="pi pi-bookmark-fill cursor-pointer"
+								className={`bg-red-600 ${
+									isBookmarked ? "text-color" : "text-white"
+								} border-circle`}
+								onClick={handleBookmark}
+							/>
+						</div>
+						<div>
+							<span
+								className="opacity-70 text-sm mx-1 cursor-pointer"
+								onClick={() => setVisible(true)}
+							>
+								{like} likes
+							</span>
+						</div>
 					</div>
 					<div className="flex justify-content-even opacity-60">
 						{showComments ? (

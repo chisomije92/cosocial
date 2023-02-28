@@ -1,10 +1,25 @@
 /** @format */
 
 .container {
-  min-width: max(100vw, 640px);
+  min-width: max(100vw, 610px);
  /*min-width: 100vw*/
+ flex: 12
 }
 
+/*@media only screen and (max-width: 420px) {
+  .container {
+    min-width: 460px
+  }
+
+}*/
+
+
+/*@media only screen and (max-width: 420px) {
+  .container {
+    min-width: 460px
+  }
+
+}*/
 
 .inputSearch [class*="p-inputtext"] {
   width: 35vw;
@@ -30,8 +45,6 @@
 }
 
 }
-
-
 
 .home{
   color: red;

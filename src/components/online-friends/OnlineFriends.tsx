@@ -8,7 +8,7 @@ const OnlineFriends: FC<{
 	imageSrc: string;
 }> = ({ name, imageSrc }) => {
 	return (
-		<li className="-ml-5 flex  mb-3">
+		<li className="-ml-5 flex mb-3">
 			<Chip
 				label={name}
 				image={imageSrc}

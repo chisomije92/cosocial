@@ -14,6 +14,7 @@
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+  margin-right: 10px
 }
 
 .friendbox img {

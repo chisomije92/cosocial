@@ -4,13 +4,12 @@ import React from "react";
 import classes from "./notifications.module.css";
 import { Avatar } from "primereact/avatar";
 import { Button } from "primereact/button";
+import { Link } from "react-router-dom";
 
 const Notifications = () => {
 	return (
-		<div
-			className={`${classes.notifications} md:ml-auto ml-8  flex flex-column`}
-		>
-			<ul className="list-none ">
+		<div className={`${classes.notifications} mx-auto  flex flex-column w-6`}>
+			<ul className="list-none flex flex-column">
 				<li className="flex justify-content-between">
 					<div className="text-2xl p-4 font-bold">Notifications</div>
 					<div className="mt-4 mr-3">
@@ -26,9 +25,9 @@ const Notifications = () => {
 						<div>
 							<div className="font-semibold">Chisom</div>
 							<div className="mt-1">
-								<a href="#/" className="no-underline text-primary">
+								<Link to="/post/1" className="no-underline text-primary">
 									Liked your post
-								</a>{" "}
+								</Link>{" "}
 							</div>
 						</div>
 					</div>
@@ -42,9 +41,9 @@ const Notifications = () => {
 						<div>
 							<div className="font-semibold">Chisom</div>
 							<div className="mt-1">
-								<a href="#/" className="no-underline text-primary">
+								<Link to="/post/1" className="no-underline text-primary">
 									Liked your post
-								</a>{" "}
+								</Link>{" "}
 							</div>
 						</div>
 					</div>
@@ -58,9 +57,9 @@ const Notifications = () => {
 						<div>
 							<div className="font-semibold">Chisom</div>
 							<div className="mt-1">
-								<a href="#/" className="no-underline text-primary">
+								<Link to="/profile" className="no-underline text-primary">
 									followed you
-								</a>{" "}
+								</Link>{" "}
 							</div>
 						</div>
 					</div>

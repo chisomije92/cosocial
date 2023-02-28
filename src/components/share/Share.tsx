@@ -1,11 +1,10 @@
 /** @format */
 
-import { InputText } from "primereact/inputtext";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import classes from "./share.module.css";
 import { Button } from "primereact/button";
 import LabelIcon from "@mui/icons-material/Label";
-import RoomIcon from "@mui/icons-material/Room";
+
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -13,7 +12,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 export default function Share() {
 	return (
 		<div
-			className={`card ${classes.container}  h-13rem xl:h-12rem w-full border-round-md shadow-4 min-w-min`}
+			className={`card ${classes.container}  h-13rem xl:h-12rem w-full border-round-md shadow-4 `}
 		>
 			<div className="flex gap-0 -ml-3">
 				<Avatar
@@ -34,22 +33,18 @@ export default function Share() {
 			<div
 				className={`${classes.options} ml-4 mt-2  flex flex-column xl:flex-row flex-wrap gap-5 sm:gap-3`}
 			>
-				<div className="flex">
-					<div className="mr-3 flex">
+				<div className="flex gap-1">
+					<div className=" flex">
 						<PermMediaIcon className="mx-1 text-red-400" />
-						<span>Media</span>
+						<span className="hidden md:inline">Media</span>
 					</div>
-					<div className="md:mr-5 mr-0 flex">
+					<div className=" flex">
 						<EmojiEmotionsIcon className="mx-1 text-yellow-500" />
-						<span>Feelings</span>
+						<span className="hidden md:inline">Feelings</span>
 					</div>
-					<div className=" md:mr-5 mr-0 flex">
+					<div className="  flex">
 						<LabelIcon className="mx-1 text-blue-500" />
-						<span>Tag</span>
-					</div>
-					<div className="md:mr-7 mr-3 flex">
-						<RoomIcon className="mx-1 text-green-600" />
-						<span>Location</span>
+						<span className="hidden md:inline">Tag</span>
 					</div>
 				</div>
 				<Button label="Post" className="w-min p-button-success ml-0 py-1" />

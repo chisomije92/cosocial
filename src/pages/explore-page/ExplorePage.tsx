@@ -22,7 +22,7 @@ const ExplorePage = () => {
 	return (
 		<>
 			<SideBar />
-			<Feeds posts={shuffledPosts} isExploring />
+			<Feeds posts={shuffledPosts} />
 			<RightBar />
 		</>
 	);

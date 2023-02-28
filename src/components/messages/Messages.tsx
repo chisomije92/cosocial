@@ -1,38 +1,40 @@
 /** @format */
 
 import { Avatar } from "primereact/avatar";
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
+
 import React from "react";
 import { Users } from "../../data/dummy-data";
+
 import classes from "./messages.module.css";
 
 const Messages = () => {
-	const chatUsers = Users.slice(1, 4);
+	//const chatUsers = Users.slice(1, 4);
+	const chatUsers = Users.slice();
 	return (
-		<div className={`${classes.container} flex flex-column mt-2 ml-1 h-1rem`}>
-			<ul className="list-none">
+		<div className={`${classes.container} flex justify-content-center`}>
+			<ul className="list-none w-7 flex flex-column">
+				<li>
+					<p className="ml-3 text-3xl font-bold">Messages</p>
+				</li>
 				{chatUsers.map(u => (
-					<li className="my-2" key={u.id}>
-						<Card className="mr-auto  w-11">
-							<div className="flex flex-column">
-								<div className="flex gap-2">
-									<Avatar
-										image="/assets/person/1.jpeg"
-										size="large"
-										shape="circle"
-									/>
-									<div>
-										<p className="">Chisom Ijeomah</p>
-									</div>
-								</div>
-
-								<div className=" border-1 border-100 p-1 surface-300 border-round">
-									<p className="ml-2">This is a new Message</p>{" "}
+					<li className="my-2 flex w-12" key={u.id}>
+						<div className="flex flex-column">
+							<div className="flex gap-1">
+								<Avatar
+									image="/assets/person/1.jpeg"
+									size="xlarge"
+									shape="circle"
+									className="mt-3"
+								/>
+								<div className="mt-1">
+									<p className="font-semibold ">Chisom Ijeomah</p>
+									<p className="-mt-2 font-light text-500">
+										This is a new Message
+									</p>
 								</div>
 							</div>
-							<Button label="Reply" className="mt-2 p-button-success py-2" />
-						</Card>
+						</div>
+						<div className="ml-auto mt-3 mr-3 opacity-70">20 seconds ago</div>
 					</li>
 				))}
 			</ul>

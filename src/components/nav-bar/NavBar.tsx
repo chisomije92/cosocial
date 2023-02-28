@@ -179,11 +179,11 @@ export default function NavBar() {
 	);
 
 	return (
-		<nav className={`${classes.container} `}>
+		<nav className={`${classes.container}`}>
 			<Menubar
 				className={`${classes.menuBar} ${
 					!isThemeDark ? "bg-blue-900" : ""
-				} text-white h-5rem w-12`}
+				} text-white h-5rem min-w-min`}
 				start={start}
 				model={items}
 				end={end}

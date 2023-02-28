@@ -26,6 +26,7 @@ import SinglePostPage, {
 import ExplorePage, {
 	loader as explorePostsLoader,
 } from "./pages/explore-page/ExplorePage";
+import ChatPage from "./pages/messages-page/chat-page/ChatPage";
 
 function App() {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -46,6 +47,8 @@ function App() {
 				<Route path="/profile" element={<ProfilePage />} />
 				<Route path="/notifications" element={<NotificationsPage />} />
 				<Route path="/messages" element={<MessagesPage />} />
+
+				<Route path="/messages/:id" element={<ChatPage />} />
 				<Route path="/bookmarks" element={<BookmarkPage />} />
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />

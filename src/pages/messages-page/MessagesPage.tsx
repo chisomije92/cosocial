@@ -1,14 +1,16 @@
 /** @format */
 
 import React from "react";
-import ChatBox from "../../components/chatbox/ChatBox";
+
 import Messages from "../../components/messages/Messages";
+
+import SideBar from "../../components/side-bar/SideBar";
 
 const MessagesPage = () => {
 	return (
 		<>
+			<SideBar />
 			<Messages />
-			<ChatBox />
 		</>
 	);
 };

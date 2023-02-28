@@ -1,7 +1,49 @@
 .container{
-  flex: 5.5
+  flex: 4;
+  /*max-width: 40%;*/
+  /*min-width: 200px;*/
+  /*min-width: min-content;*/
+  /*max-width: 300px;*/
+  /*height: 700px;
+    overflow-y: scroll;*/
+  
+  
+}
+
+.container ul {
+    min-width: min-content;
+  height: 700px;
+  overflow-y: scroll;
 }
 
 .container img {
   object-fit: cover;
+}
+
+.container li:nth-of-type(1n+2):hover {
+  cursor: pointer;
+  background-color: var(--surface-300);
+   padding: 0 12px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+}
+
+
+.container ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.container ul::-webkit-scrollbar-track {
+  background-color: rgb(234, 232, 232);
+
+}
+
+.container ul::-webkit-scrollbar-thumb {
+  background: grey;
+  margin-bottom: 10px;
+
 }

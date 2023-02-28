@@ -1,11 +1,32 @@
 .container {
-  flex: 4;
+  min-width: min-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  background-color: var(--surface-50);
+  height: 520px;
+  overflow-y: scroll;
+
 
 }
 
+@media only screen and (max-width: 460px) {
+  .container {
+  margin-left: 15px;
+    margin-right: 0;
+  }
+}
+
+.header{
+  border-bottom: 1px solid var(--surface-500);
+  height: 40px
+}
+
+
+
+
 .container [class*="p-panel"] {
   background-color: var(--surface-500)
-  /*background: red;*/
 }
 
 .container [class*="p-panel-content"]{
@@ -15,4 +36,20 @@
 .container [class*="p-panel-header"] {
  font-size: larger;
  font-weight: 900;
+}
+
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.container::-webkit-scrollbar-track {
+  background-color: rgb(234, 232, 232);
+
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: grey;
+  margin-bottom: 10px;
+
 }

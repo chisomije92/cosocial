@@ -9,9 +9,9 @@ import classes from "./right-bar.module.css";
 export default function RightBar() {
 	return (
 		<div
-			className={`${classes.rightBar} flex flex-column card shadow-1 border-round-sm mt-3 mr-2 `}
+			className={`${classes.rightBar} flex flex-column card shadow-1 border-round-sm mt-3 mr-0 md:mr-2 `}
 		>
-			<div className="flex my-3">
+			<div className="flex my-3 text-sm">
 				<Avatar className="mr-3 ml-3 bg-primary-reverse" size="large">
 					<Image src="/assets/gift.png" />
 				</Avatar>
@@ -29,7 +29,7 @@ export default function RightBar() {
 					alt=""
 				/>
 			</div>
-			<div className="ml-3">
+			<div className="ml-3 text-sm">
 				<h3>Cosocials Online:</h3>
 				<ul>
 					{Users.map(user => (
