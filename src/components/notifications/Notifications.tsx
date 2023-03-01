@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 const Notifications = () => {
 	return (
 		<div className={`${classes.notifications} mx-auto  flex flex-column w-6`}>
-			<ul className="list-none flex flex-column">
-				<li className="flex justify-content-between">
+			<ul className="list-none flex flex-column ">
+				<li className="flex justify-content-between surface-200">
 					<div className="text-2xl p-4 font-bold">Notifications</div>
 					<div className="mt-4 mr-3">
 						<Button
@@ -19,7 +19,14 @@ const Notifications = () => {
 						/>
 					</div>
 				</li>
-				<li className="flex">
+				<li className="flex surface-400">
+					<div className="flex my-auto ml-2">
+						<i
+							className={`pi pi-circle-fill  text-primary absolute -ml-2 -mt-1`}
+							style={{ fontSize: "0.5rem", cursor: "pointer" }}
+						></i>
+					</div>
+
 					<div className="flex gap-2 p-2">
 						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
 						<div>
@@ -35,7 +42,13 @@ const Notifications = () => {
 						<div className="opacity-70">5 minutes ago</div>
 					</div>
 				</li>
-				<li className="flex">
+				<li className="flex surface-100">
+					<div className="flex my-auto ml-2">
+						<i
+							className={`pi pi-circle-fill  text-color-secondary absolute -ml-2 -mt-1`}
+							style={{ fontSize: "0.5rem", cursor: "pointer" }}
+						></i>
+					</div>
 					<div className="flex gap-2 p-2">
 						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
 						<div>
@@ -51,7 +64,13 @@ const Notifications = () => {
 						<div className="opacity-70">5 minutes ago</div>
 					</div>
 				</li>
-				<li className="flex">
+				<li className="flex surface-100">
+					<div className="flex my-auto ml-2">
+						<i
+							className={`pi pi-circle-fill  text-color-secondary absolute -ml-2 -mt-1`}
+							style={{ fontSize: "0.5rem", cursor: "pointer" }}
+						></i>
+					</div>
 					<div className="flex gap-2 p-2">
 						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
 						<div>

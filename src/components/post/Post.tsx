@@ -9,6 +9,7 @@ import { Image } from "primereact/image";
 import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
 import { Link } from "react-router-dom";
+import CommentIcon from "@mui/icons-material/Comment";
 
 const Post: FC<{
 	post: any;
@@ -43,7 +44,7 @@ const Post: FC<{
 	return (
 		<>
 			<div
-				className={`card mt-3 ${classes.container} shadow-1 border-round-sm w-12`}
+				className={`card mt-3 ${classes.container} shadow-1 border-round-sm w-12 mx-auto`}
 			>
 				<div>
 					<div className="flex">
@@ -89,13 +90,13 @@ const Post: FC<{
 						preview
 					/>
 				</div>
-				<div className="flex justify-content-between">
+				<div className="flex justify-content-between gap-2 mb-3">
 					<div className="flex mt-2 md:flex-row">
 						<div>
 							<Avatar
 								icon="pi pi-thumbs-up-fill cursor-pointer"
 								shape="circle"
-								className={`mr-1 ml-3 bg-blue-500 
+								className={`mr-1 ml-3 mb-2 bg-blue-500 
 							${isLiked ? "text-color" : "text-white"}
 							border-circle`}
 								onClick={handleLike}
@@ -119,13 +120,17 @@ const Post: FC<{
 							</span>
 						</div>
 					</div>
-					<div className="flex justify-content-even opacity-60">
+					<div className="flex justify-content-even opacity-60 mr-1">
 						{showComments ? (
 							<Link to={`/post/${post.id}`} className="no-underline text-900">
 								<p className=" mt-4 border-200">{post.comment} comments</p>
 							</Link>
 						) : (
-							<p className=" mt-4 border-200">{post.comment} comments</p>
+							<span className="flex gap-1">
+								<span>{post.comment}</span>
+								<span className="hidden md:block">comments</span>
+								<CommentIcon className="inline-block md:hidden" />
+							</span>
 						)}
 
 						<code>&nbsp;</code>

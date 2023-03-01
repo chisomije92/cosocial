@@ -2,6 +2,7 @@
 
 import React, { useState, FC } from "react";
 import { Card } from "primereact/card";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Posts, Users } from "../../data/dummy-data";
 import Post from "../post/Post";
 import classes from "./profile.module.css";
@@ -20,6 +21,7 @@ const Profile: FC<{
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
 	const [showFollow, setShowFollow] = useState(false);
+	const [isFollowing, setIsFollowing] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -58,6 +60,25 @@ const Profile: FC<{
 			<Follows />
 		</Dialog>
 	);
+
+	const confirm = () => {
+		confirmDialog({
+			message: "Are you sure you want to stop following this user?",
+			header: "Confirmation",
+			icon: "pi pi-exclamation-triangle",
+			accept: () => setIsFollowing(false),
+			reject: () => setIsFollowing(true),
+		});
+	};
+
+	const setFollowStatus = () => {
+		if (isFollowing) {
+			confirm();
+			return;
+		}
+		setIsFollowing(prev => !prev);
+	};
+
 	return (
 		<div className={`${classes.profile} mx-3 mt-2`}>
 			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
@@ -119,17 +140,17 @@ const Profile: FC<{
 						}}
 					/>
 				</div>
-				<div className="flex flex-row justify-content-around ">
-					<Button
-						label="Follow"
-						className={`${classes.followBtn} p-2  border-50 text-center w-4`}
-						onClick={() => {}}
-					/>
-
+				<div className="flex flex-column align-items-center gap-1">
 					<Link to="/messages/1" className="flex no-underline gap-1">
 						<ChatRoundedIcon />
 						<span>Chat</span>
 					</Link>
+					<ConfirmDialog />
+					<Button
+						label={`${isFollowing ? "Following" : "Follow"}`}
+						className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold  bg-bluegray-900 `}
+						onClick={setFollowStatus}
+					/>
 				</div>
 			</Card>
 			{editProfileForm}

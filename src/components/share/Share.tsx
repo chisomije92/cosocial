@@ -47,7 +47,10 @@ export default function Share() {
 						<span className="hidden md:inline">Tag</span>
 					</div>
 				</div>
-				<Button label="Post" className="w-min p-button-success ml-0 py-1" />
+				<Button
+					label="Post"
+					className="w-min p-button-success ml-0 py-1 ml-auto mr-3"
+				/>
 			</div>
 		</div>
 	);
