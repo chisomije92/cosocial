@@ -10,6 +10,7 @@ import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
 import { Link } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
+import ReactTimeAgo from "react-time-ago";
 
 const Post: FC<{
 	post: any;
@@ -44,20 +45,23 @@ const Post: FC<{
 	return (
 		<>
 			<div
-				className={`card mt-3 ${classes.container} shadow-1 border-round-sm w-12 mx-auto`}
+				className={`card mt-3 ${classes.container} shadow-1 border-round-sm w-12 mx-auto flex flex-column`}
 			>
 				<div>
-					<div className="flex">
+					<div className="flex justify-content-around gap-2 ml-3 mt-2 -mb-2">
 						<Avatar
 							image={Users.filter(u => u.id === post?.userId)[0].profilePicture}
 							size="normal"
 							shape="circle"
-							className="mx-2 my-2"
+							className=""
 						/>
-						<span className="mx-1 my-2 font-semibold">
+						<span className=" font-semibold">
 							{Users.filter(u => u.id === post?.userId)[0].username}
 						</span>
-						<span className="mx-1 my-2 font-light text-sm">{post.date}</span>
+						{/*<span className=" opacity-70 text-sm">{post.date}</span>*/}
+						<span className=" opacity-70 text-sm">
+							<ReactTimeAgo date={new Date()} locale="en-US" />
+						</span>
 						<i
 							className="pi pi-ellipsis-v ml-auto mr-1 my-3  cursor-pointer"
 							onClick={e => op.current.toggle(e)}
@@ -122,8 +126,13 @@ const Post: FC<{
 					</div>
 					<div className="flex justify-content-even opacity-60 mr-1">
 						{showComments ? (
-							<Link to={`/post/${post.id}`} className="no-underline text-900">
-								<p className=" mt-4 border-200">{post.comment} comments</p>
+							<Link
+								to={`/post/${post.id}`}
+								className="no-underline text-900 flex gap-1 mt-2"
+							>
+								<span>{post.comment}</span>
+								<span className="hidden md:block">comments</span>
+								<CommentIcon className="inline-block md:hidden" />
 							</Link>
 						) : (
 							<span className="flex gap-1">
