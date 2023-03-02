@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useLayoutEffect, useRef } from "react";
+import React, { FC, useLayoutEffect, useRef } from "react";
 import useLocalStorage from "use-local-storage";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
@@ -11,17 +11,23 @@ import { Avatar } from "primereact/avatar";
 import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, Navigate } from "react-router-dom";
 
-export default function NavBar() {
+const NavBar: FC<{
+	onSignOut: () => void;
+}> = ({ onSignOut }) => {
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
+
 	const navigate = useNavigate();
 
 	const logOut = () => {
-		navigate("login");
+		//setIsSignedIn(false);
+		onSignOut();
+		navigate("/login");
+		//signOut();
 	};
 
 	const op = useRef<any>(null);
@@ -60,16 +66,16 @@ export default function NavBar() {
 	};
 
 	const items = [
-		{
-			template: (
-				<div className={`${classes.inputSearch}`}>
-					<span className="p-input-icon-left">
-						<i className="pi pi-search" />
-						<InputText placeholder="Search" />
-					</span>
-				</div>
-			),
-		},
+		//{
+		//	template: (
+		//		<div className={`${classes.inputSearch}`}>
+		//			<span className="p-input-icon-left">
+		//				<i className="pi pi-search" />
+		//				<InputText placeholder="Search" />
+		//			</span>
+		//		</div>
+		//	),
+		//},
 		{
 			template: (
 				<>
@@ -88,6 +94,20 @@ export default function NavBar() {
 				</>
 			),
 		},
+		{
+			template: (
+				<>
+					<div className={`mx-3 text-xl ${classes.templateDiv}`}>Pro</div>
+				</>
+			),
+		},
+		//{
+		//	template: (
+		//		<>
+		//			<div className={`mx-3 text-xl ${classes.templateDiv}`}>For you</div>
+		//		</>
+		//	),
+		//},
 	];
 
 	const start = (
@@ -98,7 +118,7 @@ export default function NavBar() {
 						alt="logo"
 						src={cosocialImg}
 						height="40"
-						className="hidden sm:block"
+						//className="hidden sm:block"
 					></img>
 				</div>
 				<div className={`-mt-2 ${classes.brandName}`}>
@@ -190,4 +210,6 @@ export default function NavBar() {
 			/>
 		</nav>
 	);
-}
+};
+
+export default NavBar;

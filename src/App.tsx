@@ -4,8 +4,9 @@ import {
 	createRoutesFromElements,
 	Route,
 	RouterProvider,
+	useNavigate,
 } from "react-router-dom";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
@@ -27,40 +28,147 @@ import ExplorePage, {
 	loader as explorePostsLoader,
 } from "./pages/explore-page/ExplorePage";
 import ChatPage from "./pages/messages-page/chat-page/ChatPage";
+import ProtectedRoute from "./components/protected-route/ProtectedRoute";
+import useLocalStorage from "use-local-storage";
 
 function App() {
 	const [loading, setLoading] = useState<boolean>(true);
+	//const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+	const [isSignedIn, setIsSignedIn] = useLocalStorage<boolean>(
+		"isSignedIn",
+		false
+	);
+	//const navigate = useNavigate();
+	//useLayoutEffect(() => {
+	//	const timer = setTimeout(() => {
+	//		setLoading(false);
+	//	}, 200);
+	//	return () => {
+	//		clearTimeout(timer);
+	//	};
+	//}, []);
+	const signedIn = localStorage.getItem("isSignedIn");
+	//useEffect(() => {
+	//	//if (signedIn) {
+	//	//	setIsSignedIn(!!signedIn);
+	//	//	console.log(signedIn);
+	//	//}
+	//	//setIsSignedIn(true)
+	//	//if(isSignedIn){
 
-	useLayoutEffect(() => {
-		const timer = setTimeout(() => {
-			setLoading(false);
-		}, 200);
-		return () => {
-			clearTimeout(timer);
-		};
-	}, []);
-
+	//	//}
+	//	setTimeout(() => {
+	//		setIsSignedIn(true);
+	//	}, 8000);
+	//}, []);
 	const router = createBrowserRouter(
 		createRoutesFromElements(
-			<Route path="/" errorElement={<ErrorPage />} element={<RootLayout />}>
-				<Route index element={<Home />} loader={homePostsLoader} />
-				<Route path="/profile" element={<ProfilePage />} />
-				<Route path="/profile/:id" element={<ProfilePage />} />
-				<Route path="/notifications" element={<NotificationsPage />} />
-				<Route path="/messages" element={<MessagesPage />} />
+			//<Route
+			//	path="/"
+			//	errorElement={<ErrorPage />}
+			//	element={
+			//		<ProtectedRoute isSignedIn={true}>
+			//			<RootLayout />
+			//		</ProtectedRoute>
+			//	}
+			//>
+			<Route
+				path="/"
+				errorElement={<ErrorPage onSignOut={() => setIsSignedIn(false)} />}
+				element={<RootLayout onSignOut={() => setIsSignedIn(false)} />}
+			>
+				<Route
+					index
+					element={
+						<ProtectedRoute isSignedIn={isSignedIn}>
+							<Home />
+						</ProtectedRoute>
+					}
+					loader={homePostsLoader}
+				/>
+				<Route
+					path="/profile"
+					element={
+						<ProtectedRoute isSignedIn={isSignedIn}>
+							<ProfilePage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/profile/:id"
+					element={
+						<ProtectedRoute isSignedIn={isSignedIn}>
+							<ProfilePage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/notifications"
+					element={
+						<ProtectedRoute isSignedIn={isSignedIn}>
+							<NotificationsPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/messages"
+					element={
+						<ProtectedRoute isSignedIn={isSignedIn}>
+							<MessagesPage />
+						</ProtectedRoute>
+					}
+				/>
 
-				<Route path="/messages/:id" element={<ChatPage />} />
-				<Route path="/bookmarks" element={<BookmarkPage />} />
-				<Route path="/sign-up" element={<SignUpPage />} />
-				<Route path="/login" element={<LoginPage />} />
+				<Route
+					path="/messages/:id"
+					element={
+						<ProtectedRoute>
+							<ChatPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/bookmarks"
+					element={
+						<ProtectedRoute isSignedIn={isSignedIn}>
+							<BookmarkPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/sign-up"
+					element={<SignUpPage onSignUp={() => setIsSignedIn(true)} />}
+				/>
+				<Route
+					path="/login"
+					element={
+						<>
+							{/*<button onClick={() => setIsSignedIn(prev => !prev)}>Change</button>*/}
+							<LoginPage
+								onLogin={fn => {
+									setIsSignedIn(true);
+									fn("/");
+								}}
+							/>
+						</>
+					}
+				/>
 				<Route
 					path="/post/:id"
-					element={<SinglePostPage />}
+					element={
+						<ProtectedRoute>
+							<SinglePostPage />
+						</ProtectedRoute>
+					}
 					loader={singlePostLoader}
 				/>
 				<Route
 					path="/explore"
-					element={<ExplorePage />}
+					element={
+						<ProtectedRoute isSignedIn={isSignedIn}>
+							<ExplorePage />
+						</ProtectedRoute>
+					}
 					loader={explorePostsLoader}
 				/>
 			</Route>

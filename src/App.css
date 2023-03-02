@@ -10,9 +10,9 @@
 		padding: 10px;
 	}
 
-	.p-menubar.p-menubar-mobile-active .p-menubar-root-list li:nth-of-type(1) {
+	/*.p-menubar.p-menubar-mobile-active .p-menubar-root-list li:nth-of-type(1) {
 		text-align: center;
-	}
+	}*/
 
 	.p-menubar .p-menubar-button {
 		color: white !important;

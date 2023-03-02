@@ -3,10 +3,10 @@
 import React from "react";
 import AuthForm from "../../components/Auth/AuthForm";
 
-const SignUpPage = () => {
+const SignUpPage: React.FC<{ onSignUp: () => void }> = ({ onSignUp }) => {
 	return (
 		<>
-			<AuthForm />
+			<AuthForm onSignUp={onSignUp} />
 		</>
 	);
 };

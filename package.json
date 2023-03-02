@@ -21,7 +21,7 @@
     "primereact": "^9.0.0-beta.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
+    "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
     "react-time-ago": "^7.2.1",
     "react-toggle-dark-mode": "^1.1.1",

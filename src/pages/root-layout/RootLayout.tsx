@@ -1,13 +1,16 @@
 /** @format */
 
-import React from "react";
+import React, { FC } from "react";
 import NavBar from "../../components/nav-bar/NavBar";
 import { Outlet } from "react-router-dom";
 
-const RootLayout = () => {
+const RootLayout: FC<{ isSignedIn?: boolean; onSignOut: () => void }> = ({
+	isSignedIn,
+	onSignOut,
+}) => {
 	return (
 		<>
-			<NavBar />
+			<NavBar onSignOut={onSignOut} />
 			<main className="flex w-12">
 				<Outlet />
 			</main>

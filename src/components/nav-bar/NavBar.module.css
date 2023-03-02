@@ -26,6 +26,10 @@
  
 }
 
+.templateDiv {
+  cursor: not-allowed;
+}
+
 
 @media only screen and (max-width: 960px) {
   .logoContainer {
@@ -39,9 +43,9 @@
   height: 3rem
 }
 
-.brandName{
+/*.brandName{
    display: none !important;
-}
+}*/
 
 }
 

@@ -1,5 +1,5 @@
 /** @format */
-import React from "react";
+import React, { FC } from "react";
 import { InputText } from "primereact/inputtext";
 
 import { Password } from "primereact/password";
@@ -11,14 +11,18 @@ import * as Yup from "yup";
 import { classNames } from "primereact/utils";
 import { RegisterValues } from "../../models/authForm";
 import cosocialImg from "../../images/CO-1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const AuthForm = () => {
+const AuthForm: FC<{
+	onSignUp: () => void;
+}> = ({ onSignUp }) => {
+	const navigate = useNavigate();
 	const onSubmit = (values: RegisterValues) => {
 		if (isValid) {
 			resetForm();
 		}
-		console.log(values);
+		navigate("/");
+		onSignUp();
 	};
 
 	const {

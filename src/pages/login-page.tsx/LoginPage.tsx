@@ -1,12 +1,16 @@
 /** @format */
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import LoginForm from "../../components/Auth/LoginForm";
 
-const LoginPage = () => {
+const LoginPage: React.FC<{
+	onLogin: (fn: any) => void;
+}> = ({ onLogin }) => {
+	const navigate = useNavigate();
 	return (
 		<>
-			<LoginForm />
+			<LoginForm onLogin={() => onLogin(navigate)} />
 		</>
 	);
 };

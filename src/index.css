@@ -17,6 +17,17 @@ body {
   opacity: 1;
  }
 
+ .p-menubar .p-menubar-root-list {
+  margin: auto !important
+ }
+
+ /*@media screen and (max-width: 962px) {
+  .p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+    margin-top: 0 !important;
+    background-color: red !important
+}
+}*/
+
  .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
    
     opacity: 0.8;

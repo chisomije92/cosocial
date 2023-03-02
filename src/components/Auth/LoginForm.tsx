@@ -1,5 +1,5 @@
 /** @format */
-
+import { FC } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button } from "primereact/button";
@@ -10,14 +10,21 @@ import { LoginValues } from "../../models/authForm";
 import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import cosocialImg from "../../images/CO-1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm: FC<{
+	onLogin: () => void;
+}> = ({ onLogin }) => {
+	const navigate = useNavigate();
 	const onSubmit = (values: LoginValues) => {
 		if (isValid) {
 			resetForm();
 		}
-		console.log(values);
+		//console.log(values);
+		//const isSignedIn = localStorage.setItem("isSignedIn", "true");
+		navigate("/");
+		onLogin();
+		//console.log(isSignedIn);
 	};
 	const {
 		values,
