@@ -12,9 +12,9 @@ import { InputTextarea } from "primereact/inputtextarea";
 export default function Share() {
 	return (
 		<div
-			className={`card ${classes.container}  h-13rem xl:h-12rem w-full border-round-md shadow-4 `}
+			className={`card ${classes.container}  h-13rem xl:h-12rem w-full border-round-md shadow-4`}
 		>
-			<div className="flex gap-0 -ml-3">
+			<div className="flex gap-0 -ml-3 ">
 				<Avatar
 					image="/assets/person/1.jpeg"
 					size="large"
@@ -33,7 +33,7 @@ export default function Share() {
 			<div
 				className={`${classes.options} ml-4 mt-2  flex flex-column xl:flex-row flex-wrap gap-5 sm:gap-3`}
 			>
-				<div className="flex gap-1">
+				<div className="flex gap-2 mt-1">
 					<div className=" flex">
 						<PermMediaIcon className="mx-1 text-red-400" />
 						<span className="hidden md:inline">Media</span>
@@ -49,7 +49,7 @@ export default function Share() {
 				</div>
 				<Button
 					label="Post"
-					className="w-min p-button-success ml-0 py-1 ml-auto mr-3"
+					className="w-min p-button-success ml-0 mt-1 py-1 ml-auto mr-4 font-bold"
 				/>
 			</div>
 		</div>

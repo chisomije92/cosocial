@@ -2,11 +2,13 @@
 
 import { Avatar } from "primereact/avatar";
 import { Image } from "primereact/image";
+import { useNavigate } from "react-router-dom";
 import { Users } from "../../data/dummy-data";
 import OnlineFriends from "../online-friends/OnlineFriends";
 import classes from "./right-bar.module.css";
 
 export default function RightBar() {
+	const navigate = useNavigate();
 	return (
 		<div
 			className={`${classes.rightBar} flex flex-column card shadow-1 border-round-sm mt-3 mr-0 md:mr-2 `}
@@ -37,6 +39,9 @@ export default function RightBar() {
 							key={user.id}
 							name={user.username}
 							imageSrc={user.profilePicture}
+							onClick={() => {
+								navigate(`/profile/${user.id}`);
+							}}
 						/>
 					))}
 				</ul>

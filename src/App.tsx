@@ -45,6 +45,7 @@ function App() {
 			<Route path="/" errorElement={<ErrorPage />} element={<RootLayout />}>
 				<Route index element={<Home />} loader={homePostsLoader} />
 				<Route path="/profile" element={<ProfilePage />} />
+				<Route path="/profile/:id" element={<ProfilePage />} />
 				<Route path="/notifications" element={<NotificationsPage />} />
 				<Route path="/messages" element={<MessagesPage />} />
 

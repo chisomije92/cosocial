@@ -6,9 +6,10 @@ import React, { FC } from "react";
 const OnlineFriends: FC<{
 	name: string;
 	imageSrc: string;
-}> = ({ name, imageSrc }) => {
+	onClick: () => void;
+}> = ({ name, imageSrc, onClick }) => {
 	return (
-		<li className="-ml-5 flex mb-3">
+		<li className="-ml-5 flex mb-3 cursor-pointer" onClick={onClick}>
 			<Chip
 				label={name}
 				image={imageSrc}

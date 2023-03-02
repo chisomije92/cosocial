@@ -16,6 +16,9 @@ const Reply: FC<{
 
 	return (
 		<li className={`mt-2  p-2 ${classes.listReply}`} key={reply.id}>
+			{/*Ensure you get _id of reply, convert it to string and store it as replyId*/}
+			<input type="text" value={reply.replyId} hidden readOnly />
+
 			<div className="flex gap-2">
 				<Avatar image={reply.photo} shape="circle" className="text-center" />
 				<div className="flex flex-column gap-2">

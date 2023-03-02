@@ -6,10 +6,16 @@ import { Chip } from "primereact/chip";
 const Mutuals: FC<{
 	name: string;
 	imageSrc: string;
-}> = ({ name, imageSrc }) => {
+	onClick: () => void;
+}> = ({ name, imageSrc, onClick }) => {
 	return (
 		<li className="-ml-5 flex">
-			<Chip label={name} image={imageSrc} className="bg-primary-reverse" />
+			<Chip
+				label={name}
+				image={imageSrc}
+				className="bg-primary-reverse"
+				onClick={onClick}
+			/>
 		</li>
 	);
 };

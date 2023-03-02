@@ -14,9 +14,10 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import Mutuals from "../mutuals/Mutuals";
 import { Users } from "../../data/dummy-data";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function SideBar() {
+	const navigate = useNavigate();
 	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
 		return `text-color no-underline text-lg ${isActive ? "opacity-70" : ""}`;
 	};
@@ -75,6 +76,9 @@ export default function SideBar() {
 							key={user.id}
 							name={user.username}
 							imageSrc={user.profilePicture}
+							onClick={() => {
+								navigate(`/profile/${user.id}`);
+							}}
 						/>
 					))}
 				</ul>

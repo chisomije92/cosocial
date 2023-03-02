@@ -32,7 +32,7 @@ const Replies: FC<{
 					placeholder="Add a comment"
 					autoResize
 				/>
-				<Button label="Comment" className="p-2" />
+				<Button label="Comment" className="p-2 text-white font-bold mt-1" />
 			</div>
 			<ul className="list-none">
 				{replies.map((reply: any) => (

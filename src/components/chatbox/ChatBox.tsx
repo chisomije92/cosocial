@@ -16,7 +16,7 @@ const ChatBox = () => {
 	return (
 		<div className={`${classes.container} w-7 h-7`}>
 			<div
-				className={`${classes.header} w-12 surface-500 p-2 text-3xl font-bold`}
+				className={`${classes.header} w-12 surface-500 p-2 text-3xl font-bold h-3rem`}
 			>
 				Chat
 			</div>
@@ -28,14 +28,12 @@ const ChatBox = () => {
 					<UserBox />
 				</li>
 				<li className="list-none">
-					{" "}
 					<FriendBox />
 				</li>
 				<li className="list-none">
 					<UserBox />
 				</li>
 				<li className="list-none">
-					{" "}
 					<FriendBox />
 				</li>
 			</ul>
