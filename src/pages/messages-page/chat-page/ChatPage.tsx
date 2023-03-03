@@ -10,7 +10,6 @@ const ChatPage = () => {
 		<>
 			<SideBar />
 			<ChatBox />
-			{/*<SearchFriend />*/}
 		</>
 	);
 };

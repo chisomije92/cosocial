@@ -12,22 +12,19 @@ import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Link, NavLink, useNavigate, Navigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth/useAuth";
 
-const NavBar: FC<{
-	onSignOut: () => void;
-}> = ({ onSignOut }) => {
+const NavBar: FC<{}> = () => {
+	const { isAuthenticated } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
-
+	const { logout } = useAuth();
 	const navigate = useNavigate();
 
 	const logOut = () => {
-		//setIsSignedIn(false);
-		onSignOut();
-		navigate("/login");
-		//signOut();
+		logout();
 	};
 
 	const op = useRef<any>(null);
@@ -66,16 +63,6 @@ const NavBar: FC<{
 	};
 
 	const items = [
-		//{
-		//	template: (
-		//		<div className={`${classes.inputSearch}`}>
-		//			<span className="p-input-icon-left">
-		//				<i className="pi pi-search" />
-		//				<InputText placeholder="Search" />
-		//			</span>
-		//		</div>
-		//	),
-		//},
 		{
 			template: (
 				<>
@@ -101,25 +88,31 @@ const NavBar: FC<{
 				</>
 			),
 		},
-		//{
-		//	template: (
-		//		<>
-		//			<div className={`mx-3 text-xl ${classes.templateDiv}`}>For you</div>
-		//		</>
-		//	),
-		//},
+	];
+
+	const notAuthenticatedItems = [
+		{
+			template: <></>,
+		},
+		{
+			template: (
+				<>
+					<Link
+						to="/login"
+						className="text-white no-underline m-3 text-xl cursor-auto"
+					>
+						Explore
+					</Link>
+				</>
+			),
+		},
 	];
 
 	const start = (
 		<div className={`mr-8 ml-2 ${classes.logoContainer} flex`}>
 			<div className="flex justify-content-between">
 				<div>
-					<img
-						alt="logo"
-						src={cosocialImg}
-						height="40"
-						//className="hidden sm:block"
-					></img>
+					<img alt="logo" src={cosocialImg} height="40"></img>
 				</div>
 				<div className={`-mt-2 ${classes.brandName}`}>
 					<h3>COSOCIAL</h3>
@@ -205,8 +198,18 @@ const NavBar: FC<{
 					!isThemeDark ? "bg-blue-900" : ""
 				} text-white h-5rem min-w-min`}
 				start={start}
-				model={items}
-				end={end}
+				model={isAuthenticated ? items : notAuthenticatedItems}
+				end={
+					isAuthenticated ? (
+						end
+					) : (
+						<div className="flex justify-content-center gap-2 text-xl font-bold">
+							<span>Explore</span>
+							<span>and</span>
+							<span>Connect</span>
+						</div>
+					)
+				}
 			/>
 		</nav>
 	);

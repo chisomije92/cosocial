@@ -4,12 +4,10 @@ import React from "react";
 import Error from "../../components/error/Error";
 import NavBar from "../../components/nav-bar/NavBar";
 
-const ErrorPage: React.FC<{
-	onSignOut: () => void;
-}> = ({ onSignOut }) => {
+const ErrorPage: React.FC<{}> = () => {
 	return (
 		<>
-			<NavBar onSignOut={onSignOut} />
+			<NavBar />
 			<Error />
 		</>
 	);

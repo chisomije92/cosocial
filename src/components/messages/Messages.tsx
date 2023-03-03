@@ -3,12 +3,14 @@
 import { Avatar } from "primereact/avatar";
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Users } from "../../data/dummy-data";
 
 import classes from "./messages.module.css";
 
 const Messages = () => {
 	//const chatUsers = Users.slice(1, 4);
+	const navigate = useNavigate();
 	const chatUsers = Users.slice();
 	return (
 		<div className={`${classes.container} flex justify-content-center`}>
@@ -17,7 +19,13 @@ const Messages = () => {
 					<p className="ml-3 text-3xl font-bold">Messages</p>
 				</li>
 				{chatUsers.map(u => (
-					<li className="my-2 flex w-12" key={u.id}>
+					<li
+						className="my-2 flex w-12"
+						key={u.id}
+						onClick={() => {
+							navigate(`${u.id}`);
+						}}
+					>
 						<div className="flex flex-column">
 							<div className="flex gap-1">
 								<Avatar
