@@ -170,7 +170,7 @@ const NavBar: FC<{}> = () => {
 
 				<OverlayPanel ref={op} className="mt-1 mr-2">
 					<Link
-						to="profile?cosocials=followers"
+						to="profile/1"
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer no-underline`}
 					>
 						<span className="text-sm">Profile</span>{" "}
@@ -210,6 +210,8 @@ const NavBar: FC<{}> = () => {
 						</div>
 					)
 				}
+				//model={items}
+				//end={end}
 			/>
 		</nav>
 	);

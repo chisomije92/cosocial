@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, FC } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Posts, Users } from "../../data/dummy-data";
@@ -13,22 +13,13 @@ import EditProfile from "./EditProfile";
 import ChangePassword from "../change-password/ChangePassword";
 import { Link, useNavigate } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
-import Follows from "../follows/Follows";
 
-const Profile: FC<{
-	follows: string | null;
-}> = ({ follows }) => {
+const Profile = () => {
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
-	const [showFollow, setShowFollow] = useState(false);
 	const [isFollowing, setIsFollowing] = useState(false);
 
 	const navigate = useNavigate();
-
-	const navigateToFollows = (followQuery: string) => {
-		setShowFollow(true);
-		navigate(`/profile?cosocials=${followQuery}`);
-	};
 
 	const userId = Users[0].id;
 	const user = Users[0];
@@ -38,26 +29,12 @@ const Profile: FC<{
 			header={`${showForm === 1 ? "Edit Profile" : "Change Password"}`}
 			visible={visible}
 			style={{ width: "50vw" }}
-			onHide={() => setVisible(false)}
+			onHide={() => {
+				setVisible(false);
+			}}
 			className="w-27rem"
 		>
 			{showForm === 1 ? <EditProfile /> : <ChangePassword />}
-		</Dialog>
-	);
-
-	const showFollowers = (
-		<Dialog
-			header={`${
-				follows !== null
-					? follows[0]?.toUpperCase() + follows.slice(1)
-					: follows
-			}`}
-			visible={showFollow}
-			style={{ width: "50vw" }}
-			onHide={() => setShowFollow(false)}
-			className="w-27rem"
-		>
-			<Follows />
 		</Dialog>
 	);
 
@@ -101,26 +78,18 @@ const Profile: FC<{
 						Posts:{" "}
 						<span className="font-semibold opacity-90">{userPosts.length}</span>
 					</div>
-					<div>
-						<span
-							className="flex gap-2 cursor-pointer"
-							onClick={() => navigateToFollows("following")}
-						>
+					<Link className="text-color no-underline" to={`following`}>
+						<span className="flex gap-2 cursor-pointer">
 							<span>Following:</span>
 							<span className="font-semibold opacity-90">100</span>
 						</span>
-					</div>
-					<div>
-						<span
-							className="flex gap-2 cursor-pointer"
-							onClick={() => navigateToFollows("followers")}
-						>
+					</Link>
+					<Link className="text-color no-underline" to={`followers`}>
+						<span className="flex gap-2 cursor-pointer">
 							<span>Followers:</span>
 							<span className="font-semibold opacity-90">100</span>
 						</span>
-					</div>
-
-					{showFollow && showFollowers}
+					</Link>
 				</div>
 				<div className="flex mt-1 ">
 					<Button

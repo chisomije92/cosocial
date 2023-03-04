@@ -29,7 +29,11 @@ import ExplorePage, {
 } from "./pages/explore-page/ExplorePage";
 import ChatPage from "./pages/messages-page/chat-page/ChatPage";
 import ProtectedRoutes from "./components/protected-routes/ProtectedRoutes";
-import { AuthLayout } from "./components/auth-layout/AuthLayout";
+import {
+	AuthLayout,
+	//loader as authLoader,
+} from "./pages/auth-layout/AuthLayout";
+import FollowListPage from "./pages/follow-list-page/FollowListPage";
 
 function App() {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -46,8 +50,8 @@ function App() {
 	const getAuthStatus = () =>
 		new Promise(resolve =>
 			setTimeout(() => {
-				const user = localStorage.getItem("isAuth");
-				resolve(user);
+				const isAuth = localStorage.getItem("isAuth");
+				resolve(isAuth);
 			}, 3000)
 		);
 
@@ -56,19 +60,19 @@ function App() {
 			<Route
 				element={<AuthLayout />}
 				errorElement={<ErrorPage />}
-				loader={() => defer({ authPromise: getAuthStatus() })}
+				//loader={() => defer({ authPromise: getAuthStatus() })}
+				//loader={() => localStorage.getItem("isAuth")}
 			>
 				<Route path="/" element={<RootLayout />}>
-					<Route index element={<Home />} loader={homePostsLoader} />
-					<Route
-						path="/explore"
-						element={<ExplorePage />}
-						loader={explorePostsLoader}
-					/>
 					<Route element={<ProtectedRoutes />}>
-						<Route path="/profile" element={<ProfilePage />} />
+						<Route index element={<Home />} loader={homePostsLoader} />
+						<Route
+							path="/explore"
+							element={<ExplorePage />}
+							loader={explorePostsLoader}
+						/>
 						<Route path="/profile/:id" element={<ProfilePage />} />
-
+						<Route path="/profile/:id/:follow" element={<FollowListPage />} />
 						<Route path="/notifications" element={<NotificationsPage />} />
 						<Route path="/messages" element={<MessagesPage />}></Route>
 						<Route path="/messages/:id" element={<ChatPage />} />
@@ -86,7 +90,6 @@ function App() {
 						path="/login"
 						element={
 							<>
-								{/*<button onClick={() => setIsSignedIn(prev => !prev)}>Change</button>*/}
 								<LoginPage />
 							</>
 						}

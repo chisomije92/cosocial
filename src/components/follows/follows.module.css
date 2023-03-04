@@ -1,5 +1,7 @@
 .container{
-  
+ flex: 4.5;
+ margin-left: 12px;
+ margin-right: 12px;
 }
 
 .container img {
@@ -13,6 +15,7 @@ background-color: red !important;
 .container ul {
   height: 500px;
     overflow-y: scroll;
+    overflow-x: none;
 }
 
 .container [classes*="p-chip-image"]{
