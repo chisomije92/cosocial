@@ -76,7 +76,7 @@ const Notifications = () => {
 						<div>
 							<div className="font-semibold">Chisom</div>
 							<div className="mt-1">
-								<Link to="/profile" className="no-underline text-primary">
+								<Link to="/profile/1" className="no-underline text-primary">
 									followed you
 								</Link>{" "}
 							</div>

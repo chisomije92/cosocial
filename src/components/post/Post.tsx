@@ -8,7 +8,7 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
 import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
 
@@ -17,6 +17,7 @@ const Post: FC<{
 	showComments?: boolean;
 }> = ({ post, showComments }) => {
 	const op = useRef<any>(null);
+	const navigate = useNavigate();
 	const [like, setLike] = useState(post.like);
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
@@ -55,7 +56,10 @@ const Post: FC<{
 							shape="circle"
 							className=""
 						/>
-						<span className=" font-semibold">
+						<span
+							className=" font-semibold cursor-pointer"
+							onClick={() => navigate("/profile/1")}
+						>
 							{Users.filter(u => u.id === post?.userId)[0].username}
 						</span>
 						{/*<span className=" opacity-70 text-sm">{post.date}</span>*/}
