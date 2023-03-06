@@ -7,41 +7,64 @@ import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 
 const AuthContext = createContext<{
-	isAuthenticated: boolean;
-	login: (data: boolean) => Promise<void>;
+	authUser: {
+		token: string;
+		userId: string;
+		expirationTimer: string;
+	} | null;
+	login: (data: any) => Promise<void>;
 	logout: () => void;
 }>({
-	isAuthenticated: false,
+	authUser: {
+		token: "",
+		userId: "",
+		expirationTimer: "",
+	},
 	login: async (data: boolean) => {},
 	logout: () => {},
 });
 
 export const AuthProvider: React.FC<{
 	children: JSX.Element;
-	isAuth: boolean;
-}> = ({ children, isAuth }) => {
-	const [isAuthenticated, setIsAuthenticated] = useLocalStorage<boolean>(
-		"isAuth",
-		isAuth
-	);
+	user: {
+		token: string;
+		userId: string;
+		expirationTimer: string;
+	};
+}> = ({ children, user }) => {
+	const [authUser, setAuthUser] = useLocalStorage<{
+		token: string;
+		userId: string;
+		expirationTimer: string;
+	} | null>("authUser", user);
 	const navigate = useNavigate();
-	const login = async (data: boolean) => {
-		setIsAuthenticated(data);
+
+	const login = async (data: { email: string; password: string }) => {
+		setAuthUser({
+			userId: "userId",
+			token: "token",
+			expirationTimer: new Date().toISOString(),
+		});
 		navigate("/", { replace: true });
 	};
 
 	const logout = () => {
-		setIsAuthenticated(false);
+		//setAuthUser({
+		//	userId: "",
+		//	token: "",
+		//	expirationTimer: "",
+		//});
+		setAuthUser(null);
 		navigate("/login", { replace: true });
 	};
 
 	const value = useMemo(
 		() => ({
-			isAuthenticated,
+			authUser,
 			login,
 			logout,
 		}),
-		[isAuthenticated]
+		[authUser]
 	);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

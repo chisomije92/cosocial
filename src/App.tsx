@@ -61,7 +61,10 @@ function App() {
 				element={<AuthLayout />}
 				errorElement={<ErrorPage />}
 				//loader={() => defer({ authPromise: getAuthStatus() })}
-				//loader={() => localStorage.getItem("isAuth")}
+				loader={async () => {
+					console.log(localStorage.getItem("authUser"));
+					return localStorage.getItem("authUser");
+				}}
 			>
 				<Route path="/" element={<RootLayout />}>
 					<Route element={<ProtectedRoutes />}>
@@ -88,11 +91,8 @@ function App() {
 					<Route path="/sign-up" element={<SignUpPage />} />
 					<Route
 						path="/login"
-						element={
-							<>
-								<LoginPage />
-							</>
-						}
+						element={<LoginPage />}
+						//action={SignUpAction}
 					/>
 				</Route>
 			</Route>

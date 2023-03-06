@@ -10,19 +10,22 @@ import { LoginValues } from "../../models/authForm";
 import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import cosocialImg from "../../images/CO-1.png";
-import { Link } from "react-router-dom";
+import { Link, useSubmit } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const LoginForm = () => {
 	const { login } = useAuth();
+	const submit = useSubmit();
 
-	const onSubmit = (values: LoginValues) => {
+	const onSubmit = async (values: { email: string; password: string }) => {
 		if (isValid) {
 			resetForm();
 		}
 
-		login(true);
+		await login(values);
+		//submit(values, { method: "post" });
 	};
+
 	const {
 		values,
 		errors,
@@ -46,6 +49,14 @@ const LoginForm = () => {
 				.min(6, "Minimum of 6 characters required!")
 				.required("Required"),
 		}),
+		//onSubmit: async values => {
+		//	if (isValid) {
+		//		resetForm();
+		//	}
+
+		//	login(true);
+		//	submit(values, { method: "post" });
+		//},
 		onSubmit,
 		validateOnChange: true,
 		validateOnBlur: true,
@@ -85,6 +96,7 @@ const LoginForm = () => {
 					</div>
 				</div>
 				<form
+					//method="post"
 					className="flex flex-column gap-2 w-26rem  p-3"
 					onSubmit={handleSubmit}
 					onBlur={handleBlur}

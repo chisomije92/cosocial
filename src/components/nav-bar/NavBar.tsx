@@ -14,14 +14,20 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Link, NavLink, useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
+let userId: string | null;
 const NavBar: FC<{}> = () => {
-	const { isAuthenticated } = useAuth();
+	const { authUser } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
+
 	const { logout } = useAuth();
 	const navigate = useNavigate();
+
+	if (authUser) {
+		userId = authUser.userId;
+	}
 
 	const logOut = () => {
 		logout();
@@ -198,9 +204,9 @@ const NavBar: FC<{}> = () => {
 					!isThemeDark ? "bg-blue-900" : ""
 				} text-white h-5rem min-w-min`}
 				start={start}
-				model={isAuthenticated ? items : notAuthenticatedItems}
+				model={userId ? items : notAuthenticatedItems}
 				end={
-					isAuthenticated ? (
+					userId ? (
 						end
 					) : (
 						<div className="flex justify-content-center gap-2 text-xl font-bold">

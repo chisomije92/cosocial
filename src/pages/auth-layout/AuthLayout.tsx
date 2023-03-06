@@ -7,10 +7,10 @@ import { ProgressBar } from "primereact/progressbar";
 
 export const AuthLayout = () => {
 	const outlet = useOutlet();
-	const { isAuthenticated } = useAuth();
+	const user = useLoaderData() as any;
 
 	return (
-		<AuthProvider isAuth={isAuthenticated}>
+		<AuthProvider user={user}>
 			<>{outlet}</>
 		</AuthProvider>
 	);
