@@ -49,11 +49,6 @@ export const AuthProvider: React.FC<{
 	};
 
 	const logout = () => {
-		//setAuthUser({
-		//	userId: "",
-		//	token: "",
-		//	expirationTimer: "",
-		//});
 		setAuthUser(null);
 		navigate("/login", { replace: true });
 	};

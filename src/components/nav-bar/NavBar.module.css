@@ -5,20 +5,12 @@
  flex: 12
 }
 
-/*@media only screen and (max-width: 420px) {
-  .container {
-    min-width: 460px
-  }
-
-}*/
+.menuBar [class="p-menubar-button"]{
+  display: none ;
+ 
+}
 
 
-/*@media only screen and (max-width: 420px) {
-  .container {
-    min-width: 460px
-  }
-
-}*/
 
 .inputSearch [class*="p-inputtext"] {
   width: 35vw;
@@ -43,9 +35,6 @@
   height: 3rem
 }
 
-/*.brandName{
-   display: none !important;
-}*/
 
 }
 

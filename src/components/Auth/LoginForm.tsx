@@ -17,13 +17,12 @@ const LoginForm = () => {
 	const { login } = useAuth();
 	const submit = useSubmit();
 
-	const onSubmit = async (values: { email: string; password: string }) => {
+	const onSubmit = async (values: LoginValues) => {
 		if (isValid) {
 			resetForm();
 		}
 
 		await login(values);
-		//submit(values, { method: "post" });
 	};
 
 	const {
@@ -49,14 +48,7 @@ const LoginForm = () => {
 				.min(6, "Minimum of 6 characters required!")
 				.required("Required"),
 		}),
-		//onSubmit: async values => {
-		//	if (isValid) {
-		//		resetForm();
-		//	}
 
-		//	login(true);
-		//	submit(values, { method: "post" });
-		//},
 		onSubmit,
 		validateOnChange: true,
 		validateOnBlur: true,
@@ -96,7 +88,6 @@ const LoginForm = () => {
 					</div>
 				</div>
 				<form
-					//method="post"
 					className="flex flex-column gap-2 w-26rem  p-3"
 					onSubmit={handleSubmit}
 					onBlur={handleBlur}
@@ -141,7 +132,10 @@ const LoginForm = () => {
 					/>
 					<div className="flex gap-1">
 						<span>Not a registered user yet?</span>
-						<Link to="/sign-up" className="no-underline">
+						<Link
+							to="/sign-up"
+							className="no-underline text-primary-600 font-bold"
+						>
 							Sign up
 						</Link>
 					</div>

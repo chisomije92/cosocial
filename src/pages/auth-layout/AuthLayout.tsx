@@ -13,5 +13,22 @@ export const AuthLayout = () => {
 		<AuthProvider user={user}>
 			<>{outlet}</>
 		</AuthProvider>
+		//<Suspense
+		//	fallback={
+		//		<ProgressBar
+		//			mode="indeterminate"
+		//			style={{ height: "6px" }}
+		//		></ProgressBar>
+		//	}
+		//>
+		//	<Await
+		//		resolve={user}
+		//		children={user => (
+		//			<AuthProvider user={user}>
+		//				<>{outlet}</>
+		//			</AuthProvider>
+		//		)}
+		//	/>
+		//</Suspense>
 	);
 };

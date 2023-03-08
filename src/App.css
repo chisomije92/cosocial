@@ -14,6 +14,10 @@
 		text-align: center;
 	}*/
 
+	.p-menubar .isNotAuth {
+		display: none;
+	}
+
 	.p-menubar .p-menubar-button {
 		color: white !important;
 	}

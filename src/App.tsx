@@ -50,8 +50,8 @@ function App() {
 	const getAuthStatus = () =>
 		new Promise(resolve =>
 			setTimeout(() => {
-				const isAuth = localStorage.getItem("isAuth");
-				resolve(isAuth);
+				const user = localStorage.getItem("authUser");
+				resolve(user);
 			}, 3000)
 		);
 
@@ -62,7 +62,6 @@ function App() {
 				errorElement={<ErrorPage />}
 				//loader={() => defer({ authPromise: getAuthStatus() })}
 				loader={async () => {
-					console.log(localStorage.getItem("authUser"));
 					return localStorage.getItem("authUser");
 				}}
 			>

@@ -158,7 +158,10 @@ const AuthForm = () => {
 					<div className="flex gap-1">
 						<span>Registered already?</span>
 
-						<Link to="/login" className="no-underline">
+						<Link
+							to="/login"
+							className="no-underline text-primary-600 font-bold"
+						>
 							Log in
 						</Link>
 					</div>

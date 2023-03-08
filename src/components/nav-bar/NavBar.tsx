@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { FC, useLayoutEffect, useRef } from "react";
+import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import useLocalStorage from "use-local-storage";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
@@ -14,20 +14,22 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Link, NavLink, useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
-let userId: string | null;
 const NavBar: FC<{}> = () => {
-	const { authUser } = useAuth();
+	const { authUser, logout } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
-
-	const { logout } = useAuth();
+	const [userId, setUserId] = useState<string | null>(null);
 	const navigate = useNavigate();
 
-	if (authUser) {
-		userId = authUser.userId;
-	}
+	useEffect(() => {
+		if (authUser) {
+			setUserId(authUser.userId);
+		} else {
+			setUserId(null);
+		}
+	}, [authUser]);
 
 	const logOut = () => {
 		logout();
@@ -98,19 +100,7 @@ const NavBar: FC<{}> = () => {
 
 	const notAuthenticatedItems = [
 		{
-			template: <></>,
-		},
-		{
-			template: (
-				<>
-					<Link
-						to="/login"
-						className="text-white no-underline m-3 text-xl cursor-auto"
-					>
-						Explore
-					</Link>
-				</>
-			),
+			template: <div className="hidden"></div>,
 		},
 	];
 
@@ -200,7 +190,7 @@ const NavBar: FC<{}> = () => {
 	return (
 		<nav className={`${classes.container}`}>
 			<Menubar
-				className={`${classes.menuBar} ${
+				className={`${!authUser && classes.menuBar} ${
 					!isThemeDark ? "bg-blue-900" : ""
 				} text-white h-5rem min-w-min`}
 				start={start}
