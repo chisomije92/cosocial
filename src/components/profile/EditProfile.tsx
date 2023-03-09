@@ -12,10 +12,6 @@ import { Profile } from "../../models/profile";
 import classes from "./profile.module.css";
 
 const EditProfile = () => {
-	const [selectedImageText, setSelectedImageText] = React.useState<
-		string | null
-	>();
-	//const [selectedImageFile, setSelectedImageFile] = React.useState<File>();
 	const [selectedImageFile, setSelectedImageFile] = React.useState<{
 		preview: string;
 		data: File | null;
@@ -42,7 +38,7 @@ const EditProfile = () => {
 		const requestObj: requestObjType = {};
 		if (isValid) {
 			setFieldValue("image", undefined);
-			setSelectedImageText(null);
+
 			resetForm();
 		}
 		if (values.desc !== "") {
@@ -160,7 +156,7 @@ const EditProfile = () => {
 								};
 							}
 							setSelectedImageFile(img);
-							setSelectedImageText(e?.target?.files?.[0].name);
+
 							setFieldValue("image", e?.target?.files?.[0]);
 						}}
 					/>

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { Posts, Users } from "../../data/dummy-data";
 import Post from "../post/Post";
 import classes from "./profile.module.css";
 import { Image } from "primereact/image";
@@ -11,19 +10,17 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import EditProfile from "./EditProfile";
 import ChangePassword from "../change-password/ChangePassword";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 
-const Profile = () => {
+const Profile: React.FC<{
+	user: any;
+	userPosts: any;
+}> = ({ user, userPosts }) => {
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);
 
-	const navigate = useNavigate();
-
-	const userId = Users[0].id;
-	const user = Users[0];
-	const userPosts = Posts.filter(p => p.userId === userId);
 	const editProfileForm = (
 		<Dialog
 			header={`${showForm === 1 ? "Edit Profile" : "Change Password"}`}
@@ -61,7 +58,7 @@ const Profile = () => {
 			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
 				<div className={`${classes.imgContainer}`}>
 					<Image
-						src="/assets/person/1.jpeg"
+						src={user.profilePicture}
 						alt=""
 						height="260"
 						width="240"
@@ -71,7 +68,7 @@ const Profile = () => {
 				<div className="flex flex-column align-items-center mt-2 mb-2">
 					<div className="font-bold my-1">{user.username}</div>
 					<div className="opacity-80">Chisom@gmail.com</div>
-					<div className="mt-1 font-medium">This is my description!</div>
+					<div className="mt-1 font-medium">This is user's description!</div>
 				</div>
 				<div className="flex gap-3 justify-content-around ">
 					<div>
@@ -125,7 +122,7 @@ const Profile = () => {
 			{editProfileForm}
 
 			<div className="">
-				{userPosts.map(p => (
+				{userPosts.map((p: any) => (
 					<Post key={p.id} post={p} showComments />
 				))}
 			</div>

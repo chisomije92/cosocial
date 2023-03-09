@@ -14,7 +14,9 @@ import "./App.css";
 
 import Home, { loader as homePostsLoader } from "./pages/home/Home";
 import RootLayout from "./pages/root-layout/RootLayout";
-import ProfilePage from "./pages/profile-page/ProfilePage";
+import ProfilePage, {
+	profilePageLoader,
+} from "./pages/profile-page/ProfilePage";
 import NotificationsPage from "./pages/notifications-page/NotificationsPage";
 import MessagesPage from "./pages/messages-page/MessagesPage";
 import ErrorPage from "./pages/error-page/ErrorPage";
@@ -73,7 +75,11 @@ function App() {
 							element={<ExplorePage />}
 							loader={explorePostsLoader}
 						/>
-						<Route path="/profile/:id" element={<ProfilePage />} />
+						<Route
+							path="/profile/:id"
+							element={<ProfilePage />}
+							loader={profilePageLoader}
+						/>
 						<Route path="/profile/:id/:follow" element={<FollowListPage />} />
 						<Route path="/notifications" element={<NotificationsPage />} />
 						<Route path="/messages" element={<MessagesPage />}></Route>
