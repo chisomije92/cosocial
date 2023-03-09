@@ -60,7 +60,7 @@ function App() {
 			<Route
 				element={<AuthLayout />}
 				errorElement={<ErrorPage />}
-				//loader={() => defer({ authPromise: getAuthStatus() })}
+				//loader={() => defer({ authUser: getAuthStatus() })}
 				loader={async () => {
 					return localStorage.getItem("authUser");
 				}}

@@ -5,10 +5,19 @@ import { Image } from "primereact/image";
 import { useNavigate } from "react-router-dom";
 import { Users } from "../../data/dummy-data";
 import OnlineFriends from "../online-friends/OnlineFriends";
+import { shuffleArray } from "../../utils/util";
+
 import classes from "./right-bar.module.css";
+import { adsArray } from "../../utils/ad-images-util";
 
 export default function RightBar() {
 	const navigate = useNavigate();
+
+	const showAd = (data: string[]) => {
+		const arr = shuffleArray(data);
+		return arr[0];
+	};
+
 	return (
 		<div
 			className={`${classes.rightBar} flex flex-column card shadow-1 border-round-sm mt-3 mr-0 md:mr-2 `}
@@ -25,9 +34,10 @@ export default function RightBar() {
 			</div>
 			<div>
 				<img
-					src="/assets/ad.png"
+					src={showAd(adsArray)}
 					className="ml-3 border-round-lg"
-					width="90%"
+					width="93%"
+					height="300px"
 					alt=""
 				/>
 			</div>

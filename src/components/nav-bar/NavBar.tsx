@@ -5,13 +5,12 @@ import useLocalStorage from "use-local-storage";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 import { Menubar } from "primereact/menubar";
-import { InputText } from "primereact/inputtext";
 import classes from "./NavBar.module.css";
 import { Avatar } from "primereact/avatar";
 import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { Link, NavLink, useNavigate, Navigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const NavBar: FC<{}> = () => {
