@@ -15,6 +15,12 @@ const EditProfile = () => {
 	const [selectedImageText, setSelectedImageText] = React.useState<
 		string | null
 	>();
+	//const [selectedImageFile, setSelectedImageFile] = React.useState<File>();
+	const [selectedImageFile, setSelectedImageFile] = React.useState<{
+		preview: string;
+		data: File | null;
+		text: string | null;
+	}>({ preview: "", data: null, text: null });
 
 	const allValuesEmpty = () => {
 		return (
@@ -118,21 +124,47 @@ const EditProfile = () => {
 						className={`${classes.imgInputLabel} flex cursor-pointer`}
 					>
 						<PermMediaIcon className="mx-1 text-red-400" />
-						{!selectedImageText ? (
+						{!selectedImageFile.text ? (
 							<span>Change Profile Picture</span>
 						) : (
-							<span className="">{selectedImageText}</span>
+							<span className="">{selectedImageFile.text}</span>
+						)}
+						{selectedImageFile.text && (
+							<img
+								src={selectedImageFile.preview}
+								alt=""
+								width="20px"
+								height="20px"
+								className="ml-2 border-round"
+							/>
 						)}
 					</label>
 					<input
 						id="imageInput"
 						type="file"
 						onChange={e => {
-							console.log(e?.target?.files?.[0]);
+							let img: {
+								preview: string;
+								data: File | null;
+								text: string | null;
+							} = {
+								preview: "",
+								data: null,
+								text: null,
+							};
+							if (e?.target?.files?.[0]) {
+								img = {
+									preview: URL.createObjectURL(e.target.files[0]),
+									data: e.target.files[0],
+									text: e.target.files[0].name,
+								};
+							}
+							setSelectedImageFile(img);
 							setSelectedImageText(e?.target?.files?.[0].name);
 							setFieldValue("image", e?.target?.files?.[0]);
 						}}
 					/>
+					{/*<img src={selectedImageFile.preview} />*/}
 				</div>
 				<div>
 					<InputText
