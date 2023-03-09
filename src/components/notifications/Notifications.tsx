@@ -15,7 +15,7 @@ const Notifications = () => {
 					<div className="mt-4 mr-3">
 						<Button
 							label="Mark all as read"
-							className="px-2 py-2 surface-100 text-primary font-semibold"
+							className="px-2 py-2 surface-200 text-primary font-semibold"
 						/>
 					</div>
 				</li>

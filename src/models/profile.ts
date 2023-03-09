@@ -1,5 +1,5 @@
 export interface Profile {
-  image?: string
+  image?: File;
   username?: string;
   email?: string;
   desc?: string

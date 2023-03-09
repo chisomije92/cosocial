@@ -2,19 +2,23 @@
 
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FileUpload } from "primereact/fileupload";
 import React from "react";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
-
+import PermMediaIcon from "@mui/icons-material/PermMedia";
 import * as Yup from "yup";
 import { classNames } from "primereact/utils";
 import { Profile } from "../../models/profile";
+import classes from "./profile.module.css";
 
 const EditProfile = () => {
+	const [selectedImageText, setSelectedImageText] = React.useState<
+		string | null
+	>();
+
 	const allValuesEmpty = () => {
 		return (
-			values.image === "" &&
+			!values.image &&
 			values.email === "" &&
 			values.username === "" &&
 			values.desc === ""
@@ -31,6 +35,8 @@ const EditProfile = () => {
 	const onSubmit = (values: Profile) => {
 		const requestObj: requestObjType = {};
 		if (isValid) {
+			setFieldValue("image", undefined);
+			setSelectedImageText(null);
 			resetForm();
 		}
 		if (values.desc !== "") {
@@ -45,10 +51,10 @@ const EditProfile = () => {
 			requestObj["username"] = values.username;
 		}
 
-		if (values.image !== "") {
-			requestObj["image"] = values.image;
+		if (!values.image) {
+			requestObj.image = values.image;
 		}
-		console.log(requestObj);
+		console.log({ ...requestObj, image: values.image });
 	};
 
 	const {
@@ -63,13 +69,12 @@ const EditProfile = () => {
 		setFieldValue,
 	} = useFormik({
 		initialValues: {
-			image: "",
+			image: undefined,
 			username: "",
 			email: "",
 			desc: "",
 		},
 		validationSchema: Yup.object({
-			image: Yup.string().optional(),
 			username: Yup.string()
 				.min(4, "Minimum of 4 characters required!")
 				.max(15, "Characters must be less than 15!")
@@ -99,30 +104,41 @@ const EditProfile = () => {
 	};
 
 	return (
-		<div className="card flex justify-content-center w-12 m-auto">
+		<div
+			className={`${classes.editProfile} card flex justify-content-center w-12 m-auto`}
+		>
 			<form
 				className="flex flex-column gap-2"
 				onBlur={handleBlur}
 				onSubmit={handleSubmit}
 			>
 				<div>
-					<FileUpload
-						id="image"
-						mode="basic"
-						url="/api/upload"
-						accept="image/*"
-						maxFileSize={1000000}
-						onSelect={e => {
-							setFieldValue("image", e.files[0].name);
+					<label
+						htmlFor="imageInput"
+						className={`${classes.imgInputLabel} flex cursor-pointer`}
+					>
+						<PermMediaIcon className="mx-1 text-red-400" />
+						{!selectedImageText ? (
+							<span>Change Profile Picture</span>
+						) : (
+							<span className="">{selectedImageText}</span>
+						)}
+					</label>
+					<input
+						id="imageInput"
+						type="file"
+						onChange={e => {
+							console.log(e?.target?.files?.[0]);
+							setSelectedImageText(e?.target?.files?.[0].name);
+							setFieldValue("image", e?.target?.files?.[0]);
 						}}
-						chooseLabel="Update Picture"
 					/>
 				</div>
 				<div>
 					<InputText
 						id="email"
+						name="email"
 						placeholder="Edit email"
-						//type="email"
 						value={values.email}
 						onChange={e => {
 							setFieldValue("email", e.target.value);
@@ -136,6 +152,7 @@ const EditProfile = () => {
 				<div>
 					<InputText
 						id="username"
+						name="username"
 						placeholder="Edit username"
 						type="text"
 						value={values.username}
@@ -148,6 +165,7 @@ const EditProfile = () => {
 				<div>
 					<InputTextarea
 						id="desc"
+						name="desc"
 						placeholder="Edit description"
 						value={values.desc}
 						onChange={e => {

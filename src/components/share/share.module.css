@@ -16,3 +16,8 @@
   -o-border-radius: 50%;
   object-fit: cover;
 }
+
+
+.container input[type="file"] {
+  display: none;
+}
