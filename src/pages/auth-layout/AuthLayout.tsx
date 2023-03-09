@@ -7,32 +7,12 @@ import { ProgressBar } from "primereact/progressbar";
 
 export const AuthLayout = () => {
 	const outlet = useOutlet();
-	//const data = useLoaderData() as any;
+
 	const user = useLoaderData() as any;
 
 	return (
 		<AuthProvider user={user}>
 			<>{outlet}</>
 		</AuthProvider>
-		//<Suspense
-		//	fallback={
-		//		<ProgressBar
-		//			mode="indeterminate"
-		//			style={{ height: "6px" }}
-		//		></ProgressBar>
-		//	}
-		//>
-		//	<Await
-		//		resolve={data.authUser}
-		//		children={user => (
-		//			<AuthProvider user={user}>
-		//				<>
-		//					{console.log(user)}
-		//					{outlet}
-		//				</>
-		//			</AuthProvider>
-		//		)}
-		//	/>
-		//</Suspense>
 	);
 };
