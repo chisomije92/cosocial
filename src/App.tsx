@@ -49,11 +49,11 @@ function App() {
 	//	};
 	//}, []);
 
-	useEffect(() => {
-		fetch("https://cosocial-api.onrender.com/").then(res =>
-			console.log("connected to API")
-		);
-	}, []);
+	//useEffect(() => {
+	//	fetch("https://cosocial-api.onrender.com/").then(res =>
+	//		console.log("connected to API")
+	//	);
+	//}, []);
 
 	const getAuthStatus = () =>
 		new Promise(resolve =>

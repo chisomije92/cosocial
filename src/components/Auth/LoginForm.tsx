@@ -14,7 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const LoginForm = () => {
-	const { login, userId } = useAuth();
+	const { authenticateUser, userId, errorMsg } = useAuth();
 	const navigate = useNavigate();
 
 	const onSubmit = async (values: LoginValues) => {
@@ -22,7 +22,7 @@ const LoginForm = () => {
 			resetForm();
 		}
 
-		await login(values);
+		await authenticateUser(values, false);
 	};
 
 	useEffect(() => {
@@ -138,6 +138,7 @@ const LoginForm = () => {
 						className="w-23rem font-bold"
 						disabled={isSubmitting || !isValid || !touched.email}
 					/>
+					<span className="text-center text-red-500">{errorMsg}</span>
 					<div className="flex gap-1">
 						<span>Not a registered user yet?</span>
 						<Link

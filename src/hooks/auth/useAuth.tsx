@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext, useMemo } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
-import { signIn } from "../../utils/api";
+import { signIn, signUp } from "../../utils/api";
 
 const AuthContext = createContext<{
 	authUser: {
@@ -13,10 +13,11 @@ const AuthContext = createContext<{
 		userId: string;
 		expirationTimer: string;
 	} | null;
-	login: (data: any) => Promise<void>;
+	userId: string | null;
+	errorMsg: string | null;
+	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
-	userId: string | null;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
 }>({
 	authUser: {
@@ -24,10 +25,12 @@ const AuthContext = createContext<{
 		userId: "",
 		expirationTimer: "",
 	},
-	login: async (data: boolean) => {},
-	logout: () => {},
-	autoLogout: (milliseconds: number) => {},
 	userId: null,
+	errorMsg: null,
+	authenticateUser: async () => {},
+	logout: () => {},
+	autoLogout: () => {},
+
 	setUserId: () => {},
 });
 
@@ -45,18 +48,35 @@ export const AuthProvider: React.FC<{
 		expirationTimer: string;
 	} | null>("authUser", user);
 	const [userId, setUserId] = useState<string | null>(null);
+	const [errorMsg, setErrorMsg] = useState<string | null>(null);
 	const navigate = useNavigate();
 
-	const login = async (data: { email: string; password: string }) => {
-		const resData = await signIn(data);
+	const authenticateUser = async (
+		data: { email: string; password: string; username: string },
+		isSignUp: boolean
+	) => {
+		let resData: any;
+		if (!isSignUp) {
+			resData = await signIn(data);
+		} else {
+			resData = await signUp({
+				email: data.email,
+				password: data.password,
+				username: data.username,
+			});
+		}
+		if (!resData?.userId) {
+			setErrorMsg(resData);
+		}
 		const remainingMilliseconds = 60 * 60 * 1000;
 		const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
-		setAuthUser({
-			userId: resData.userId,
-			token: resData.token,
-			expirationTimer: expiryDate.toISOString(),
-		});
-
+		if (resData) {
+			setAuthUser({
+				userId: resData.userId,
+				token: resData.token,
+				expirationTimer: expiryDate.toISOString(),
+			});
+		}
 		autoLogout(remainingMilliseconds);
 	};
 
@@ -80,12 +100,16 @@ export const AuthProvider: React.FC<{
 		}
 	}, [authUser]);
 
+	useEffect(() => {
+		console.log(errorMsg);
+	}, [errorMsg]);
 	const value = {
 		authUser,
-		login,
+		userId,
+		errorMsg,
+		authenticateUser,
 		logout,
 		autoLogout,
-		userId,
 		setUserId,
 	};
 

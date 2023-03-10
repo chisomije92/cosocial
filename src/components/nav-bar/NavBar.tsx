@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import useLocalStorage from "use-local-storage";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
@@ -19,16 +19,8 @@ const NavBar: FC<{}> = () => {
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
-	//const [userId, setUserId] = useState<string | null>(null);
-	const navigate = useNavigate();
 
-	//useEffect(() => {
-	//	if (authUser) {
-	//		setUserId(authUser.userId);
-	//	} else {
-	//		setUserId(null);
-	//	}
-	//}, [authUser]);
+	const navigate = useNavigate();
 
 	const logOut = () => {
 		logout();
@@ -46,7 +38,7 @@ const NavBar: FC<{}> = () => {
 		return `text-white ${isActive ? "opacity-90" : ""}`;
 	};
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		let themeLink: HTMLLinkElement = document.getElementById(
 			"app-theme"
 		) as HTMLLinkElement;

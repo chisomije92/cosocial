@@ -1,8 +1,13 @@
 let url = 'http://localhost:8000/api'
 
+export class CustomError extends Error {
+  constructor(public message: string, public statusCode: number) {
+    super(message)
+  }
+}
+
 
 export const signIn = async (data: { email: string; password: string },
-  //setLocalStorage : (userData:{userId: string; token: string; expirationTimer: string} | null) => void
 ) => {
   try {
     const res = await fetch(`${url}/auth/login`, {
@@ -15,26 +20,54 @@ export const signIn = async (data: { email: string; password: string },
         password: data.password,
       }),
     })
-    if (res.status === 422) {
-      throw new Error("Validation failed.");
+
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
     }
-    if (res.status !== 200 && res.status !== 201) {
-      throw new Error("Could not authenticate you!");
-    }
-    const resData = await res.json()
-    //const remainingMilliseconds = 60 * 60 * 1000;
-    //const expiryDate = new Date(
-    //  new Date().getTime() + remainingMilliseconds
-    //);
-    //setLocalStorage({
-    //  userId: resData.userId,
-    //  token: resData.token,
-    //  expirationTimer: expiryDate.toISOString(),
-    //})
+    const resData: {
+      userId: string;
+      token: string
+    } = await res.json()
+
     return resData
   } catch (err: any) {
-    console.log(err)
+
+    return err.message
   }
 
 
 }
+
+
+export const signUp = async (data: { email: string; password: string; username: string },
+) => {
+  try {
+    const res = await fetch(`${url}/auth/sign-up`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+        username: data.username
+      }),
+    })
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
+    }
+
+    const resData = await res.json()
+
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+
+
+}
+

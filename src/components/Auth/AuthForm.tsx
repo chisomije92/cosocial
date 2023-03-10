@@ -1,5 +1,5 @@
 /** @format */
-import React from "react";
+import React, { useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 
 import { Password } from "primereact/password";
@@ -11,18 +11,25 @@ import * as Yup from "yup";
 import { classNames } from "primereact/utils";
 import { RegisterValues } from "../../models/authForm";
 import cosocialImg from "../../images/CO-1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const AuthForm = () => {
-	const { login } = useAuth();
+	const { authenticateUser, userId, errorMsg } = useAuth();
+	const navigate = useNavigate();
 	const onSubmit = (values: RegisterValues) => {
 		if (isValid) {
 			resetForm();
 		}
 
-		login(true);
+		authenticateUser(values, true);
 	};
+
+	useEffect(() => {
+		if (userId) {
+			navigate("/");
+		}
+	}, [userId]);
 
 	const {
 		values,
@@ -155,6 +162,8 @@ const AuthForm = () => {
 						className="w-23rem font-bold my-2"
 						type="submit"
 					/>
+					<span className="text-center text-red-500">{errorMsg}</span>
+
 					<div className="flex gap-1">
 						<span>Registered already?</span>
 
