@@ -11,7 +11,7 @@ import { ProgressBar } from "primereact/progressbar";
 
 const ProfilePage = () => {
 	const data = useLoaderData() as any;
-	console.log(data);
+	//console.log(data);
 	return (
 		<>
 			<SideBar />

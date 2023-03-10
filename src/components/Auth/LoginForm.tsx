@@ -1,5 +1,5 @@
 /** @format */
-import rreact from "react";
+import react, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button } from "primereact/button";
@@ -10,12 +10,12 @@ import { LoginValues } from "../../models/authForm";
 import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import cosocialImg from "../../images/CO-1.png";
-import { Link, useSubmit } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const LoginForm = () => {
-	const { login } = useAuth();
-	const submit = useSubmit();
+	const { login, userId } = useAuth();
+	const navigate = useNavigate();
 
 	const onSubmit = async (values: LoginValues) => {
 		if (isValid) {
@@ -24,6 +24,12 @@ const LoginForm = () => {
 
 		await login(values);
 	};
+
+	useEffect(() => {
+		if (userId) {
+			navigate("/");
+		}
+	}, [userId]);
 
 	const {
 		values,
@@ -91,6 +97,8 @@ const LoginForm = () => {
 					className="flex flex-column gap-2 w-26rem  p-3"
 					onSubmit={handleSubmit}
 					onBlur={handleBlur}
+					//method="post"
+					//action="/"
 				>
 					<div className="font-bold text-3xl ">Log In</div>
 					<div>

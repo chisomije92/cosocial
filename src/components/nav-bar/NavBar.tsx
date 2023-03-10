@@ -14,21 +14,21 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const NavBar: FC<{}> = () => {
-	const { authUser, logout } = useAuth();
+	const { authUser, logout, userId } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
-	const [userId, setUserId] = useState<string | null>(null);
+	//const [userId, setUserId] = useState<string | null>(null);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (authUser) {
-			setUserId(authUser.userId);
-		} else {
-			setUserId(null);
-		}
-	}, [authUser]);
+	//useEffect(() => {
+	//	if (authUser) {
+	//		setUserId(authUser.userId);
+	//	} else {
+	//		setUserId(null);
+	//	}
+	//}, [authUser]);
 
 	const logOut = () => {
 		logout();
