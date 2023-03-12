@@ -9,9 +9,9 @@ import { Users } from "../../data/dummy-data";
 import classes from "./messages.module.css";
 
 const Messages = () => {
-	//const chatUsers = Users.slice(1, 4);
+	const chatUsers = Users.slice(1, 5);
 	const navigate = useNavigate();
-	const chatUsers = Users.slice();
+	//const chatUsers = Users.slice();
 	return (
 		<div className={`${classes.container} flex justify-content-center`}>
 			<ul className="list-none w-7 flex flex-column">

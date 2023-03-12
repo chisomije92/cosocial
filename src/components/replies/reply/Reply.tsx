@@ -7,10 +7,12 @@ import { Users } from "../../../data/dummy-data";
 
 import classes from "./reply.module.css";
 
-const Reply: FC<{
+interface ReplyProp {
 	reply: any;
 	onClick: () => void;
-}> = ({ reply, onClick }) => {
+}
+
+const Reply: FC<ReplyProp> = ({ reply, onClick }) => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [like, setLike] = useState(reply.like);
 

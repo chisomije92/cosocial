@@ -12,10 +12,12 @@ import { Link, useNavigate } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
 
-const Post: FC<{
+interface PostProp {
 	post: any;
 	showComments?: boolean;
-}> = ({ post, showComments }) => {
+}
+
+const Post: FC<PostProp> = ({ post, showComments }) => {
 	const op = useRef<any>(null);
 	const navigate = useNavigate();
 	const [like, setLike] = useState(post.like);

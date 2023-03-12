@@ -10,7 +10,7 @@ import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { useState } from "react";
 
-export default function Share() {
+const Share = () => {
 	const [inputText, setInputText] = useState("");
 	const [selectedFile, setSelectedFile] = useState<File>();
 
@@ -75,4 +75,6 @@ export default function Share() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default Share;

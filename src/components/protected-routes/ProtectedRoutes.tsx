@@ -8,7 +8,6 @@ let userId: string | null;
 const ProtectedRoutes = () => {
 	const { authUser } = useAuth();
 
-	//const { userId } = authUser;
 	if (authUser) {
 		userId = authUser.userId;
 	}

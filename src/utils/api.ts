@@ -1,10 +1,10 @@
+import CustomError from "../models/custom-error";
+
+
+
 let url = 'http://localhost:8000/api'
 
-export class CustomError extends Error {
-  constructor(public message: string, public statusCode: number) {
-    super(message)
-  }
-}
+
 
 
 export const signIn = async (data: { email: string; password: string },

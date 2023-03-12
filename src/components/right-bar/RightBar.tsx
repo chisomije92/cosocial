@@ -10,7 +10,7 @@ import { shuffleArray } from "../../utils/util";
 import classes from "./right-bar.module.css";
 import { adsArray } from "../../utils/ad-images-util";
 
-export default function RightBar() {
+const RightBar = () => {
 	const navigate = useNavigate();
 
 	const showAd = (data: string[]) => {
@@ -58,4 +58,6 @@ export default function RightBar() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default RightBar;

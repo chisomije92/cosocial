@@ -9,9 +9,11 @@ import Likes from "../likes/Likes";
 import classes from "./replies.module.css";
 import Reply from "./reply/Reply";
 
-const Replies: FC<{
+interface RepliesProp {
 	replies?: any;
-}> = ({ replies }) => {
+}
+
+const Replies: FC<RepliesProp> = ({ replies }) => {
 	const [visible, setVisible] = useState(false);
 
 	const likesDialogue = (

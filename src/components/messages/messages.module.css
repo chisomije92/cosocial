@@ -1,18 +1,11 @@
 .container{
   flex: 4;
-  /*max-width: 40%;*/
-  /*min-width: 200px;*/
-  /*min-width: min-content;*/
-  /*max-width: 300px;*/
-  /*height: 700px;
-    overflow-y: scroll;*/
-  
-  
+
 }
 
 .container ul {
-    min-width: min-content;
-  height: 700px;
+  min-width: min-content;
+  height: 65%;
   overflow-y: scroll;
 }
 

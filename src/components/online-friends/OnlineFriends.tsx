@@ -3,11 +3,12 @@
 import { Chip } from "primereact/chip";
 import React, { FC } from "react";
 
-const OnlineFriends: FC<{
+interface OnlineFriendsProp {
 	name: string;
 	imageSrc: string;
 	onClick: () => void;
-}> = ({ name, imageSrc, onClick }) => {
+}
+const OnlineFriends: FC<OnlineFriendsProp> = ({ name, imageSrc, onClick }) => {
 	return (
 		<li className="-ml-5 flex mb-3 cursor-pointer" onClick={onClick}>
 			<Chip

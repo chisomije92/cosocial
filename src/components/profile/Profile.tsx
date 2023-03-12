@@ -13,10 +13,12 @@ import ChangePassword from "../change-password/ChangePassword";
 import { Link } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 
-const Profile: React.FC<{
+interface ProfileProps {
 	user: any;
 	userPosts: any;
-}> = ({ user, userPosts }) => {
+}
+
+const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);

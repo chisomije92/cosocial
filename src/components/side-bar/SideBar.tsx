@@ -16,7 +16,7 @@ import Mutuals from "../mutuals/Mutuals";
 import { Users } from "../../data/dummy-data";
 import { NavLink, useNavigate } from "react-router-dom";
 
-export default function SideBar() {
+const SideBar = () => {
 	const navigate = useNavigate();
 	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
 		return `text-color no-underline text-lg ${isActive ? "opacity-70" : ""}`;
@@ -85,4 +85,6 @@ export default function SideBar() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default SideBar;
