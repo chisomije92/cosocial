@@ -135,6 +135,7 @@ const LoginForm = () => {
 
 					<Button
 						label="Login"
+						type="submit"
 						className="w-23rem font-bold"
 						disabled={isSubmitting || !isValid || !touched.email}
 					/>

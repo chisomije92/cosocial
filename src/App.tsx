@@ -55,20 +55,11 @@ function App() {
 	//	);
 	//}, []);
 
-	const getAuthStatus = () =>
-		new Promise(resolve =>
-			setTimeout(() => {
-				const user = localStorage.getItem("authUser");
-				resolve(user);
-			}, 3000)
-		);
-
 	const router = createBrowserRouter(
 		createRoutesFromElements(
 			<Route
 				element={<AuthLayout />}
 				errorElement={<ErrorPage />}
-				//loader={() => defer({ authUser: getAuthStatus() })}
 				loader={async () => {
 					return localStorage.getItem("authUser");
 				}}
@@ -100,11 +91,7 @@ function App() {
 					</Route>
 
 					<Route path="/sign-up" element={<SignUpPage />} />
-					<Route
-						path="/login"
-						element={<LoginPage />}
-						//action={SignUpAction}
-					/>
+					<Route path="/login" element={<LoginPage />} />
 				</Route>
 			</Route>
 		)

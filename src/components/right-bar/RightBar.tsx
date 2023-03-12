@@ -36,7 +36,7 @@ export default function RightBar() {
 				<img
 					src={showAd(adsArray)}
 					className="ml-3 border-round-lg"
-					width="93%"
+					width="85%"
 					height="300px"
 					alt=""
 				/>

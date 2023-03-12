@@ -1,5 +1,7 @@
 .container {
   flex: 5.5;
   margin-left: 50%;
+  margin-top: 10%;
+  opacity: 0.3;
   
 }

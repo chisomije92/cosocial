@@ -101,8 +101,17 @@ export const AuthProvider: React.FC<{
 	}, [authUser]);
 
 	useEffect(() => {
-		console.log(errorMsg);
+		let timer: NodeJS.Timeout;
+		if (errorMsg) {
+			timer = setTimeout(() => {
+				setErrorMsg(null);
+			}, 5000);
+		}
+		return () => {
+			clearTimeout(timer);
+		};
 	}, [errorMsg]);
+
 	const value = {
 		authUser,
 		userId,
