@@ -157,7 +157,7 @@ const NavBar: FC<{}> = () => {
 
 				<OverlayPanel ref={op} className="mt-1 mr-2">
 					<Link
-						to="profile/1"
+						to={`profile`}
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer no-underline`}
 					>
 						<span className="text-sm">Profile</span>{" "}

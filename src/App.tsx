@@ -73,6 +73,11 @@ function App() {
 							loader={explorePostsLoader}
 						/>
 						<Route
+							path="/profile"
+							element={<ProfilePage />}
+							loader={profilePageLoader}
+						/>
+						<Route
 							path="/profile/:id"
 							element={<ProfilePage />}
 							loader={profilePageLoader}

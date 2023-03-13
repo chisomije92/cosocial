@@ -4,6 +4,7 @@ import CustomError from "../models/custom-error";
 
 
 let url = 'http://localhost:8000/api'
+export const urlImg = "http://localhost:8000/"
 
 
 const checkResponseForError = async (res: Response) => {
@@ -120,6 +121,42 @@ export const updatePassword = async (id: string, token: string, data: {
     )
 
 
+    const resData = await checkResponseForError(res)
+
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+export const getUser = async (id: string, token: string) => {
+  try {
+    const res = await fetch(`${url}/users/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+
+    },
+    )
+    const resData = await checkResponseForError(res)
+
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+export const getAuthUser = async (token: string) => {
+  try {
+    const res = await fetch(`${url}/users/`, {
+      method: "GET",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+
+    },
+    )
     const resData = await checkResponseForError(res)
 
     return resData
@@ -276,7 +313,11 @@ export const deleteUser = async (id: string, token: string) => {
 
     },
     )
-
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
+    }
 
     const resData = await checkResponseForError(res)
 

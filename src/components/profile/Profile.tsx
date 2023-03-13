@@ -12,6 +12,7 @@ import EditProfile from "./EditProfile";
 import ChangePassword from "../change-password/ChangePassword";
 import { Link } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
+import { urlImg } from "../../utils/user-api";
 
 interface ProfileProps {
 	user: any;
@@ -19,6 +20,7 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
+	console.log(user.profilePicture);
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);
@@ -60,7 +62,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
 				<div className={`${classes.imgContainer}`}>
 					<Image
-						src={user.profilePicture}
+						src={`${urlImg}${user.profilePicture}`}
 						alt=""
 						height="260"
 						width="240"

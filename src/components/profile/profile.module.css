@@ -1,6 +1,9 @@
 .profile {
-  /*flex: 5.5*/
-  max-width: 100%
+  flex: 5.5;
+}
+
+.imgContainer {
+  margin-left: 20px;
 }
 
 
@@ -13,7 +16,6 @@
   -o-border-radius: 50%;
   object-fit: cover;
   background-color: none;
- 
 
 }
 
