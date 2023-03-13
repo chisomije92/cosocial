@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 
 import { createContext, useContext, useMemo } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
-import { signIn, signUp } from "../../utils/api";
+import { signIn, signUp } from "../../utils/user-api";
 
 const AuthContext = createContext<{
 	authUser: {
