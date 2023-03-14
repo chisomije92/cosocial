@@ -21,9 +21,9 @@ const Messages = () => {
 				{chatUsers.map(u => (
 					<li
 						className="my-2 flex w-12"
-						key={u.id}
+						key={u._id}
 						onClick={() => {
-							navigate(`${u.id}`);
+							navigate(`${u._id}`);
 						}}
 					>
 						<div className="flex flex-column">

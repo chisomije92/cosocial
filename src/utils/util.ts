@@ -20,3 +20,12 @@ export const checkResponseForError = async (res: Response) => {
   const resData = await res.json()
   return resData
 }
+
+export const getDataFromLocalStorage = () => {
+  let parsedUser;
+  const authUser = localStorage.getItem("authUser");
+  if (authUser) {
+    parsedUser = JSON.parse(authUser);
+  }
+  return parsedUser
+}

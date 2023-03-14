@@ -75,7 +75,7 @@ const SearchFriend = () => {
 					imageSrc={user.profilePicture}
 					name={user.username}
 					onClick={() => {
-						navigate(`/profile/${user.id}`);
+						navigate(`/profile/${user._id}`);
 					}}
 				/>
 			</div>

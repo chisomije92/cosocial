@@ -7,16 +7,17 @@ import classes from "./feeds.module.css";
 
 interface FeedsInterface {
 	posts: any;
+	user: any;
 	isExploring?: boolean;
 }
 
-const Feeds: FC<FeedsInterface> = ({ posts, isExploring }) => {
+const Feeds: FC<FeedsInterface> = ({ posts, user, isExploring }) => {
 	return (
 		<div className={`${classes.feeds}`}>
 			<div className="p-4 flex flex-column">
 				{!isExploring && <Share />}
 				{posts.map((p: any) => (
-					<Post post={p} key={p.id} showComments={true} />
+					<Post post={p} user={user} key={p._id} showComments={true} />
 				))}
 			</div>
 		</div>

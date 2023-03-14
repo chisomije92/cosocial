@@ -25,7 +25,7 @@ const Reply: FC<ReplyProp> = ({ reply, onClick }) => {
 				<Avatar image={reply.photo} shape="circle" className="text-center" />
 				<div className="flex flex-column gap-2">
 					<small className="opacity-80 ">
-						{Users.filter(u => u.id === reply?.userId)[0].username}
+						{Users.filter(u => u._id === reply?.userId)[0].username}
 					</small>
 					<span>{reply.desc}</span>
 					<div className="flex mt-2">

@@ -21,7 +21,7 @@ const SinglePostPage = () => {
 };
 
 export async function loader({ params }: any) {
-	const selectedPost = Posts.find(post => post.id === +params.id);
+	const selectedPost = Posts.find(post => post._id === +params.id);
 	return selectedPost;
 }
 

@@ -9,7 +9,7 @@ const Bookmarks = () => {
 	return (
 		<div className={`${classes.bookmarks} mx-3`}>
 			{Posts.map(p => (
-				<Post post={p} key={p.id} showComments={true} />
+				<Post post={p} key={p._id} showComments={true} />
 			))}
 		</div>
 	);

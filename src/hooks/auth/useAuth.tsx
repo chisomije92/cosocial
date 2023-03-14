@@ -70,6 +70,7 @@ export const AuthProvider: React.FC<{
 		}
 		const remainingMilliseconds = 60 * 60 * 1000;
 		const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
+
 		if (resData) {
 			setAuthUser({
 				userId: resData.userId,
@@ -77,7 +78,6 @@ export const AuthProvider: React.FC<{
 				expirationTimer: expiryDate.toISOString(),
 			});
 		}
-		autoLogout(remainingMilliseconds);
 	};
 
 	const logout = () => {
@@ -94,6 +94,9 @@ export const AuthProvider: React.FC<{
 	useEffect(() => {
 		if (authUser) {
 			setUserId(authUser.userId);
+			const expirationDuration =
+				new Date(authUser.expirationTimer).getTime() - new Date().getTime();
+			autoLogout(expirationDuration);
 		} else {
 			setUserId(null);
 			navigate("/login", { replace: true });

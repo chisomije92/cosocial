@@ -46,11 +46,11 @@ const RightBar = () => {
 				<ul>
 					{Users.map(user => (
 						<OnlineFriends
-							key={user.id}
+							key={user._id}
 							name={user.username}
 							imageSrc={user.profilePicture}
 							onClick={() => {
-								navigate(`/profile/${user.id}`);
+								navigate(`/profile/${user._id}`);
 							}}
 						/>
 					))}

@@ -9,18 +9,21 @@ import SideBar from "../../components/side-bar/SideBar";
 import { Posts } from "../../data/dummy-data";
 
 import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
+import { getPostsOnTl } from "../../utils/post-api";
+import { getAuthUser } from "../../utils/user-api";
+import { getDataFromLocalStorage } from "../../utils/util";
 
 export default function Home() {
-	const { loadedPosts }: any = useLoaderData();
+	const { data }: any = useLoaderData();
 	return (
 		<>
 			<Suspense fallback={<LoadingSpinner />}>
 				<Await
-					resolve={loadedPosts}
+					resolve={data}
 					children={data => (
 						<>
 							<SideBar />
-							<Feeds posts={data} />
+							<Feeds posts={data.loadedPosts} user={data.userData} />
 							<RightBar />
 						</>
 					)}
@@ -30,18 +33,18 @@ export default function Home() {
 	);
 }
 
-function loadPosts() {
-	return new Promise(resolve =>
-		setTimeout(() => {
-			const loadedPosts = Posts;
-			resolve(loadedPosts);
-		}, 1000)
-	);
-}
+const loadData = async () => {
+	const parsedUser = getDataFromLocalStorage();
+	const user = await getAuthUser(parsedUser.token, parsedUser.userId);
+	const loadedPosts = await getPostsOnTl(parsedUser.token, parsedUser.userId);
+	return {
+		userData: { ...user },
+		loadedPosts: loadedPosts,
+	};
+};
 
-export function loader() {
-	//const loadedPosts = Posts;
-	//return loadedPosts;
-
-	return defer({ loadedPosts: loadPosts() });
-}
+export const loader = async () => {
+	return defer({
+		data: loadData(),
+	});
+};

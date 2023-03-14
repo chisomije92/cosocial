@@ -17,7 +17,7 @@ const Follows: React.FC<{
 				<h2 className="-mt-3 capitalize">{followList}</h2>
 				<ul className="list-none ">
 					{Users.map(u => (
-						<li className="flex justify-content-between " key={u.id}>
+						<li className="flex justify-content-between " key={u._id}>
 							<div className="my-2 flex gap-2">
 								<Avatar image={u.profilePicture} size="large" />
 								<div className="flex flex-column -mt-3">
@@ -28,7 +28,7 @@ const Follows: React.FC<{
 							<div className="mr-2">
 								<Link
 									className="no-underline text-primary"
-									to={`/profile/${u.id}`}
+									to={`/profile/${u._id}`}
 								>
 									View Profile
 								</Link>

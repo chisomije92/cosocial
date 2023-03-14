@@ -9,10 +9,11 @@ import { Posts, Users } from "../../data/dummy-data";
 import { Await, defer, useLoaderData } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { getAuthUser, getUser } from "../../utils/user-api";
+import { getUserPosts } from "../../utils/post-api";
+import { getDataFromLocalStorage } from "../../utils/util";
 
 const ProfilePage = () => {
 	const { data } = useLoaderData() as any;
-	console.log(data.user);
 
 	return (
 		<>
@@ -27,10 +28,10 @@ const ProfilePage = () => {
 			>
 				<Await
 					resolve={data}
-					children={user => (
+					children={data => (
 						<>
 							<SideBar />
-							<Profile user={data.user} userPosts={[]} />
+							<Profile user={data.userData} userPosts={data.loadedPosts} />
 							<SearchFriend />
 						</>
 					)}
@@ -40,48 +41,36 @@ const ProfilePage = () => {
 	);
 };
 
-export const profilePageLoader = async ({ params }: any) => {
-	//try {
-	//	const user = Users.find(u => u.id === +params.id);
-	//	const userPosts = Posts.filter(p => p.userId === user?.id);
-	//	//console.log(localStorage.getItem("authUser"));
-	//	const authUser = localStorage.getItem("authUser");
-	//	if (authUser) {
-	//		const parsedUser = JSON.parse(authUser);
-	//		console.log(parsedUser.token);
-	//	}
+const loadData = async (paramsId?: string) => {
+	let user;
+	let loadedPosts;
+	let parsedUser = getDataFromLocalStorage();
 
-	//	return {
-	//		user,
-	//		userPosts,
-	//	};
-	//} catch (err: any) {
-	//	throw err;
-	//}
+	if (!paramsId) {
+		user = await getAuthUser(parsedUser.token, parsedUser.userId);
+		loadedPosts = await getUserPosts(parsedUser.token, parsedUser.userId);
+	} else {
+		user = await getUser(paramsId, parsedUser.userId);
+		loadedPosts = await getUserPosts(parsedUser.token, parsedUser.userId);
+	}
+
+	return {
+		userData: { ...user },
+		loadedPosts: loadedPosts,
+	};
+};
+
+export const profilePageLoader = async ({ params }: any) => {
 	try {
-		let user: any;
-		let parsedUser;
-		const authUser = localStorage.getItem("authUser");
-		if (authUser) {
-			parsedUser = JSON.parse(authUser);
-		}
-		const userPosts = Posts.filter(p => p.userId === user?.id);
 		if (!params.id) {
-			//user = await getAuthUser(parsedUser.token);
 			return defer({
-				data: { user: getAuthUser(parsedUser.token) },
+				data: loadData(),
 			});
 		} else {
-			//user = await getUser(params.id, parsedUser.token);
 			return defer({
-				user: getUser(params.id, parsedUser.token),
-				//userPosts: userPosts,
+				data: loadData(params.id),
 			});
 		}
-		//return defer({
-		//	user,
-		//	userPosts,
-		//});
 	} catch (err: any) {
 		throw err;
 	}

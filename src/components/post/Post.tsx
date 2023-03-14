@@ -11,13 +11,15 @@ import Likes from "../likes/Likes";
 import { Link, useNavigate } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
+import { urlImgString } from "../../utils/constants/constants";
 
 interface PostProp {
 	post: any;
+	user?: any;
 	showComments?: boolean;
 }
 
-const Post: FC<PostProp> = ({ post, showComments }) => {
+const Post: FC<PostProp> = ({ post, user, showComments }) => {
 	const op = useRef<any>(null);
 	const navigate = useNavigate();
 	const [like, setLike] = useState(post.like);
@@ -53,7 +55,7 @@ const Post: FC<PostProp> = ({ post, showComments }) => {
 				<div>
 					<div className="flex justify-content-around gap-2 ml-3 mt-2 -mb-2">
 						<Avatar
-							image={Users.filter(u => u.id === post?.userId)[0].profilePicture}
+							image={`${urlImgString}${user.profilePicture}`}
 							size="normal"
 							shape="circle"
 							className=""
@@ -62,11 +64,12 @@ const Post: FC<PostProp> = ({ post, showComments }) => {
 							className=" font-semibold cursor-pointer"
 							onClick={() => navigate("/profile/1")}
 						>
-							{Users.filter(u => u.id === post?.userId)[0].username}
+							{/*{Users.filter(u => u._id === post?.userId)[0].username}*/}
+							{user.username}
 						</span>
 						{/*<span className=" opacity-70 text-sm">{post.date}</span>*/}
 						<span className=" opacity-70 text-sm">
-							<ReactTimeAgo date={new Date()} locale="en-US" />
+							<ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
 						</span>
 						<i
 							className="pi pi-ellipsis-v ml-auto mr-1 my-3  cursor-pointer"
@@ -89,11 +92,11 @@ const Post: FC<PostProp> = ({ post, showComments }) => {
 					</div>
 				</div>
 				<div className="ml-3 text-700">
-					<p>{post.desc}</p>
+					<p>{post.description}</p>
 				</div>
 				<div className="">
 					<Image
-						src={post.photo}
+						src={`${urlImgString}${post.image}`}
 						alt="Image"
 						width="100%"
 						className="mx-3"
@@ -126,7 +129,7 @@ const Post: FC<PostProp> = ({ post, showComments }) => {
 								className="opacity-70 text-sm mx-1 cursor-pointer"
 								onClick={() => setVisible(true)}
 							>
-								{like} likes
+								{post.likes.length > 0 ? `${post.likes.length} likes` : ""}
 							</span>
 						</div>
 					</div>

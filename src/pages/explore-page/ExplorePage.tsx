@@ -14,7 +14,7 @@ const ExplorePage = () => {
 	return (
 		<>
 			<SideBar />
-			<Feeds posts={shuffledPosts} />
+			<Feeds posts={shuffledPosts} user={{}} />
 			<RightBar />
 		</>
 	);

@@ -1,4 +1,5 @@
 
+
 import CustomError from "../models/custom-error";
 import { urlString } from "./constants/constants";
 import { checkResponseForError } from "./util";
@@ -127,14 +128,13 @@ export const getUser = async (id: string, token: string) => {
     },
     )
     const resData = await checkResponseForError(res)
-
     return resData
   } catch (err: any) {
     return err.message
   }
 }
 
-export const getAuthUser = async (token: string) => {
+export const getAuthUser = async (token: string, userId: string) => {
   try {
     const res = await fetch(`${urlString}/users/`, {
       method: "GET",
@@ -145,6 +145,7 @@ export const getAuthUser = async (token: string) => {
     },
     )
     const resData = await checkResponseForError(res)
+
 
     return resData
   } catch (err: any) {

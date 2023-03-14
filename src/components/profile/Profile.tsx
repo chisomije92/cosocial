@@ -70,8 +70,8 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 				</div>
 				<div className="flex flex-column align-items-center mt-2 mb-2">
 					<div className="font-bold my-1">{user.username}</div>
-					<div className="opacity-80">Chisom@gmail.com</div>
-					<div className="mt-1 font-medium">This is user's description!</div>
+					<div className="opacity-80">{user.email}</div>
+					<div className="mt-1 font-medium">{user.description}</div>
 				</div>
 				<div className="flex gap-3 justify-content-around ">
 					<div>
@@ -126,7 +126,8 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 
 			<div className="">
 				{userPosts.map((p: any) => (
-					<Post key={p.id} post={p} showComments />
+					//<Post key={p.id} post={p} showComments />
+					<Post key={p._id} post={p} user={user} showComments />
 				))}
 			</div>
 		</div>
