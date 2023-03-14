@@ -1,28 +1,15 @@
 
 import CustomError from "../models/custom-error";
+import { urlString } from "./constants/constants";
+import { checkResponseForError } from "./util";
 
 
 
-let url = 'http://localhost:8000/api'
-export const urlImg = "http://localhost:8000/"
-
-
-const checkResponseForError = async (res: Response) => {
-  if (!res.ok) {
-    const errorMessage = await res.json()
-    const errorData = errorMessage.message
-    throw new CustomError(errorData, 400);
-  }
-
-  const resData = await res.json()
-
-  return resData
-}
 
 export const signIn = async (data: { email: string; password: string },
 ) => {
   try {
-    const res = await fetch(`${url}/auth/login`, {
+    const res = await fetch(`${urlString}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +43,7 @@ export const signIn = async (data: { email: string; password: string },
 export const signUp = async (data: { email: string; password: string; username: string },
 ) => {
   try {
-    const res = await fetch(`${url}/auth/sign-up`, {
+    const res = await fetch(`${urlString}/auth/sign-up`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,7 +72,7 @@ export const updateUser = async (id: string, token: string, data: Partial<{
   image: string
 }>) => {
   try {
-    const res = await fetch(`${url}/users/${id}`, {
+    const res = await fetch(`${urlString}/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +96,7 @@ export const updatePassword = async (id: string, token: string, data: {
   newPassword: string;
 }) => {
   try {
-    const res = await fetch(`${url}/users/${id}/update-password`, {
+    const res = await fetch(`${urlString}/users/${id}/update-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -131,7 +118,7 @@ export const updatePassword = async (id: string, token: string, data: {
 
 export const getUser = async (id: string, token: string) => {
   try {
-    const res = await fetch(`${url}/users/${id}`, {
+    const res = await fetch(`${urlString}/users/${id}`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -149,7 +136,7 @@ export const getUser = async (id: string, token: string) => {
 
 export const getAuthUser = async (token: string) => {
   try {
-    const res = await fetch(`${url}/users/`, {
+    const res = await fetch(`${urlString}/users/`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -167,7 +154,7 @@ export const getAuthUser = async (token: string) => {
 
 export const getFollowers = async (id: string, token: string) => {
   try {
-    const res = await fetch(`${url}/users/${id}/followers`, {
+    const res = await fetch(`${urlString}/users/${id}/followers`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -187,7 +174,7 @@ export const getFollowers = async (id: string, token: string) => {
 
 export const getFollowing = async (id: string, token: string) => {
   try {
-    const res = await fetch(`${url}/users/${id}/following`, {
+    const res = await fetch(`${urlString}/users/${id}/following`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -207,7 +194,7 @@ export const getFollowing = async (id: string, token: string) => {
 
 export const followUser = async (id: string, token: string) => {
   try {
-    const res = await fetch(`${url}/users/${id}/follow`, {
+    const res = await fetch(`${urlString}/users/${id}/follow`, {
       method: "PUT",
       headers: {
         Authorization: `bearer ${token}`
@@ -227,7 +214,7 @@ export const followUser = async (id: string, token: string) => {
 
 export const unFollowUser = async (id: string, token: string) => {
   try {
-    const res = await fetch(`${url}/users/${id}/unfollow`, {
+    const res = await fetch(`${urlString}/users/${id}/unfollow`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -246,7 +233,7 @@ export const unFollowUser = async (id: string, token: string) => {
 
 export const getNonFollowing = async (token: string) => {
   try {
-    const res = await fetch(`${url}/users/notfollowing`, {
+    const res = await fetch(`${urlString}/users/notfollowing`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -266,7 +253,7 @@ export const getNonFollowing = async (token: string) => {
 
 export const getNonFollowers = async (token: string) => {
   try {
-    const res = await fetch(`${url}/users/nonfollowers`, {
+    const res = await fetch(`${urlString}/users/nonfollowers`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -285,7 +272,7 @@ export const getNonFollowers = async (token: string) => {
 
 export const getNotfications = async (token: string) => {
   try {
-    const res = await fetch(`${url}/users/notifications`, {
+    const res = await fetch(`${urlString}/users/notifications`, {
       method: "GET",
       headers: {
         Authorization: `bearer ${token}`
@@ -305,7 +292,7 @@ export const getNotfications = async (token: string) => {
 
 export const deleteUser = async (id: string, token: string) => {
   try {
-    const res = await fetch(`${url}/users/${id}`, {
+    const res = await fetch(`${urlString}/users/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `bearer ${token}`

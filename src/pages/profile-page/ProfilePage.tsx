@@ -11,32 +11,31 @@ import { ProgressBar } from "primereact/progressbar";
 import { getAuthUser, getUser } from "../../utils/user-api";
 
 const ProfilePage = () => {
-	const data = useLoaderData() as any;
-	//console.log(data);
+	const { data } = useLoaderData() as any;
+	console.log(data.user);
+
 	return (
 		<>
-			<SideBar />
-			<Profile user={data.user} userPosts={data.userPosts} />
-			<SearchFriend />
-			{/*<Suspense
+			<Suspense
 				fallback={
-					<ProgressBar
-						mode="indeterminate"
-						style={{ height: "6px" }}
-					></ProgressBar>
+					//<ProgressBar
+					//	mode="indeterminate"
+					//	style={{ height: "6px" }}
+					//></ProgressBar>
+					<div>Loading...</div>
 				}
 			>
 				<Await
 					resolve={data}
-					children={data => (
+					children={user => (
 						<>
 							<SideBar />
-							<Profile user={data.user} userPosts={data.userPosts} />
+							<Profile user={data.user} userPosts={[]} />
 							<SearchFriend />
 						</>
 					)}
 				/>
-			</Suspense>*/}
+			</Suspense>
 		</>
 	);
 };
@@ -65,18 +64,24 @@ export const profilePageLoader = async ({ params }: any) => {
 		const authUser = localStorage.getItem("authUser");
 		if (authUser) {
 			parsedUser = JSON.parse(authUser);
-			console.log(parsedUser.token);
 		}
 		const userPosts = Posts.filter(p => p.userId === user?.id);
 		if (!params.id) {
-			user = await getAuthUser(parsedUser.token);
+			//user = await getAuthUser(parsedUser.token);
+			return defer({
+				data: { user: getAuthUser(parsedUser.token) },
+			});
 		} else {
-			user = await getUser(params.id, parsedUser.token);
+			//user = await getUser(params.id, parsedUser.token);
+			return defer({
+				user: getUser(params.id, parsedUser.token),
+				//userPosts: userPosts,
+			});
 		}
-		return {
-			user,
-			userPosts,
-		};
+		//return defer({
+		//	user,
+		//	userPosts,
+		//});
 	} catch (err: any) {
 		throw err;
 	}
