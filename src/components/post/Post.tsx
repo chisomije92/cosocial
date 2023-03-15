@@ -47,6 +47,19 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 		</Dialog>
 	);
 
+	const setImageString = () => {
+		let imgString: string;
+
+		if (user) {
+			imgString = `${urlImgString}${user.profilePicture}`;
+		} else if (!user && post._id) {
+			imgString = `${urlImgString}${post.linkedUser.profilePicture}`;
+		} else {
+			imgString = `${post.linkedUser.profilePicture}`;
+		}
+
+		return imgString;
+	};
 	return (
 		<>
 			<div
@@ -55,7 +68,7 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 				<div>
 					<div className="flex justify-content-around gap-2 ml-3 mt-2 -mb-2">
 						<Avatar
-							image={`${urlImgString}${user.profilePicture}`}
+							image={setImageString()}
 							size="normal"
 							shape="circle"
 							className=""
@@ -64,10 +77,8 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 							className=" font-semibold cursor-pointer"
 							onClick={() => navigate("/profile/1")}
 						>
-							{/*{Users.filter(u => u._id === post?.userId)[0].username}*/}
-							{user.username}
+							{user ? user.username : post.linkedUser.username}
 						</span>
-						{/*<span className=" opacity-70 text-sm">{post.date}</span>*/}
 						<span className=" opacity-70 text-sm">
 							<ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
 						</span>

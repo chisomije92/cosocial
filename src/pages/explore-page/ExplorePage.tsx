@@ -1,28 +1,50 @@
 /** @format */
 
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { Await, defer, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
 import Feeds from "../../components/feeds/Feeds";
 import RightBar from "../../components/right-bar/RightBar";
 import SideBar from "../../components/side-bar/SideBar";
-import { Posts } from "../../data/dummy-data";
-import { shuffleArray } from "../../utils/util";
+import { getPostsOnExplore } from "../../utils/post-api";
+import { getAuthUser } from "../../utils/user-api";
+import { getDataFromLocalStorage } from "../../utils/util";
+import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
 
 const ExplorePage = () => {
-	const loadedPosts: any = useLoaderData();
-	const shuffledPosts = shuffleArray(loadedPosts);
+	const { data }: any = useLoaderData();
+
 	return (
 		<>
-			<SideBar />
-			<Feeds posts={shuffledPosts} user={{}} />
-			<RightBar />
+			<Suspense fallback={<LoadingSpinner />}>
+				<Await
+					resolve={data}
+					children={data => (
+						<>
+							<SideBar />
+							<Feeds posts={data.loadedPosts} />
+							<RightBar />
+						</>
+					)}
+				/>
+			</Suspense>
 		</>
 	);
 };
 
-export function loader() {
-	const loadedPosts = Posts;
+const loadData = async () => {
+	const parsedUser = getDataFromLocalStorage();
+	const user = await getAuthUser(parsedUser.token, parsedUser.userId);
+	const loadedPosts = await getPostsOnExplore(parsedUser.token);
+	return {
+		userData: { ...user },
+		loadedPosts: loadedPosts,
+	};
+};
 
-	return loadedPosts;
-}
+export const loader = async () => {
+	return defer({
+		data: loadData(),
+	});
+};
 export default ExplorePage;

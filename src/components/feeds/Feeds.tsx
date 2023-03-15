@@ -7,7 +7,7 @@ import classes from "./feeds.module.css";
 
 interface FeedsInterface {
 	posts: any;
-	user: any;
+	user?: any;
 	isExploring?: boolean;
 }
 

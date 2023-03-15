@@ -5,27 +5,20 @@ import Profile from "../../components/profile/Profile";
 
 import SideBar from "../../components/side-bar/SideBar";
 import SearchFriend from "../../components/search-friend/SearchFriend";
-import { Posts, Users } from "../../data/dummy-data";
+
 import { Await, defer, useLoaderData } from "react-router-dom";
-import { ProgressBar } from "primereact/progressbar";
+
 import { getAuthUser, getUser } from "../../utils/user-api";
 import { getUserPosts } from "../../utils/post-api";
 import { getDataFromLocalStorage } from "../../utils/util";
+import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
 
 const ProfilePage = () => {
 	const { data } = useLoaderData() as any;
 
 	return (
 		<>
-			<Suspense
-				fallback={
-					//<ProgressBar
-					//	mode="indeterminate"
-					//	style={{ height: "6px" }}
-					//></ProgressBar>
-					<div>Loading...</div>
-				}
-			>
+			<Suspense fallback={<LoadingSpinner />}>
 				<Await
 					resolve={data}
 					children={data => (

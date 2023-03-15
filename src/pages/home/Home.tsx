@@ -6,7 +6,6 @@ import Feeds from "../../components/feeds/Feeds";
 import RightBar from "../../components/right-bar/RightBar";
 
 import SideBar from "../../components/side-bar/SideBar";
-import { Posts } from "../../data/dummy-data";
 
 import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
 import { getPostsOnTl } from "../../utils/post-api";
@@ -15,6 +14,7 @@ import { getDataFromLocalStorage } from "../../utils/util";
 
 export default function Home() {
 	const { data }: any = useLoaderData();
+
 	return (
 		<>
 			<Suspense fallback={<LoadingSpinner />}>
@@ -23,7 +23,7 @@ export default function Home() {
 					children={data => (
 						<>
 							<SideBar />
-							<Feeds posts={data.loadedPosts} user={data.userData} />
+							<Feeds posts={[]} />
 							<RightBar />
 						</>
 					)}

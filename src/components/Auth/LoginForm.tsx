@@ -27,7 +27,7 @@ const LoginForm = () => {
 
 	useEffect(() => {
 		if (userId) {
-			navigate("/profile");
+			navigate("/");
 		}
 	}, [userId]);
 
@@ -97,8 +97,6 @@ const LoginForm = () => {
 					className="flex flex-column gap-2 w-26rem  p-3"
 					onSubmit={handleSubmit}
 					onBlur={handleBlur}
-					//method="post"
-					//action="/"
 				>
 					<div className="font-bold text-3xl ">Log In</div>
 					<div>

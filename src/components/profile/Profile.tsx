@@ -126,7 +126,6 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 
 			<div className="">
 				{userPosts.map((p: any) => (
-					//<Post key={p.id} post={p} showComments />
 					<Post key={p._id} post={p} user={user} showComments />
 				))}
 			</div>
