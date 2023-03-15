@@ -19,3 +19,9 @@
   -ms-transition: opacity 0.3s ease 0.1s;
   -o-transition: opacity 0.3s ease 0.1s;
 }
+
+.disableInteractions [class*="p-avatar"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+
+}

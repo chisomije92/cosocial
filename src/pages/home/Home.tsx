@@ -23,7 +23,11 @@ export default function Home() {
 					children={data => (
 						<>
 							<SideBar />
-							<Feeds posts={[]} />
+							<Feeds
+								currentUser={data.userData}
+								posts={data.loadedPosts}
+								areTherePosts={data.loadedPosts.length > 0}
+							/>
 							<RightBar />
 						</>
 					)}

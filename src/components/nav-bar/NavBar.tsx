@@ -7,13 +7,15 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { Menubar } from "primereact/menubar";
 import classes from "./NavBar.module.css";
 import { Avatar } from "primereact/avatar";
-import headshot from "../../images/headshot.jpg";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { urlImgString } from "../../utils/constants/constants";
 
-const NavBar: FC<{}> = () => {
+const NavBar: FC<{
+	currentUser: any;
+}> = ({ currentUser }) => {
 	const { authUser, logout, userId, autoLogout } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
@@ -151,8 +153,12 @@ const NavBar: FC<{}> = () => {
 					className="flex flex-column ml-4 -mt-3 cursor-pointer"
 					onClick={e => op.current.toggle(e)}
 				>
-					<Avatar image={headshot} shape="circle" className="mx-auto" />
-					<div className="text-sm">Test user</div>
+					<Avatar
+						image={`${urlImgString}${currentUser.profilePicture}`}
+						shape="circle"
+						className="mx-auto"
+					/>
+					<div className="text-sm">{currentUser.username}</div>
 				</div>
 
 				<OverlayPanel ref={op} className="mt-1 mr-2">
@@ -197,8 +203,6 @@ const NavBar: FC<{}> = () => {
 						</div>
 					)
 				}
-				//model={items}
-				//end={end}
 			/>
 		</nav>
 	);

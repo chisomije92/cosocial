@@ -7,7 +7,7 @@ import NavBar from "../../components/nav-bar/NavBar";
 const ErrorPage: React.FC<{}> = () => {
 	return (
 		<>
-			<NavBar />
+			<NavBar currentUser={{}} />
 			<Error />
 		</>
 	);

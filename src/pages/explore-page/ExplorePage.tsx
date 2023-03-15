@@ -22,7 +22,11 @@ const ExplorePage = () => {
 					children={data => (
 						<>
 							<SideBar />
-							<Feeds posts={data.loadedPosts} />
+							<Feeds
+								posts={data.loadedPosts}
+								areTherePosts={data.loadedPosts.length > 0}
+								currentUser={data.userData}
+							/>
 							<RightBar />
 						</>
 					)}

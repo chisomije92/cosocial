@@ -75,7 +75,7 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 						/>
 						<span
 							className=" font-semibold cursor-pointer"
-							onClick={() => navigate("/profile/1")}
+							onClick={() => navigate("/profile")}
 						>
 							{user ? user.username : post.linkedUser.username}
 						</span>
@@ -107,7 +107,7 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 				</div>
 				<div className="">
 					<Image
-						src={`${urlImgString}${post.image}`}
+						src={post._id ? `${urlImgString}${post.image}` : `${post.image}`}
 						alt="Image"
 						width="100%"
 						className="mx-3"
@@ -116,24 +116,44 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 				</div>
 				<div className="flex justify-content-between gap-2 mb-3">
 					<div className="flex mt-2 md:flex-row">
-						<div>
-							<Avatar
-								icon="pi pi-thumbs-up-fill cursor-pointer"
-								shape="circle"
-								className={`mr-1 ml-3 mb-2 bg-blue-500 
+						<div className={!post._id ? `${classes.disableInteractions}` : ""}>
+							{post._id && (
+								<Avatar
+									icon="pi pi-thumbs-up-fill cursor-pointer"
+									shape="circle"
+									className={`mr-1 ml-3 mb-2 bg-blue-500 
 							${isLiked ? "text-color" : "text-white"}
 							border-circle`}
-								onClick={handleLike}
-							/>
+									onClick={handleLike}
+								/>
+							)}
+							{!post._id && (
+								<Avatar
+									icon="pi pi-thumbs-up-fill cursor-pointer"
+									shape="circle"
+									className={`mr-1 ml-3 mb-2 bg-blue-500 text-white
+							border-circle`}
+									onClick={handleLike}
+								/>
+							)}
 						</div>
-						<div>
-							<Avatar
-								icon="pi pi-bookmark-fill cursor-pointer"
-								className={`bg-red-600 ${
-									isBookmarked ? "text-color" : "text-white"
-								} border-circle`}
-								onClick={handleBookmark}
-							/>
+						<div className={!post._id ? `${classes.disableInteractions}` : ""}>
+							{post._id && (
+								<Avatar
+									icon="pi pi-bookmark-fill cursor-pointer"
+									className={`bg-red-600 ${
+										isBookmarked ? "text-color" : "text-white"
+									} border-circle`}
+									onClick={handleBookmark}
+								/>
+							)}
+							{!post._id && (
+								<Avatar
+									icon="pi pi-bookmark-fill"
+									className={`bg-red-600 text-white
+									border-circle`}
+								/>
+							)}
 						</div>
 						<div>
 							<span

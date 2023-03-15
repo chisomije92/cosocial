@@ -13,7 +13,7 @@ import "primeflex/primeflex.css";
 import "./App.css";
 
 import Home, { loader as homePostsLoader } from "./pages/home/Home";
-import RootLayout from "./pages/root-layout/RootLayout";
+import RootLayout, { layoutLoader } from "./pages/root-layout/RootLayout";
 import ProfilePage, {
 	profilePageLoader,
 } from "./pages/profile-page/ProfilePage";
@@ -64,7 +64,7 @@ function App() {
 					return localStorage.getItem("authUser");
 				}}
 			>
-				<Route path="/" element={<RootLayout />}>
+				<Route path="/" element={<RootLayout />} loader={layoutLoader}>
 					<Route element={<ProtectedRoutes />}>
 						<Route index element={<Home />} loader={homePostsLoader} />
 						<Route

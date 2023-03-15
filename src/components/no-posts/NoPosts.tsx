@@ -11,8 +11,10 @@ const NoPosts = () => {
 				description:
 					"Share and connect with loved ones. Share your thoughts, opinions and memories. Be seen and heard",
 				createdAt: "2023-01-15T15:09:17.354+00:00",
+				likes: new Array(1000),
+
 				linkedUser: {
-					profilePicture: "/assets/connection.jpg",
+					profilePicture: "/assets/cosocial-logo.png",
 					email: "Cosocial@cosocial.com",
 					username: "Cosocial",
 				},

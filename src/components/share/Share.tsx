@@ -4,13 +4,15 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import classes from "./share.module.css";
 import { Button } from "primereact/button";
 import LabelIcon from "@mui/icons-material/Label";
-
+import { useState, FC } from "react";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { useState } from "react";
+import { urlImgString } from "../../utils/constants/constants";
 
-const Share = () => {
+const Share: FC<{
+	currentUser: any;
+}> = ({ currentUser }) => {
 	const [inputText, setInputText] = useState("");
 	const [selectedFile, setSelectedFile] = useState<File>();
 
@@ -24,14 +26,14 @@ const Share = () => {
 			selectedFile,
 		});
 	};
-
 	return (
 		<div
 			className={`card ${classes.container}  h-13rem xl:h-12rem w-full border-round-md shadow-4`}
 		>
 			<div className="flex gap-0 -ml-3 ">
 				<Avatar
-					image="/assets/person/1.jpeg"
+					//image="/assets/person/1.jpeg"
+					image={`${urlImgString}${currentUser.profilePicture}`}
 					size="large"
 					shape="circle"
 					className="mx-4 -mb-2 mt-2"
