@@ -13,6 +13,7 @@ import ChangePassword from "../change-password/ChangePassword";
 import { Link } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 import { urlImgString } from "../../utils/constants/constants";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 interface ProfileProps {
 	user: any;
@@ -23,6 +24,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);
+	const { authUser } = useAuth();
 
 	const editProfileForm = (
 		<Dialog
@@ -113,18 +115,20 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						}}
 					/>
 				</div>
-				<div className="flex flex-column align-items-center gap-1">
-					<Link to="/messages/1" className="flex no-underline gap-1">
-						<ChatRoundedIcon />
-						<span>Chat</span>
-					</Link>
-					<ConfirmDialog />
-					<Button
-						label={`${isFollowing ? "Following" : "Follow"}`}
-						className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold  bg-bluegray-900 `}
-						onClick={setFollowStatus}
-					/>
-				</div>
+				{user._id !== authUser?.userId && (
+					<div className="flex flex-column align-items-center gap-1">
+						<Link to="/messages/1" className="flex no-underline gap-1">
+							<ChatRoundedIcon />
+							<span>Chat</span>
+						</Link>
+						<ConfirmDialog />
+						<Button
+							label={`${isFollowing ? "Following" : "Follow"}`}
+							className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold  bg-bluegray-900 `}
+							onClick={setFollowStatus}
+						/>
+					</div>
+				)}
 			</Card>
 			{editProfileForm}
 

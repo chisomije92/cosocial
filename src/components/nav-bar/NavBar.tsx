@@ -14,16 +14,12 @@ import { useAuth } from "../../hooks/auth/useAuth";
 import { urlImgString } from "../../utils/constants/constants";
 import { getAuthUser } from "../../utils/user-api";
 
-const NavBar: FC<{
-	//currentUser?: any;
-}> = () => {
+const NavBar = () => {
 	const { authUser, logout, userId, currentUser } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
-
-	//const [currentUser, setCurrentUser] = useState<any>();
 
 	const logOut = () => {
 		logout();
@@ -47,21 +43,6 @@ const NavBar: FC<{
 		) as HTMLLinkElement;
 		themeLink.href = theme;
 	}, [theme]);
-
-	//useEffect(() => {
-	//async function getUser() {
-	//	if (authUser?.userId) {
-	//		const authenticatedUser = await getAuthUser(
-	//			authUser.token,
-	//			authUser.userId
-	//		);
-	//		setCurrentUser(authenticatedUser);
-	//	} else {
-	//		setCurrentUser(null);
-	//	}
-	//}
-	//getUser();
-	//}, [userId]);
 
 	const isThemeDark = theme === "bootstrap4-dark-blue.css";
 
