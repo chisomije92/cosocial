@@ -6,14 +6,14 @@ import {
 	Route,
 	RouterProvider,
 } from "react-router-dom";
-import { useLayoutEffect, useState, useEffect } from "react";
+
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import "./App.css";
 
 import Home, { loader as homePostsLoader } from "./pages/home/Home";
-import RootLayout, { layoutLoader } from "./pages/root-layout/RootLayout";
+import RootLayout from "./pages/root-layout/RootLayout";
 import ProfilePage, {
 	profilePageLoader,
 } from "./pages/profile-page/ProfilePage";
@@ -31,30 +31,10 @@ import ExplorePage, {
 } from "./pages/explore-page/ExplorePage";
 import ChatPage from "./pages/messages-page/chat-page/ChatPage";
 import ProtectedRoutes from "./components/protected-routes/ProtectedRoutes";
-import {
-	AuthLayout,
-	//loader as authLoader,
-} from "./pages/auth-layout/AuthLayout";
+import { AuthLayout } from "./pages/auth-layout/AuthLayout";
 import FollowListPage from "./pages/follow-list-page/FollowListPage";
 
 function App() {
-	const [loading, setLoading] = useState<boolean>(true);
-
-	//useLayoutEffect(() => {
-	//	const timer = setTimeout(() => {
-	//		setLoading(false);
-	//	}, 200);
-	//	return () => {
-	//		clearTimeout(timer);
-	//	};
-	//}, []);
-
-	//useEffect(() => {
-	//	fetch("https://cosocial-api.onrender.com/").then(res =>
-	//		console.log("connected to API")
-	//	);
-	//}, []);
-
 	const router = createBrowserRouter(
 		createRoutesFromElements(
 			<Route
@@ -64,7 +44,7 @@ function App() {
 					return localStorage.getItem("authUser");
 				}}
 			>
-				<Route path="/" element={<RootLayout />} loader={layoutLoader}>
+				<Route path="/" element={<RootLayout />}>
 					<Route element={<ProtectedRoutes />}>
 						<Route index element={<Home />} loader={homePostsLoader} />
 						<Route
@@ -93,8 +73,7 @@ function App() {
 							element={<SinglePostPage />}
 							loader={singlePostLoader}
 						/>
-					</Route>
-
+					</Route>{" "}
 					<Route path="/sign-up" element={<SignUpPage />} />
 					<Route path="/login" element={<LoginPage />} />
 				</Route>

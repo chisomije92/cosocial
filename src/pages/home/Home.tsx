@@ -1,7 +1,7 @@
 /** @format */
 
 import { Suspense } from "react";
-import { Await, defer, useLoaderData } from "react-router-dom";
+import { Await, defer, redirect, useLoaderData } from "react-router-dom";
 import Feeds from "../../components/feeds/Feeds";
 import RightBar from "../../components/right-bar/RightBar";
 

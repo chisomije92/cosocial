@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
-import { signIn, signUp } from "../../utils/user-api";
+import { getAuthUser, signIn, signUp } from "../../utils/user-api";
 
 const AuthContext = createContext<{
 	authUser: {
@@ -15,6 +15,7 @@ const AuthContext = createContext<{
 	} | null;
 	userId: string | null;
 	errorMsg: string | null;
+	currentUser: any;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
@@ -27,6 +28,7 @@ const AuthContext = createContext<{
 	},
 	userId: null,
 	errorMsg: null,
+	currentUser: null,
 	authenticateUser: async () => {},
 	logout: () => {},
 	autoLogout: () => {},
@@ -49,6 +51,7 @@ export const AuthProvider: React.FC<{
 	} | null>("authUser", user);
 	const [userId, setUserId] = useState<string | null>(null);
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
+	const [currentUser, setCurrentUser] = useState<any>();
 	const navigate = useNavigate();
 
 	const authenticateUser = async (
@@ -97,7 +100,12 @@ export const AuthProvider: React.FC<{
 			const expirationDuration =
 				new Date(authUser.expirationTimer).getTime() - new Date().getTime();
 			autoLogout(expirationDuration);
+
+			getAuthUser(authUser.token, authUser.userId).then(res =>
+				setCurrentUser(res)
+			);
 		} else {
+			setCurrentUser(null);
 			setUserId(null);
 			navigate("/login", { replace: true });
 		}
@@ -119,6 +127,7 @@ export const AuthProvider: React.FC<{
 		authUser,
 		userId,
 		errorMsg,
+		currentUser,
 		authenticateUser,
 		logout,
 		autoLogout,

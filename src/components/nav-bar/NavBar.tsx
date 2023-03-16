@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import useLocalStorage from "use-local-storage";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
@@ -9,20 +9,21 @@ import classes from "./NavBar.module.css";
 import { Avatar } from "primereact/avatar";
 import cosocialImg from "../../images/CO-1.png";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { urlImgString } from "../../utils/constants/constants";
+import { getAuthUser } from "../../utils/user-api";
 
 const NavBar: FC<{
-	currentUser: any;
-}> = ({ currentUser }) => {
-	const { authUser, logout, userId, autoLogout } = useAuth();
+	//currentUser?: any;
+}> = () => {
+	const { authUser, logout, userId, currentUser } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
 		"bootstrap4-dark-blue.css"
 	);
 
-	const navigate = useNavigate();
+	//const [currentUser, setCurrentUser] = useState<any>();
 
 	const logOut = () => {
 		logout();
@@ -46,6 +47,21 @@ const NavBar: FC<{
 		) as HTMLLinkElement;
 		themeLink.href = theme;
 	}, [theme]);
+
+	//useEffect(() => {
+	//async function getUser() {
+	//	if (authUser?.userId) {
+	//		const authenticatedUser = await getAuthUser(
+	//			authUser.token,
+	//			authUser.userId
+	//		);
+	//		setCurrentUser(authenticatedUser);
+	//	} else {
+	//		setCurrentUser(null);
+	//	}
+	//}
+	//getUser();
+	//}, [userId]);
 
 	const isThemeDark = theme === "bootstrap4-dark-blue.css";
 
@@ -154,11 +170,15 @@ const NavBar: FC<{
 					onClick={e => op.current.toggle(e)}
 				>
 					<Avatar
-						image={`${urlImgString}${currentUser.profilePicture}`}
+						image={
+							currentUser ? `${urlImgString}${currentUser.profilePicture}` : ""
+						}
 						shape="circle"
 						className="mx-auto"
 					/>
-					<div className="text-sm">{currentUser.username}</div>
+					<div className="text-sm">
+						{currentUser ? currentUser.username : ""}
+					</div>
 				</div>
 
 				<OverlayPanel ref={op} className="mt-1 mr-2">

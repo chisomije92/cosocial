@@ -81,13 +81,17 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 					<Link className="text-color no-underline" to={`following`}>
 						<span className="flex gap-2 cursor-pointer">
 							<span>Following:</span>
-							<span className="font-semibold opacity-90">100</span>
+							<span className="font-semibold opacity-90">
+								{user.following.length}
+							</span>
 						</span>
 					</Link>
 					<Link className="text-color no-underline" to={`followers`}>
 						<span className="flex gap-2 cursor-pointer">
 							<span>Followers:</span>
-							<span className="font-semibold opacity-90">100</span>
+							<span className="font-semibold opacity-90">
+								{user.followers.length}
+							</span>
 						</span>
 					</Link>
 				</div>
