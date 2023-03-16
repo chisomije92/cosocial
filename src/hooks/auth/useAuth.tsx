@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<{
 		const remainingMilliseconds = 60 * 60 * 1000;
 		const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
 
-		if (resData) {
+		if (resData?.userId) {
 			setAuthUser({
 				userId: resData.userId,
 				token: resData.token,
@@ -95,7 +95,7 @@ export const AuthProvider: React.FC<{
 	};
 
 	useEffect(() => {
-		if (authUser) {
+		if (authUser?.userId) {
 			setUserId(authUser.userId);
 			const expirationDuration =
 				new Date(authUser.expirationTimer).getTime() - new Date().getTime();
