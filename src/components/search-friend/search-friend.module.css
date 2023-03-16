@@ -1,6 +1,6 @@
 .container {
-  flex: 1;
-  max-width: 200px
+  flex: 3;
+  max-width: 300px
 }
 
 .container input {

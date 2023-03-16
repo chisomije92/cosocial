@@ -30,3 +30,12 @@ export const getDataFromLocalStorage = () => {
   }
   return parsedUser
 }
+
+export const sortData = (arr: any) => {
+  return arr.sort((a: any, b: any) => {
+    return (
+      new Date(a.updatedAt).getTime() <
+      new Date(b.updatedAt).getTime()
+    );
+  })
+}

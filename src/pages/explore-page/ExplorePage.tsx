@@ -8,7 +8,7 @@ import RightBar from "../../components/right-bar/RightBar";
 import SideBar from "../../components/side-bar/SideBar";
 import { getPostsOnExplore } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
-import { getDataFromLocalStorage } from "../../utils/util";
+import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
 
 const ExplorePage = () => {
@@ -23,7 +23,7 @@ const ExplorePage = () => {
 						<>
 							<SideBar />
 							<Feeds
-								posts={data.loadedPosts}
+								posts={sortData(data.loadedPosts)}
 								areTherePosts={data.loadedPosts.length > 0}
 								currentUser={data.userData}
 							/>

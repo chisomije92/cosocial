@@ -10,7 +10,7 @@ import SideBar from "../../components/side-bar/SideBar";
 import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
 import { getPostsOnTl } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
-import { getDataFromLocalStorage } from "../../utils/util";
+import { getDataFromLocalStorage, sortData } from "../../utils/util";
 
 export default function Home() {
 	const { data }: any = useLoaderData();
@@ -22,10 +22,18 @@ export default function Home() {
 					resolve={data}
 					children={data => (
 						<>
+							{console.log(
+								data.loadedPosts.sort((a: any, b: any) => {
+									return (
+										new Date(b.updatedAt).getTime() -
+										new Date(a.updatedAt).getTime()
+									);
+								})
+							)}
 							<SideBar />
 							<Feeds
 								currentUser={data.userData}
-								posts={data.loadedPosts}
+								posts={sortData(data.loadedPosts)}
 								areTherePosts={data.loadedPosts.length > 0}
 							/>
 							<RightBar />

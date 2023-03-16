@@ -105,12 +105,14 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 				<div className="ml-3 text-700">
 					<p>{post.description}</p>
 				</div>
-				<div className="">
+				<div className={classes.postImgContainer}>
 					<Image
 						src={post._id ? `${urlImgString}${post.image}` : `${post.image}`}
 						alt="Image"
 						width="100%"
-						className="mx-3"
+						//height="700px"
+						//className="mx-4"
+						className="mb-4"
 						preview
 					/>
 				</div>

@@ -147,7 +147,7 @@ const NavBar = () => {
 
 				<span></span>
 				<div
-					className="flex flex-column ml-4 -mt-3 cursor-pointer"
+					className={`${classes.avatarImgContainer} flex flex-column ml-4 -mt-3 cursor-pointer`}
 					onClick={e => op.current.toggle(e)}
 				>
 					<Avatar
