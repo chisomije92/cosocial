@@ -70,9 +70,11 @@ export const AuthProvider: React.FC<{
 		}
 		if (!resData?.userId) {
 			setErrorMsg(resData);
+			setAuthUser(null);
 		}
 		const remainingMilliseconds = 60 * 60 * 1000;
 		const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
+		console.log(expiryDate);
 
 		if (resData?.userId) {
 			setAuthUser({
@@ -100,10 +102,9 @@ export const AuthProvider: React.FC<{
 			const expirationDuration =
 				new Date(authUser.expirationTimer).getTime() - new Date().getTime();
 			autoLogout(expirationDuration);
-
-			getAuthUser(authUser.token, authUser.userId).then(res =>
-				setCurrentUser(res)
-			);
+			getAuthUser(authUser.token, authUser.userId).then(res => {
+				setCurrentUser(res);
+			});
 		} else {
 			setCurrentUser(null);
 			setUserId(null);
@@ -111,6 +112,13 @@ export const AuthProvider: React.FC<{
 		}
 	}, [authUser]);
 
+	//useEffect(() => {
+	//	if (authUser === undefined) {
+	//		//setCurrentUser(null);
+	//		//setUserId(null);
+	//		navigate("/login", { replace: true });
+	//	}
+	//}, [authUser]);
 	useEffect(() => {
 		let timer: NodeJS.Timeout;
 		if (errorMsg) {

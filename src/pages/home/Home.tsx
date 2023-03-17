@@ -22,14 +22,6 @@ export default function Home() {
 					resolve={data}
 					children={data => (
 						<>
-							{console.log(
-								data.loadedPosts.sort((a: any, b: any) => {
-									return (
-										new Date(b.updatedAt).getTime() -
-										new Date(a.updatedAt).getTime()
-									);
-								})
-							)}
 							<SideBar />
 							<Feeds
 								currentUser={data.userData}

@@ -216,7 +216,7 @@ export const followUser = async (id: string, token: string) => {
 export const unFollowUser = async (id: string, token: string) => {
   try {
     const res = await fetch(`${urlString}/users/${id}/unfollow`, {
-      method: "GET",
+      method: "PUT",
       headers: {
         Authorization: `bearer ${token}`
       },
@@ -271,7 +271,7 @@ export const getNonFollowers = async (token: string) => {
   }
 }
 
-export const getNotfications = async (token: string) => {
+export const getNotifications = async (token: string) => {
   try {
     const res = await fetch(`${urlString}/users/notifications`, {
       method: "GET",
@@ -287,6 +287,7 @@ export const getNotfications = async (token: string) => {
 
     return resData
   } catch (err: any) {
+
     return err.message
   }
 }

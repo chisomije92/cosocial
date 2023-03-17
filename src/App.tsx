@@ -17,7 +17,9 @@ import RootLayout from "./pages/root-layout/RootLayout";
 import ProfilePage, {
 	profilePageLoader,
 } from "./pages/profile-page/ProfilePage";
-import NotificationsPage from "./pages/notifications-page/NotificationsPage";
+import NotificationsPage, {
+	notificationsPageLoader,
+} from "./pages/notifications-page/NotificationsPage";
 import MessagesPage from "./pages/messages-page/MessagesPage";
 import ErrorPage from "./pages/error-page/ErrorPage";
 import BookmarkPage from "./pages/bookmarks-page/BookmarkPage";
@@ -40,8 +42,12 @@ function App() {
 			<Route
 				element={<AuthLayout />}
 				errorElement={<ErrorPage />}
-				loader={async () => {
-					return localStorage.getItem("authUser");
+				loader={() => {
+					const user = localStorage.getItem("authUser");
+					//if (user === undefined || !user) {
+					//	return null;
+					//}
+					return user;
 				}}
 			>
 				<Route path="/" element={<RootLayout />}>
@@ -63,7 +69,11 @@ function App() {
 							loader={profilePageLoader}
 						/>
 						<Route path="/profile/:id/:follow" element={<FollowListPage />} />
-						<Route path="/notifications" element={<NotificationsPage />} />
+						<Route
+							path="/notifications"
+							element={<NotificationsPage />}
+							loader={notificationsPageLoader}
+						/>
 						<Route path="/messages" element={<MessagesPage />}></Route>
 						<Route path="/messages/:id" element={<ChatPage />} />
 

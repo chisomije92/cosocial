@@ -2,7 +2,7 @@
 
 import { Card } from "primereact/card";
 import React from "react";
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
 import classes from "./error.module.css";
 
 const Error = () => {
@@ -25,6 +25,7 @@ const Error = () => {
 				<p className="text-red-300 font-bold">
 					Sorry, an unexpected error has occurred.
 				</p>
+				{/*<Link to={"login"}>Login</Link>*/}
 			</Card>
 		);
 	}

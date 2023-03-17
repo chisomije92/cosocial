@@ -23,7 +23,7 @@ export const checkResponseForError = async (res: Response) => {
 }
 
 export const getDataFromLocalStorage = () => {
-  let parsedUser;
+  let parsedUser = null;
   const authUser = localStorage.getItem("authUser");
   if (authUser) {
     parsedUser = JSON.parse(authUser);
