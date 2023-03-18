@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { FC, useEffect } from "react";
+import { useAuth } from "../../hooks/auth/useAuth";
 import NoPosts from "../no-posts/NoPosts";
 import Post from "../post/Post";
 import Share from "../share/Share";
@@ -21,6 +22,7 @@ const Feeds: FC<FeedsInterface> = ({
 	isExploring,
 	currentUser,
 }) => {
+	const { authUser } = useAuth();
 	return (
 		<div className={`${classes.feeds}`}>
 			<div className="p-4 flex flex-column">
@@ -28,7 +30,13 @@ const Feeds: FC<FeedsInterface> = ({
 				{!areTherePosts && <NoPosts />}
 				{areTherePosts &&
 					posts.map((p: any) => (
-						<Post post={p} user={user} key={p._id} showComments={true} />
+						<Post
+							post={p}
+							user={user}
+							key={p._id}
+							showComments={true}
+							isAuthUser={p.userId === authUser?.userId}
+						/>
 					))}
 			</div>
 		</div>

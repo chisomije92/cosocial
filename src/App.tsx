@@ -26,7 +26,7 @@ import BookmarkPage from "./pages/bookmarks-page/BookmarkPage";
 import LoginPage from "./pages/login-page.tsx/LoginPage";
 import SignUpPage from "./pages/sign-up-page/SignUpPage";
 import SinglePostPage, {
-	loader as singlePostLoader,
+	singlePostPageLoader,
 } from "./pages/single-post-page/SinglePostPage";
 import ExplorePage, {
 	loader as explorePostsLoader,
@@ -44,9 +44,6 @@ function App() {
 				errorElement={<ErrorPage />}
 				loader={() => {
 					const user = localStorage.getItem("authUser");
-					//if (user === undefined || !user) {
-					//	return null;
-					//}
 					return user;
 				}}
 			>
@@ -81,7 +78,7 @@ function App() {
 						<Route
 							path="/post/:id"
 							element={<SinglePostPage />}
-							loader={singlePostLoader}
+							loader={singlePostPageLoader}
 						/>
 					</Route>{" "}
 					<Route path="/sign-up" element={<SignUpPage />} />

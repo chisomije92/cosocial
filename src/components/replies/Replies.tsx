@@ -41,7 +41,7 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 					<Reply
 						reply={reply}
 						onClick={() => setVisible(false)}
-						key={reply.id}
+						key={reply._id}
 					/>
 				))}
 			</ul>

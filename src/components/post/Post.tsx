@@ -3,7 +3,7 @@
 import classes from "./post.module.css";
 import { Avatar } from "primereact/avatar";
 import { Dialog } from "primereact/dialog";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
 import { Users } from "../../data/dummy-data";
@@ -12,14 +12,16 @@ import { Link, useNavigate } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
 import { urlImgString } from "../../utils/constants/constants";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 interface PostProp {
 	post: any;
 	user?: any;
 	showComments?: boolean;
+	isAuthUser?: boolean;
 }
 
-const Post: FC<PostProp> = ({ post, user, showComments }) => {
+const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	const op = useRef<any>(null);
 	const navigate = useNavigate();
 	const [like, setLike] = useState(post.like);
@@ -66,40 +68,53 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 				className={`card mt-3 ${classes.container} shadow-1 border-round-sm w-12 mx-auto flex flex-column`}
 			>
 				<div>
-					<div className="flex justify-content-around gap-2 ml-3 mt-2 -mb-2">
-						<Avatar
-							image={setImageString()}
-							size="normal"
-							shape="circle"
-							className=""
-						/>
-						<span
-							className=" font-semibold cursor-pointer"
-							onClick={() => navigate("/profile")}
-						>
-							{user ? user.username : post.linkedUser.username}
-						</span>
-						<span className=" opacity-70 text-sm">
-							<ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
-						</span>
-						<i
-							className="pi pi-ellipsis-v ml-auto mr-1 my-3  cursor-pointer"
-							onClick={e => op.current.toggle(e)}
-						></i>
-						<OverlayPanel ref={op} className="mt-2 -ml-6">
-							<div
-								className={`flex text-blue-400 font-medium ${classes.actions} cursor-pointer`}
+					<div className="flex justify-content-between gap-2 ml-3 mt-2 -mb-2">
+						<div className="flex gap-2">
+							<Link
+								to={isAuthUser ? "/profile" : `/profile/${post.userId}`}
+								className="flex gap-1 no-underline text-color"
 							>
-								<span>Edit</span> <i className="pi pi-pencil ml-2"></i>
-							</div>
+								<Avatar
+									image={setImageString()}
+									size="normal"
+									shape="circle"
+									className=""
+								/>
+								<span className=" font-semibold">
+									{user ? user.username : post.linkedUser.username}
+								</span>
+							</Link>
+							<span className=" opacity-70 text-sm">
+								<ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
+							</span>
+						</div>
+						{isAuthUser && (
+							<>
+								<i
+									className={`pi pi-ellipsis-v ml-auto mr-1 my-3
+							`}
+									onClick={e => {
+										if (isAuthUser) {
+											op.current.toggle(e);
+										}
+									}}
+								></i>
+								<OverlayPanel ref={op} className="mt-2 -ml-6">
+									<div
+										className={`flex text-blue-400 font-medium ${classes.actions} cursor-pointer`}
+									>
+										<span>Edit</span> <i className="pi pi-pencil ml-2"></i>
+									</div>
 
-							<hr className="h-1 w-6rem -mr-3 -ml-3" />
-							<div
-								className={`flex text-red-500 font-medium ${classes.actions} cursor-pointer`}
-							>
-								<span>Delete</span> <i className="pi pi-trash ml-2"></i>
-							</div>
-						</OverlayPanel>
+									<hr className="h-1 w-6rem -mr-3 -ml-3" />
+									<div
+										className={`flex text-red-500 font-medium ${classes.actions} cursor-pointer`}
+									>
+										<span>Delete</span> <i className="pi pi-trash ml-2"></i>
+									</div>
+								</OverlayPanel>
+							</>
+						)}
 					</div>
 				</div>
 				<div className="ml-3 text-700">
@@ -110,8 +125,6 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 						src={post._id ? `${urlImgString}${post.image}` : `${post.image}`}
 						alt="Image"
 						width="100%"
-						//height="700px"
-						//className="mx-4"
 						className="mb-4"
 						preview
 					/>
@@ -169,10 +182,10 @@ const Post: FC<PostProp> = ({ post, user, showComments }) => {
 					<div className="flex justify-content-even opacity-60 mr-1">
 						{showComments ? (
 							<Link
-								to={`/post/${post.id}`}
+								to={`/post/${post._id}`}
 								className="no-underline text-900 flex gap-1 mt-2"
 							>
-								<span>{post.comment}</span>
+								<span>{post.comments.length}</span>
 								<span className="hidden md:block">comments</span>
 								<CommentIcon className="inline-block md:hidden" />
 							</Link>

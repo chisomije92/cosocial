@@ -25,7 +25,13 @@ const Error = () => {
 				<p className="text-red-300 font-bold">
 					Sorry, an unexpected error has occurred.
 				</p>
-				{/*<Link to={"login"}>Login</Link>*/}
+				<p className="text-red-300 font-semibold">
+					It is advised you try{" "}
+					<Link className="text-red-300 no-underline font-bold" to={"login"}>
+						logging in
+					</Link>{" "}
+					again to get rid of this error.{" "}
+				</p>
 			</Card>
 		);
 	}

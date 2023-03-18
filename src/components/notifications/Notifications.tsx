@@ -23,6 +23,7 @@ const Notifications: FC<{ notifications: any }> = ({ notifications }) => {
 				</li>
 				{notifications.map((n: any) => (
 					<li className="flex surface-400" key={n._id}>
+						<>{console.log(n.actionUser)}</>
 						<div className="flex my-auto ml-2">
 							<i
 								className={`pi pi-circle-fill  text-primary absolute -ml-2 -mt-1`}
@@ -39,7 +40,14 @@ const Notifications: FC<{ notifications: any }> = ({ notifications }) => {
 							<div>
 								<div className="font-semibold">{n.actionUser.username}</div>
 								<div className="mt-1">
-									<Link to="/post/1" className="no-underline text-primary">
+									<Link
+										to={
+											n.actionPostId
+												? `/post/${n.actionPostId}`
+												: `/profile/${n.actionUser.userId}`
+										}
+										className="no-underline text-primary"
+									>
 										{n.actions}
 									</Link>{" "}
 								</div>
@@ -57,50 +65,6 @@ const Notifications: FC<{ notifications: any }> = ({ notifications }) => {
 						</div>
 					</li>
 				))}
-				{/*<li className="flex surface-100">
-					<div className="flex my-auto ml-2">
-						<i
-							className={`pi pi-circle-fill  text-color-secondary absolute -ml-2 -mt-1`}
-							style={{ fontSize: "0.5rem", cursor: "pointer" }}
-						></i>
-					</div>
-					<div className="flex gap-2 p-2">
-						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
-						<div>
-							<div className="font-semibold">Chisom</div>
-							<div className="mt-1">
-								<Link to="/post/1" className="no-underline text-primary">
-									Liked your post
-								</Link>{" "}
-							</div>
-						</div>
-					</div>
-					<div className={`${classes.timeContainer}`}>
-						<div className="opacity-70">5 minutes ago</div>
-					</div>
-				</li>
-				<li className="flex surface-100">
-					<div className="flex my-auto ml-2">
-						<i
-							className={`pi pi-circle-fill  text-color-secondary absolute -ml-2 -mt-1`}
-							style={{ fontSize: "0.5rem", cursor: "pointer" }}
-						></i>
-					</div>
-					<div className="flex gap-2 p-2">
-						<Avatar shape="circle" size="large" image="/assets/person/4.jpeg" />
-						<div>
-							<div className="font-semibold">Chisom</div>
-							<div className="mt-1">
-								<Link to="/profile/1" className="no-underline text-primary">
-									followed you
-								</Link>{" "}
-							</div>
-						</div>
-					</div>
-					<div className={`${classes.timeContainer}`}>
-						<div className="opacity-80">5 minutes ago</div>
-					</div>
-				</li>*/}
 			</ul>
 		</div>
 	);

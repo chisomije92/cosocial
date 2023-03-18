@@ -23,7 +23,7 @@ const ExplorePage = () => {
 						<>
 							<SideBar />
 							<Feeds
-								posts={sortData(data.loadedPosts)}
+								posts={sortData(data.loadedPosts, "updatedAt")}
 								areTherePosts={data.loadedPosts.length > 0}
 								currentUser={data.userData}
 							/>
@@ -38,7 +38,7 @@ const ExplorePage = () => {
 
 const loadData = async () => {
 	const parsedUser = getDataFromLocalStorage();
-	const user = await getAuthUser(parsedUser.token, parsedUser.userId);
+	const user = await getAuthUser(parsedUser.token);
 	const loadedPosts = await getPostsOnExplore(parsedUser.token);
 	return {
 		userData: { ...user },

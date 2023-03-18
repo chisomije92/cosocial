@@ -40,10 +40,10 @@ const loadData = async (paramsId?: string) => {
 	let parsedUser = getDataFromLocalStorage();
 
 	if (!paramsId) {
-		user = await getAuthUser(parsedUser.token, parsedUser.userId);
+		user = await getAuthUser(parsedUser.token);
 		loadedPosts = await getUserPosts(parsedUser.token, parsedUser.userId);
 	} else {
-		user = await getUser(paramsId, parsedUser.userId);
+		user = await getUser(paramsId, parsedUser.token);
 		loadedPosts = await getUserPosts(parsedUser.token, parsedUser.userId);
 	}
 

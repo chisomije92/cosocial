@@ -31,11 +31,11 @@ export const getDataFromLocalStorage = () => {
   return parsedUser
 }
 
-export const sortData = (arr: any) => {
+export const sortData = (arr: any, prop: string) => {
   return arr.sort((a: any, b: any) => {
     return (
-      new Date(a.updatedAt).getTime() <
-      new Date(b.updatedAt).getTime()
+      new Date(a[prop]).getTime() <
+      new Date(b[prop]).getTime()
     );
   })
 }

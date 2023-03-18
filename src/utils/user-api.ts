@@ -134,7 +134,7 @@ export const getUser = async (id: string, token: string) => {
   }
 }
 
-export const getAuthUser = async (token: string, userId: string) => {
+export const getAuthUser = async (token: string) => {
   try {
     const res = await fetch(`${urlString}/users/`, {
       method: "GET",

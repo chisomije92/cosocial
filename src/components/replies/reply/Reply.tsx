@@ -3,7 +3,9 @@
 import { Avatar } from "primereact/avatar";
 
 import React, { FC, useState } from "react";
+import ReactTimeAgo from "react-time-ago";
 import { Users } from "../../../data/dummy-data";
+import { urlImgString } from "../../../utils/constants/constants";
 
 import classes from "./reply.module.css";
 
@@ -17,17 +19,32 @@ const Reply: FC<ReplyProp> = ({ reply, onClick }) => {
 	const [like, setLike] = useState(reply.like);
 
 	return (
-		<li className={`mt-2  p-2 ${classes.listReply}`} key={reply.id}>
+		<li className={`mt-2  p-2 ${classes.listReply}`} key={reply._id}>
 			{/*Ensure you get _id of reply, convert it to string and store it as replyId*/}
 			<input type="text" value={reply.replyId} hidden readOnly />
 
 			<div className="flex gap-2">
-				<Avatar image={reply.photo} shape="circle" className="text-center" />
+				<Avatar
+					image={`${urlImgString}${reply.commenter.profilePicture}`}
+					shape="circle"
+					className="text-center"
+				/>
 				<div className="flex flex-column gap-2">
-					<small className="opacity-80 ">
-						{Users.filter(u => u._id === reply?.userId)[0].username}
-					</small>
-					<span>{reply.desc}</span>
+					<div className="flex gap-2 ">
+						<small className=" font-semibold text-base">
+							{reply.commenter.username}
+						</small>
+						<small>
+							{
+								<ReactTimeAgo
+									date={new Date(reply.dateOfReply)}
+									locale="en-US"
+								/>
+							}
+						</small>
+					</div>
+
+					<span>{reply.comment}</span>
 					<div className="flex mt-2">
 						<i
 							className={`pi ${
