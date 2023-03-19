@@ -44,7 +44,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 			style={{ width: "50vw" }}
 			onHide={() => setVisible(false)}
 		>
-			<Likes users={Users} />
+			<Likes users={post.likes} />
 		</Dialog>
 	);
 

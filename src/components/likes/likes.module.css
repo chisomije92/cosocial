@@ -28,9 +28,10 @@
 }
 
 .likesContainer li:nth-of-type(1) {
-  border-color: var(--surface-400);
+  border-color: var(--surface-300);
   border-top-left-radius: 5%;
   border-top-right-radius: 5%;
+  border-bottom: 1px solid;
 }
 
 .likesContainer li:nth-of-type(1n+2) {
@@ -45,7 +46,7 @@
 }
 
 .likesContainer ul li {
-  /*background-color: var(--surface-100)*/
+  background-color: var(--surface-100)
 }
 
 .likesContainer::-webkit-scrollbar {
