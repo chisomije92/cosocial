@@ -69,7 +69,7 @@ function App() {
 						<Route
 							path="/notifications"
 							element={<NotificationsPage />}
-							loader={notificationsPageLoader}
+							//loader={notificationsPageLoader}
 						/>
 						<Route path="/messages" element={<MessagesPage />}></Route>
 						<Route path="/messages/:id" element={<ChatPage />} />

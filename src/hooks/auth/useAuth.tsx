@@ -5,7 +5,15 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
-import { getAuthUser, signIn, signUp } from "../../utils/user-api";
+import {
+	getAuthUser,
+	readAllNotifications,
+	readNotification,
+	signIn,
+	signUp,
+	unreadAllNotifications,
+} from "../../utils/user-api";
+import { getDataFromLocalStorage } from "../../utils/util";
 
 const AuthContext = createContext<{
 	authUser: {
@@ -16,6 +24,9 @@ const AuthContext = createContext<{
 	userId: string | null;
 	errorMsg: string | null;
 	currentUser: any;
+	changeNotificationStatus: (id: string) => void;
+	changeAllNotificationStatus: () => void;
+	changeNotificationsToUnread: () => void;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
@@ -32,7 +43,9 @@ const AuthContext = createContext<{
 	authenticateUser: async () => {},
 	logout: () => {},
 	autoLogout: () => {},
-
+	changeNotificationStatus: async (id: string) => {},
+	changeAllNotificationStatus: () => {},
+	changeNotificationsToUnread: () => {},
 	setUserId: () => {},
 });
 
@@ -74,7 +87,6 @@ export const AuthProvider: React.FC<{
 		}
 		const remainingMilliseconds = 60 * 60 * 1000;
 		const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
-		console.log(expiryDate);
 
 		if (resData?.userId) {
 			setAuthUser({
@@ -88,12 +100,34 @@ export const AuthProvider: React.FC<{
 	const logout = () => {
 		setAuthUser(null);
 		setUserId(null);
+		setCurrentUser(null);
 	};
 
 	const autoLogout = (milliseconds: number) => {
 		setTimeout(() => {
 			logout();
 		}, milliseconds);
+	};
+
+	const changeNotificationStatus = async (id: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		await readNotification(id, parsedUser.token);
+		const user = await getAuthUser(parsedUser.token);
+		setCurrentUser(user);
+	};
+
+	const changeAllNotificationStatus = async () => {
+		const parsedUser = getDataFromLocalStorage();
+		await readAllNotifications(parsedUser.token);
+		const user = await getAuthUser(parsedUser.token);
+		setCurrentUser(user);
+	};
+
+	const changeNotificationsToUnread = async () => {
+		const parsedUser = getDataFromLocalStorage();
+		await unreadAllNotifications(parsedUser.token);
+		const user = await getAuthUser(parsedUser.token);
+		setCurrentUser(user);
 	};
 
 	useEffect(() => {
@@ -133,6 +167,9 @@ export const AuthProvider: React.FC<{
 		logout,
 		autoLogout,
 		setUserId,
+		changeNotificationStatus,
+		changeAllNotificationStatus,
+		changeNotificationsToUnread,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

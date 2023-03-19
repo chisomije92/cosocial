@@ -10,7 +10,7 @@ import { Await, defer, useLoaderData } from "react-router-dom";
 
 import { getAuthUser, getUser } from "../../utils/user-api";
 import { getUserPosts } from "../../utils/post-api";
-import { getDataFromLocalStorage } from "../../utils/util";
+import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
 
 const ProfilePage = () => {
@@ -24,7 +24,10 @@ const ProfilePage = () => {
 					children={data => (
 						<>
 							<SideBar />
-							<Profile user={data.userData} userPosts={data.loadedPosts} />
+							<Profile
+								user={data.userData}
+								userPosts={sortData(data.loadedPosts, "updatedAt")}
+							/>
 							<SearchFriend />
 						</>
 					)}

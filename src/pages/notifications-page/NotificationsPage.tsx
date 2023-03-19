@@ -10,22 +10,11 @@ import { getNotifications } from "../../utils/user-api";
 import { getDataFromLocalStorage } from "../../utils/util";
 
 const NotificationsPage = () => {
-	const { data } = useLoaderData() as any;
-
 	return (
 		<>
-			<Suspense fallback={<LoadingSpinner />}>
-				<Await
-					resolve={data}
-					children={data => (
-						<>
-							<SideBar />
-							<Notifications notifications={data.notifications} />
-							<SearchFriend />
-						</>
-					)}
-				/>
-			</Suspense>
+			<SideBar />
+			<Notifications />
+			<SearchFriend />
 		</>
 	);
 };

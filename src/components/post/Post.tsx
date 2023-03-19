@@ -3,16 +3,15 @@
 import classes from "./post.module.css";
 import { Avatar } from "primereact/avatar";
 import { Dialog } from "primereact/dialog";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
 import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
 import { urlImgString } from "../../utils/constants/constants";
-import { useAuth } from "../../hooks/auth/useAuth";
 
 interface PostProp {
 	post: any;
@@ -23,7 +22,7 @@ interface PostProp {
 
 const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	const op = useRef<any>(null);
-	const navigate = useNavigate();
+
 	const [like, setLike] = useState(post.like);
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);

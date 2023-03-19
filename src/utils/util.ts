@@ -34,8 +34,8 @@ export const getDataFromLocalStorage = () => {
 export const sortData = (arr: any, prop: string) => {
   return arr.sort((a: any, b: any) => {
     return (
-      new Date(a[prop]).getTime() <
-      new Date(b[prop]).getTime()
+      new Date(b[prop]).getTime() -
+      new Date(a[prop]).getTime()
     );
   })
 }

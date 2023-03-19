@@ -4,7 +4,7 @@ import { Avatar } from "primereact/avatar";
 
 import React, { FC, useState } from "react";
 import ReactTimeAgo from "react-time-ago";
-import { Users } from "../../../data/dummy-data";
+
 import { urlImgString } from "../../../utils/constants/constants";
 
 import classes from "./reply.module.css";
@@ -59,7 +59,7 @@ const Reply: FC<ReplyProp> = ({ reply, onClick }) => {
 							className="opacity-70 text-sm mx-1  cursor-pointer"
 							onClick={onClick}
 						>
-							{like} likes
+							{reply.likes.length > 0 ? `${reply.likes.length} likes` : ""}
 						</span>
 					</div>
 				</div>

@@ -315,3 +315,75 @@ export const deleteUser = async (id: string, token: string) => {
     return err.message
   }
 }
+
+export const readNotification = async (id: string, token: string) => {
+  try {
+    const res = await fetch(`${urlString}/users/notifications/read/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+
+    },
+    )
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
+    }
+
+    const resData = await checkResponseForError(res)
+
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+export const readAllNotifications = async (token: string) => {
+  try {
+    const res = await fetch(`${urlString}/users/notifications/read`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+
+    },
+    )
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
+    }
+
+    const resData = await checkResponseForError(res)
+
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+export const unreadAllNotifications = async (token: string) => {
+  try {
+    const res = await fetch(`${urlString}/users/notifications/unread`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+
+    },
+    )
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
+    }
+
+    const resData = await checkResponseForError(res)
+
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}

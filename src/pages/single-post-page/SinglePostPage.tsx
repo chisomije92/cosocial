@@ -5,14 +5,11 @@ import { useLoaderData } from "react-router-dom";
 import Post from "../../components/post/Post";
 import Replies from "../../components/replies/Replies";
 import SideBar from "../../components/side-bar/SideBar";
-import { Posts } from "../../data/dummy-data";
 import { getSinglePost } from "../../utils/post-api";
 import { getDataFromLocalStorage } from "../../utils/util";
 
 const SinglePostPage = () => {
 	const post: any = useLoaderData();
-
-	console.log(post.comments);
 
 	return (
 		<>
