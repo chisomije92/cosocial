@@ -22,7 +22,9 @@ import NotificationsPage, {
 } from "./pages/notifications-page/NotificationsPage";
 import MessagesPage from "./pages/messages-page/MessagesPage";
 import ErrorPage from "./pages/error-page/ErrorPage";
-import BookmarkPage from "./pages/bookmarks-page/BookmarkPage";
+import BookmarkPage, {
+	bookmarksLoader,
+} from "./pages/bookmarks-page/BookmarkPage";
 import LoginPage from "./pages/login-page.tsx/LoginPage";
 import SignUpPage from "./pages/sign-up-page/SignUpPage";
 import SinglePostPage, {
@@ -74,7 +76,11 @@ function App() {
 						<Route path="/messages" element={<MessagesPage />}></Route>
 						<Route path="/messages/:id" element={<ChatPage />} />
 
-						<Route path="/bookmarks" element={<BookmarkPage />} />
+						<Route
+							path="/bookmarks"
+							element={<BookmarkPage />}
+							loader={bookmarksLoader}
+						/>
 						<Route
 							path="/post/:id"
 							element={<SinglePostPage />}

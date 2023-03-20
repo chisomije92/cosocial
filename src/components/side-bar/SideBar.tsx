@@ -38,7 +38,7 @@ const SideBar = () => {
 						</NavLink>
 					</li>
 					<li className="mb-4 flex">
-						<NavLink to="/profile/1" className={navLinkCssClasses}>
+						<NavLink to="/profile" className={navLinkCssClasses}>
 							<PersonIcon className="-mb-1" />
 							<span className="ml-3">Profile</span>
 						</NavLink>

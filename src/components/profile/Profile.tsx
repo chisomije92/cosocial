@@ -97,24 +97,26 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						</span>
 					</Link>
 				</div>
-				<div className="flex mt-1 ">
-					<Button
-						label="Edit profile"
-						className="p-2 m-auto surface-50 border-0 text-primary border-50"
-						onClick={() => {
-							setVisible(true);
-							setShowForm(1);
-						}}
-					/>
-					<Button
-						label="Change password"
-						className="p-2 m-auto surface-50 border-0 text-primary border-50"
-						onClick={() => {
-							setVisible(true);
-							setShowForm(2);
-						}}
-					/>
-				</div>
+				{user._id === authUser?.userId && (
+					<div className="flex mt-1 ">
+						<Button
+							label="Edit profile"
+							className="p-2 m-auto surface-50 border-0 text-primary border-50"
+							onClick={() => {
+								setVisible(true);
+								setShowForm(1);
+							}}
+						/>
+						<Button
+							label="Change password"
+							className="p-2 m-auto surface-50 border-0 text-primary border-50"
+							onClick={() => {
+								setVisible(true);
+								setShowForm(2);
+							}}
+						/>
+					</div>
+				)}
 				{user._id !== authUser?.userId && (
 					<div className="flex flex-column align-items-center gap-1">
 						<Link to="/messages/1" className="flex no-underline gap-1">

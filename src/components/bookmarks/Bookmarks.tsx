@@ -1,14 +1,16 @@
 /** @format */
 
-import React from "react";
+import React, { FC } from "react";
 import { Posts } from "../../data/dummy-data";
 import Post from "../post/Post";
 import classes from "./bookmarks.module.css";
 
-const Bookmarks = () => {
+const Bookmarks: FC<{
+	posts: any;
+}> = ({ posts }) => {
 	return (
 		<div className={`${classes.bookmarks} mx-3`}>
-			{Posts.map(p => (
+			{posts.map((p: any) => (
 				<Post post={p} key={p._id} showComments={true} />
 			))}
 		</div>
