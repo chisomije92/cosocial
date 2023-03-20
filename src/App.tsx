@@ -36,7 +36,9 @@ import ExplorePage, {
 import ChatPage from "./pages/messages-page/chat-page/ChatPage";
 import ProtectedRoutes from "./components/protected-routes/ProtectedRoutes";
 import { AuthLayout } from "./pages/auth-layout/AuthLayout";
-import FollowListPage from "./pages/follow-list-page/FollowListPage";
+import FollowListPage, {
+	followListPageLoader,
+} from "./pages/follow-list-page/FollowListPage";
 
 function App() {
 	const router = createBrowserRouter(
@@ -67,7 +69,11 @@ function App() {
 							element={<ProfilePage />}
 							loader={profilePageLoader}
 						/>
-						<Route path="/profile/:id/:follow" element={<FollowListPage />} />
+						<Route
+							path="/profile/:id/:follow"
+							element={<FollowListPage />}
+							loader={followListPageLoader}
+						/>
 						<Route
 							path="/notifications"
 							element={<NotificationsPage />}

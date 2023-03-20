@@ -80,7 +80,10 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						Posts:{" "}
 						<span className="font-semibold opacity-90">{userPosts.length}</span>
 					</div>
-					<Link className="text-color no-underline" to={`following`}>
+					<Link
+						className="text-color no-underline"
+						to={`/profile/${user._id}/following`}
+					>
 						<span className="flex gap-2 cursor-pointer">
 							<span>Following:</span>
 							<span className="font-semibold opacity-90">
@@ -88,7 +91,10 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 							</span>
 						</span>
 					</Link>
-					<Link className="text-color no-underline" to={`followers`}>
+					<Link
+						className="text-color no-underline"
+						to={`/profile/${user._id}/followers`}
+					>
 						<span className="flex gap-2 cursor-pointer">
 							<span>Followers:</span>
 							<span className="font-semibold opacity-90">
