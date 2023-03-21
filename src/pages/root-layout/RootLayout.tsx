@@ -3,19 +3,20 @@
 import React, { useEffect } from "react";
 import NavBar from "../../components/nav-bar/NavBar";
 import { Outlet } from "react-router-dom";
-import { getDataFromLocalStorage } from "../../utils/util";
+
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const RootLayout = () => {
-	const { autoLogout } = useAuth();
-	const data = getDataFromLocalStorage();
-	const expirationDuration =
-		new Date(data?.expirationTimer ? data.expirationTimer : 0).getTime() -
-		new Date().getTime();
+	const { autoLogout, authUser } = useAuth();
+	let dataExpirationTimer = authUser && authUser.expirationTimer;
 
 	useEffect(() => {
-		autoLogout(expirationDuration);
-	}, [expirationDuration]);
+		if (dataExpirationTimer) {
+			autoLogout(
+				new Date(dataExpirationTimer).getTime() - new Date().getTime()
+			);
+		}
+	}, [dataExpirationTimer]);
 
 	return (
 		<>

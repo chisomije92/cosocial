@@ -17,9 +17,8 @@ import RootLayout from "./pages/root-layout/RootLayout";
 import ProfilePage, {
 	profilePageLoader,
 } from "./pages/profile-page/ProfilePage";
-import NotificationsPage, {
-	notificationsPageLoader,
-} from "./pages/notifications-page/NotificationsPage";
+import NotificationsPage from //notificationsPageLoader,
+"./pages/notifications-page/NotificationsPage";
 import MessagesPage from "./pages/messages-page/MessagesPage";
 import ErrorPage from "./pages/error-page/ErrorPage";
 import BookmarkPage, {

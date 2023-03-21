@@ -19,16 +19,16 @@ const NotificationsPage = () => {
 	);
 };
 
-const loadData = async () => {
-	const parsedUser = getDataFromLocalStorage();
-	const notifications = await getNotifications(parsedUser.token);
-	return { notifications };
-};
+//const loadData = async () => {
+//	const parsedUser = getDataFromLocalStorage();
+//	const notifications = await getNotifications(parsedUser.token);
+//	return { notifications };
+//};
 
-export const notificationsPageLoader = async () => {
-	return defer({
-		data: loadData(),
-	});
-};
+//export const notificationsPageLoader = async () => {
+//	return defer({
+//		data: loadData(),
+//	});
+//};
 
 export default NotificationsPage;
