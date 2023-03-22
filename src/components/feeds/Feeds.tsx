@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { FC, useEffect } from "react";
+import { FC } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
 import NoPosts from "../no-posts/NoPosts";
 import Post from "../post/Post";

@@ -27,9 +27,8 @@ const RightBar = () => {
 					<Image src="/assets/gift.png" />
 				</Avatar>
 				<span className="text-600 mr-3">
-					<b className="text-800">Jerry</b> and{" "}
-					<b className="text-800">four other cosocials</b> celebrate their
-					birthday today
+					<b className="text-800">Four cosocials</b> celebrate their birthday
+					today
 				</span>
 			</div>
 			<div>

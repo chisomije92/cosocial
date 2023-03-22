@@ -5,7 +5,7 @@ import { useLoaderData, useParams } from "react-router-dom";
 import Follows from "../../components/follows/Follows";
 import SearchFriend from "../../components/search-friend/SearchFriend";
 import SideBar from "../../components/side-bar/SideBar";
-import { getFollowers, getFollowing, getUser } from "../../utils/user-api";
+import { getFollowers, getFollowing } from "../../utils/user-api";
 import { getDataFromLocalStorage } from "../../utils/util";
 
 const FollowListPage = () => {

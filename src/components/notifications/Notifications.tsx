@@ -64,16 +64,6 @@ const Notifications = () => {
 								<div>
 									<div className="font-semibold">{n.actionUser.username}</div>
 									<div className="mt-1">
-										{/*<Link
-										to={
-											n.actionPostId
-												? `/post/${n.actionPostId}`
-												: `/profile/${n.actionUser.userId}`
-										}
-										className="no-underline text-primary"
-									>
-										{n.actions}
-									</Link>*/}
 										<span
 											className="no-underline text-primary cursor-pointer"
 											onClick={() => {

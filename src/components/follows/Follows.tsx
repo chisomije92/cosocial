@@ -3,8 +3,6 @@
 import { Card } from "primereact/card";
 import React from "react";
 import classes from "./follows.module.css";
-
-import { Users } from "../../data/dummy-data";
 import { Avatar } from "primereact/avatar";
 import { Link } from "react-router-dom";
 import { urlImgString } from "../../utils/constants/constants";

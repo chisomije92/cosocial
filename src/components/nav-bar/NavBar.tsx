@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { FC, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import useLocalStorage from "use-local-storage";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
@@ -12,7 +12,6 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { urlImgString } from "../../utils/constants/constants";
-import { getAuthUser } from "../../utils/user-api";
 
 const NavBar = () => {
 	const { authUser, logout, userId, currentUser } = useAuth();

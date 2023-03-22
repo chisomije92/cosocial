@@ -17,8 +17,7 @@ import RootLayout from "./pages/root-layout/RootLayout";
 import ProfilePage, {
 	profilePageLoader,
 } from "./pages/profile-page/ProfilePage";
-import NotificationsPage from //notificationsPageLoader,
-"./pages/notifications-page/NotificationsPage";
+import NotificationsPage from "./pages/notifications-page/NotificationsPage";
 import MessagesPage from "./pages/messages-page/MessagesPage";
 import ErrorPage from "./pages/error-page/ErrorPage";
 import BookmarkPage, {
@@ -73,11 +72,7 @@ function App() {
 							element={<FollowListPage />}
 							loader={followListPageLoader}
 						/>
-						<Route
-							path="/notifications"
-							element={<NotificationsPage />}
-							//loader={notificationsPageLoader}
-						/>
+						<Route path="/notifications" element={<NotificationsPage />} />
 						<Route path="/messages" element={<MessagesPage />}></Route>
 						<Route path="/messages/:id" element={<ChatPage />} />
 

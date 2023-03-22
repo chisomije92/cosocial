@@ -6,7 +6,6 @@ import { Dialog } from "primereact/dialog";
 import { FC, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
-import { Users } from "../../data/dummy-data";
 import Likes from "../likes/Likes";
 import { Link } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
