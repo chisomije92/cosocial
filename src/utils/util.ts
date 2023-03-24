@@ -31,6 +31,18 @@ export const getDataFromLocalStorage = () => {
   return parsedUser
 }
 
+export const setDataToLocalStorage = () => {
+  const parsedUser = getDataFromLocalStorage()
+  if (parsedUser) {
+    const dateTimer = addMinutes(parsedUser.expirationTimer, 15);
+    const authUser = JSON.stringify({
+      ...parsedUser,
+      expirationTimer: dateTimer.toISOString()
+    })
+    localStorage.setItem("authUser", authUser)
+  }
+}
+
 export const sortData = (arr: any, prop: string) => {
   return arr.sort((a: any, b: any) => {
     return (
@@ -38,4 +50,11 @@ export const sortData = (arr: any, prop: string) => {
       new Date(a[prop]).getTime()
     );
   })
+}
+
+export const addMinutes = (date: string, minutes: number) => {
+  const dateCopy = new Date(date);
+  dateCopy.setMinutes(dateCopy.getMinutes() + minutes);
+
+  return dateCopy;
 }

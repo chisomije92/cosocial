@@ -1,5 +1,5 @@
 import { urlString } from "./constants/constants"
-import { checkResponseForError } from "./util"
+import { checkResponseForError, getDataFromLocalStorage, setDataToLocalStorage } from "./util"
 
 
 
@@ -14,6 +14,9 @@ export const getUserPosts = async (token: string, userId: string) => {
       },
     })
     const resData = await checkResponseForError(res)
+    //console.log(setDataToLocalStorage())
+    //console.log(getDataFromLocalStorage())
+    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
