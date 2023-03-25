@@ -1,5 +1,5 @@
 import { urlString } from "./constants/constants"
-import { checkResponseForError, getDataFromLocalStorage, setDataToLocalStorage } from "./util"
+import { checkResponseForError, setDataToLocalStorage } from "./util"
 
 
 
@@ -14,8 +14,6 @@ export const getUserPosts = async (token: string, userId: string) => {
       },
     })
     const resData = await checkResponseForError(res)
-    //console.log(setDataToLocalStorage())
-    //console.log(getDataFromLocalStorage())
     setDataToLocalStorage()
     return resData
   } catch (err: any) {
@@ -33,6 +31,7 @@ export const getPostsOnTl = async (token: string, userId: string) => {
       },
     })
     const resData = await checkResponseForError(res)
+    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -50,6 +49,7 @@ export const getPostsOnExplore = async (token: string) => {
       },
     })
     const resData = await checkResponseForError(res)
+    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -66,6 +66,7 @@ export const getSinglePost = async (id: string, token: string) => {
       },
     })
     const resData = await checkResponseForError(res)
+    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message

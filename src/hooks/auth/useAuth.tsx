@@ -20,6 +20,7 @@ const AuthContext = createContext<{
 		token: string;
 		userId: string;
 		expirationTimer: string;
+		loggedInTime: string;
 	} | null;
 	userId: string | null;
 	errorMsg: string | null;
@@ -37,6 +38,7 @@ const AuthContext = createContext<{
 		token: "",
 		userId: "",
 		expirationTimer: "",
+		loggedInTime: "",
 	},
 	userId: null,
 	errorMsg: null,
@@ -57,12 +59,14 @@ export const AuthProvider: React.FC<{
 		token: string;
 		userId: string;
 		expirationTimer: string;
+		loggedInTime: string;
 	};
 }> = ({ children, user }) => {
 	const [authUser, setAuthUser] = useLocalStorage<{
 		token: string;
 		userId: string;
 		expirationTimer: string;
+		loggedInTime: string;
 	} | null>("authUser", user);
 	const [userId, setUserId] = useState<string | null>(null);
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -95,6 +99,7 @@ export const AuthProvider: React.FC<{
 				userId: resData.userId,
 				token: resData.token,
 				expirationTimer: expiryDate.toISOString(),
+				loggedInTime: addMinutes(expiryDate.toString(), 2870).toISOString(),
 			});
 		}
 	};
@@ -129,82 +134,38 @@ export const AuthProvider: React.FC<{
 		const parsedUser = getDataFromLocalStorage();
 		await unreadAllNotifications(parsedUser.token);
 		const user = await getAuthUser(parsedUser.token);
-		//if (authUser) {
-		//const dateTimer = addMinutes(authUser.expirationTimer, 15);
-		//setAuthUser({
-		//	...authUser,
-		//	expirationTimer: dateTimer.toISOString(),
-		//});
-		//}
 
 		setCurrentUser(user);
 	};
 
-	const authUserId = authUser && authUser.userId;
-	const authUserExpTimer = authUser && authUser.expirationTimer;
-	const authUserToken = authUser && authUser.token;
-	const parsedUser = getDataFromLocalStorage();
-	//console.log(parsedUser.expirationTimer);
-	//useEffect(() => {
-	//	if (authUserId && authUserExpTimer && authUserToken) {
-	//		setUserId(authUserId);
-	//		//const dateTimer = addMinutes(authUser.expirationTimer, 15);
-	//		//setAuthUser({
-	//		//	...authUser,
-	//		//	expirationTimer: dateTimer.toISOString(),
-	//		//});
-	//		getAuthUser(authUserToken).then(res => {
-	//			setCurrentUser(res);
-	//			console.log(authUserExpTimer);
-	//			//console.log(parsedUser.expirationTimer);
-	//			const expirationDuration =
-	//				new Date(authUserExpTimer).getTime() - new Date().getTime();
-	//			autoLogout(expirationDuration);
-	//			//const dateTimer = addMinutes(authUser.expirationTimer, 15);
-	//			//setAuthUser({
-	//			//	...authUser,
-	//			//	expirationTimer: dateTimer.toISOString(),
-	//			//});
-	//		});
-	//	} else {
-	//		setCurrentUser(null);
-	//		setUserId(null);
-	//		navigate("/login", { replace: true });
-	//	}
-	//}, [authUserId, authUserExpTimer, authUserToken]);
 	useEffect(() => {
-		if (authUser && (authUser.userId || parsedUser.expirationTimer)) {
-			setUserId(authUserId);
-			//const dateTimer = addMinutes(authUser.expirationTimer, 15);
-			//setAuthUser({
-			//	...authUser,
-			//	expirationTimer: dateTimer.toISOString(),
-			//});
+		if (authUser && authUser.userId) {
+			setUserId(authUser.userId);
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
-				console.log(authUser.expirationTimer);
-				//console.log(parsedUser.expirationTimer);
-				const expirationDuration =
-					new Date(authUser.expirationTimer).getTime() - new Date().getTime();
-				autoLogout(expirationDuration);
-				//const dateTimer = addMinutes(authUser.expirationTimer, 15);
-				//setAuthUser({
-				//	...authUser,
-				//	expirationTimer: dateTimer.toISOString(),
-				//});
 			});
 		} else {
 			setCurrentUser(null);
 			setUserId(null);
 			navigate("/login", { replace: true });
 		}
-	}, [parsedUser.expirationTimer, authUser]);
+	}, [authUser]);
 
-	//useEffect(() => {
-	//	if (parsedUser) {
-	//		console.log(parsedUser.expirationTimer);
-	//	}
-	//}, [parsedUser]);
+	const parsedUser = getDataFromLocalStorage();
+
+	useEffect(() => {
+		if (parsedUser) {
+			const expirationDuration =
+				new Date(parsedUser.expirationTimer).getTime() - new Date().getTime();
+			const authDuration =
+				new Date(parsedUser.loggedInTime).getTime() - new Date().getTime();
+			if (expirationDuration > authDuration) {
+				autoLogout(0);
+			} else {
+				autoLogout(expirationDuration);
+			}
+		}
+	}, [parsedUser]);
 
 	useEffect(() => {
 		let timer: NodeJS.Timeout;

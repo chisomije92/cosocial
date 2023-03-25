@@ -34,12 +34,20 @@ export const getDataFromLocalStorage = () => {
 export const setDataToLocalStorage = () => {
   const parsedUser = getDataFromLocalStorage()
   if (parsedUser) {
-    const dateTimer = addMinutes(parsedUser.expirationTimer, 15);
-    const authUser = JSON.stringify({
-      ...parsedUser,
-      expirationTimer: dateTimer.toISOString()
-    })
-    localStorage.setItem("authUser", authUser)
+    //const { expirationTimer } = parsedUser
+    //console.log(new Date(parsedUser.expirationTimer).getTime())
+    //console.log(parsedUser?.expirationTimer)
+    const expirationDuration =
+      new Date(parsedUser.expirationTimer).getTime() - new Date().getTime();
+    if (expirationDuration < 900000) {
+      const dateTimer = addMinutes(parsedUser.expirationTimer, 15);
+      const authUser = JSON.stringify({
+        ...parsedUser,
+        expirationTimer: dateTimer.toISOString()
+      })
+      localStorage.setItem("authUser", authUser)
+    }
+
   }
 }
 
