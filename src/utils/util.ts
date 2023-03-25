@@ -12,11 +12,14 @@ export const shuffleArray = (array: any) => {
 }
 
 export const checkResponseForError = async (res: Response) => {
+
   if (!res.ok) {
     const errorMessage = await res.json()
     const errorData = errorMessage.message
     throw new CustomError(errorData, 400);
   }
+
+
 
   const resData = await res.json()
   return resData

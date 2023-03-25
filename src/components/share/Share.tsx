@@ -10,20 +10,45 @@ import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { urlImgString } from "../../utils/constants/constants";
 
+type ImageFileType = {
+	preview: string;
+	data: File | null;
+	text: string | null;
+};
+
 const Share: FC<{
 	currentUser: any;
 }> = ({ currentUser }) => {
 	const [inputText, setInputText] = useState("");
 	const [selectedFile, setSelectedFile] = useState<File>();
+	const [selectedImageFile, setSelectedImageFile] = useState<{
+		preview: string;
+		data: File | null;
+		text: string | null;
+	}>({ preview: "", data: null, text: null });
 
-	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setSelectedFile(event?.target?.files?.[0]);
+	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+		//console.log(URL.createObjectURL(event?.target?.files?.[0]));
+		//setSelectedFile(event?.target?.files?.[0]);
+		let img: ImageFileType = {
+			preview: "",
+			data: null,
+			text: null,
+		};
+		if (e?.target?.files?.[0]) {
+			img = {
+				preview: URL.createObjectURL(e.target.files[0]),
+				data: e.target.files[0],
+				text: e.target.files[0].name,
+			};
+		}
+		setSelectedImageFile(img);
 	};
 
 	const onSubmitPost = () => {
 		console.log({
 			inputText,
-			selectedFile,
+			imageFile: selectedImageFile.data,
 		});
 	};
 	return (
@@ -32,7 +57,6 @@ const Share: FC<{
 		>
 			<div className="flex gap-0 -ml-3 ">
 				<Avatar
-					//image="/assets/person/1.jpeg"
 					image={`${urlImgString}${currentUser.profilePicture}`}
 					size="large"
 					shape="circle"
@@ -53,10 +77,27 @@ const Share: FC<{
 				className={`${classes.options} ml-4 mt-2  flex flex-column xl:flex-row flex-wrap gap-5 sm:gap-3`}
 			>
 				<div className="flex gap-2 mt-1">
-					<div className=" flex">
+					<div className="flex">
 						<label htmlFor="imageInput" className="flex cursor-pointer">
-							<PermMediaIcon className="mx-1 text-red-400" />
-							<span className="hidden md:inline">Media</span>
+							{!selectedImageFile.text && (
+								<PermMediaIcon className="mx-1 text-red-400" />
+							)}
+							{selectedImageFile.text && (
+								<img
+									src={selectedImageFile.preview}
+									alt=""
+									width="20px"
+									height="20px"
+									className="ml-2 border-round"
+								/>
+							)}{" "}
+							{!selectedImageFile.text ? (
+								<span className="hidden md:inline">Media</span>
+							) : (
+								<span className="hidden md:inline">
+									{selectedImageFile.text}
+								</span>
+							)}
 							<input id="imageInput" type="file" onChange={handleFileSelect} />
 						</label>
 					</div>
