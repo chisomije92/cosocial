@@ -34,9 +34,6 @@ export const getDataFromLocalStorage = () => {
 export const setDataToLocalStorage = () => {
   const parsedUser = getDataFromLocalStorage()
   if (parsedUser) {
-    //const { expirationTimer } = parsedUser
-    //console.log(new Date(parsedUser.expirationTimer).getTime())
-    //console.log(parsedUser?.expirationTimer)
     const expirationDuration =
       new Date(parsedUser.expirationTimer).getTime() - new Date().getTime();
     if (expirationDuration < 900000) {
