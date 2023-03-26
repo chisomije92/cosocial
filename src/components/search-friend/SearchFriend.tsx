@@ -1,6 +1,5 @@
 /** @format */
 
-import { InputText } from "primereact/inputtext";
 import React, { useState, useEffect } from "react";
 import { Users } from "../../data/dummy-data";
 import OnlineFriends from "../online-friends/OnlineFriends";

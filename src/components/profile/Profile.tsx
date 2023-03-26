@@ -73,11 +73,13 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 				<div className="flex flex-column align-items-center mt-2 mb-2">
 					<div className="font-bold my-1">{user.username}</div>
 					<div className="opacity-80">{user.email}</div>
-					<div className="mt-1 font-medium">{user.description}</div>
+					<div className="mt-1 font-medium ">{user.description}</div>
 				</div>
+				<div className="flex justify-content-center"></div>
+
 				<div className="flex gap-3 justify-content-around ">
-					<div>
-						Posts:{" "}
+					<div className="flex gap-1">
+						<span>Posts:</span>
 						<span className="font-semibold opacity-90">{userPosts.length}</span>
 					</div>
 					<Link
@@ -124,12 +126,16 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 					</div>
 				)}
 				{user._id !== authUser?.userId && (
-					<div className="flex flex-column align-items-center gap-1">
+					<div className="flex flex-column align-items-center gap-1 mt-1">
 						<Link to="/messages/1" className="flex no-underline gap-1">
 							<ChatRoundedIcon />
 							<span>Chat</span>
 						</Link>
+
 						<ConfirmDialog />
+						{user.following.includes(authUser?.userId) && (
+							<span className="font-bold text-lg">Follows you</span>
+						)}
 						<Button
 							label={`${isFollowing ? "Following" : "Follow"}`}
 							className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold  bg-bluegray-900 `}

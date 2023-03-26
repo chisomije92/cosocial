@@ -21,7 +21,6 @@ const Share: FC<{
 	currentUser: any;
 }> = ({ currentUser }) => {
 	const [inputText, setInputText] = useState("");
-	const [selectedFile, setSelectedFile] = useState<File>();
 	const [selectedImageFile, setSelectedImageFile] = useState<{
 		preview: string;
 		data: File | null;

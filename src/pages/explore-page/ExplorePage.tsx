@@ -9,7 +9,6 @@ import SideBar from "../../components/side-bar/SideBar";
 import { getPostsOnExplore } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
-import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
 
 const ExplorePage = () => {

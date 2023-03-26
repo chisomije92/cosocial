@@ -22,13 +22,14 @@
 }
 
 .imgContainer [class*="p-image-preview-indicator"]{
+  margin-right: 25px;
 border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   object-fit: cover;
-  width: 240px;
+  width: 100%;
 }
 
 .profile button {
