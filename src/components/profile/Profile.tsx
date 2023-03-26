@@ -66,7 +66,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						src={`${urlImgString}${user.profilePicture}`}
 						alt=""
 						height="260"
-						width="240"
+						width="100%"
 						preview
 					/>
 				</div>

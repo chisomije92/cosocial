@@ -11,14 +11,14 @@ import { Await, defer, useLoaderData } from "react-router-dom";
 import { getAuthUser, getUser } from "../../utils/user-api";
 import { getUserPosts } from "../../utils/post-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
-import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
+import ProfilePageSkeleton from "../../components/loading-skeleton/ProfilePageSkeleton";
 
 const ProfilePage = () => {
 	const { data } = useLoaderData() as any;
 
 	return (
 		<>
-			<Suspense fallback={<LoadingSpinner />}>
+			<Suspense fallback={<ProfilePageSkeleton />}>
 				<Await
 					resolve={data}
 					children={data => (
