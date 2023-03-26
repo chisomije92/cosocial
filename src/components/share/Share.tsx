@@ -9,6 +9,7 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { urlImgString } from "../../utils/constants/constants";
+import { Skeleton } from "primereact/skeleton";
 
 type ImageFileType = {
 	preview: string;
@@ -28,8 +29,6 @@ const Share: FC<{
 	}>({ preview: "", data: null, text: null });
 
 	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-		//console.log(URL.createObjectURL(event?.target?.files?.[0]));
-		//setSelectedFile(event?.target?.files?.[0]);
 		let img: ImageFileType = {
 			preview: "",
 			data: null,
@@ -56,12 +55,24 @@ const Share: FC<{
 			className={`card ${classes.container}  h-13rem xl:h-12rem w-full border-round-md shadow-4`}
 		>
 			<div className="flex gap-0 -ml-3 ">
-				<Avatar
-					image={`${urlImgString}${currentUser.profilePicture}`}
-					size="large"
-					shape="circle"
-					className="mx-4 -mb-2 mt-2"
-				/>
+				{currentUser.profilePicture ? (
+					<Avatar
+						image={
+							currentUser.profilePicture
+								? `${urlImgString}${currentUser.profilePicture}`
+								: ""
+						}
+						size="large"
+						shape="circle"
+						className="mx-4 -mb-2 mt-2"
+					/>
+				) : (
+					<Skeleton
+						shape="circle"
+						size="3rem"
+						className="mx-4 -mb-2 mt-2"
+					></Skeleton>
+				)}
 				<InputTextarea
 					placeholder="Share your thoughts"
 					className="border-0 mt-1 -ml-3 w-10  h-5rem"

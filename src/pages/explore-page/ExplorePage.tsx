@@ -10,13 +10,14 @@ import { getPostsOnExplore } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import LoadingSpinner from "../../components/loading-spinner/LoadingSpinner";
+import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
 
 const ExplorePage = () => {
 	const { data }: any = useLoaderData();
 
 	return (
 		<>
-			<Suspense fallback={<LoadingSpinner />}>
+			<Suspense fallback={<HomeSkeleton />}>
 				<Await
 					resolve={data}
 					children={data => (
