@@ -2,7 +2,7 @@
 
 import CustomError from "../models/custom-error";
 import { urlString } from "./constants/constants";
-import { checkResponseForError, setDataToLocalStorage } from "./util";
+import { checkResponseForError } from "./util";
 
 
 
@@ -57,7 +57,7 @@ export const signUp = async (data: { email: string; password: string; username: 
     })
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
+
     return resData
   } catch (err: any) {
     return err.message
@@ -85,7 +85,6 @@ export const updateUser = async (id: string, token: string, data: Partial<{
     )
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -110,7 +109,6 @@ export const updatePassword = async (id: string, token: string, data: {
 
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -128,7 +126,6 @@ export const getUser = async (id: string, token: string) => {
     },
     )
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -207,7 +204,6 @@ export const followUser = async (id: string, token: string) => {
 
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -226,7 +222,6 @@ export const unFollowUser = async (id: string, token: string) => {
     )
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -246,7 +241,6 @@ export const getNonFollowing = async (token: string) => {
 
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -265,7 +259,6 @@ export const getNonFollowers = async (token: string) => {
     )
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -285,7 +278,6 @@ export const getNotifications = async (token: string) => {
 
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
 
@@ -310,7 +302,6 @@ export const deleteUser = async (id: string, token: string) => {
     }
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -334,7 +325,6 @@ export const readNotification = async (id: string, token: string) => {
     }
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -358,7 +348,6 @@ export const readAllNotifications = async (token: string) => {
     }
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -382,7 +371,6 @@ export const unreadAllNotifications = async (token: string) => {
     }
 
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message

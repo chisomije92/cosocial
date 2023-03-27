@@ -11,10 +11,6 @@ import { Link } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
 import { urlImgString } from "../../utils/constants/constants";
-import { InputTextarea } from "primereact/inputtextarea";
-import { Button } from "primereact/button";
-import PermMediaIcon from "@mui/icons-material/PermMedia";
-import { ImageFileType } from "../../models/imageFileType";
 import { useAuth } from "../../hooks/auth/useAuth";
 import EditPost from "./EditPost";
 

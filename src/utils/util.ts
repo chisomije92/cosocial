@@ -39,7 +39,7 @@ export const setDataToLocalStorage = () => {
   if (parsedUser) {
     const expirationDuration =
       new Date(parsedUser.expirationTimer).getTime() - new Date().getTime();
-    if (expirationDuration < 900000) {
+    if (expirationDuration >= 1000) {
 
       const dateTimer = addMinutes(parsedUser.expirationTimer, 15);
       console.log(dateTimer)

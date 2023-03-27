@@ -1,5 +1,5 @@
 import { urlString } from "./constants/constants"
-import { checkResponseForError, setDataToLocalStorage } from "./util"
+import { checkResponseForError } from "./util"
 
 
 
@@ -14,7 +14,6 @@ export const getUserPosts = async (token: string, userId: string) => {
       },
     })
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -31,7 +30,6 @@ export const getPostsOnTl = async (token: string, userId: string) => {
       },
     })
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -49,7 +47,6 @@ export const getPostsOnExplore = async (token: string) => {
       },
     })
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -66,7 +63,6 @@ export const getSinglePost = async (id: string, token: string) => {
       },
     })
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -87,7 +83,6 @@ export const createPost = async (token: string, data: { image: File, post: strin
       body: formData
     })
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -109,7 +104,6 @@ export const updateUserPost = async (id: string, token: string, data: { image?: 
       body: formData
     })
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
@@ -125,7 +119,6 @@ export const deletePost = async (id: string, token: string, data: { image: File,
       },
     })
     const resData = await checkResponseForError(res)
-    setDataToLocalStorage()
     return resData
   } catch (err: any) {
     return err.message
