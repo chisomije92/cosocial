@@ -73,3 +73,59 @@ export const getSinglePost = async (id: string, token: string) => {
   }
 
 }
+
+export const createPost = async (token: string, data: { image: File, post: string }) => {
+  try {
+    const formData = new FormData()
+    formData.append("image", data.image)
+    formData.append("description", data.post)
+    const res = await fetch(`${urlString}/posts`, {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+      body: formData
+    })
+    const resData = await checkResponseForError(res)
+    setDataToLocalStorage()
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+export const updatePost = async (id: string, token: string, data: { image: File, post: string }) => {
+  try {
+    const formData = new FormData()
+    formData.append("image", data.image)
+    formData.append("description", data.post)
+    const res = await fetch(`${urlString}/posts/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+      body: formData
+    })
+    const resData = await checkResponseForError(res)
+    setDataToLocalStorage()
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+export const deletePost = async (id: string, token: string, data: { image: File, post: string }) => {
+  try {
+    const res = await fetch(`${urlString}/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    })
+    const resData = await checkResponseForError(res)
+    setDataToLocalStorage()
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
