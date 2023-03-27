@@ -11,6 +11,10 @@ import { Link } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
 import { urlImgString } from "../../utils/constants/constants";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Button } from "primereact/button";
+import PermMediaIcon from "@mui/icons-material/PermMedia";
+import { ImageFileType } from "../../models/imageFileType";
 
 interface PostProp {
 	post: any;
@@ -26,6 +30,13 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
+	const [description, setDescription] = useState(post.description);
+	const [selectedPostImageFile, setSelectedPostImageFile] = useState<{
+		preview: string;
+		data: File | null;
+		text: string | null;
+	}>({ preview: "", data: null, text: null });
+	const [isEditing, setIsEditing] = useState(false);
 
 	const handleLike = () => {
 		setLike(isLiked ? like - 1 : like + 1);
@@ -34,6 +45,22 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 
 	const handleBookmark = () => {
 		setIsBookmarked(prev => !prev);
+	};
+
+	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+		let img: ImageFileType = {
+			preview: "",
+			data: null,
+			text: null,
+		};
+		if (e?.target?.files?.[0]) {
+			img = {
+				preview: URL.createObjectURL(e.target.files[0]),
+				data: e.target.files[0],
+				text: e.target.files[0].name,
+			};
+		}
+		setSelectedPostImageFile(img);
 	};
 
 	const likesDialogue = (
@@ -89,7 +116,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 						{isAuthUser && (
 							<>
 								<i
-									className={`pi pi-ellipsis-v ml-auto mr-1 my-3
+									className={`pi pi-ellipsis-v ml-auto mr-1 my-3 cursor-pointer
 							`}
 									onClick={e => {
 										if (isAuthUser) {
@@ -101,7 +128,14 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 									<div
 										className={`flex text-blue-400 font-medium ${classes.actions} cursor-pointer`}
 									>
-										<span>Edit</span> <i className="pi pi-pencil ml-2"></i>
+										<span
+											onClick={() => {
+												setIsEditing(val => !val);
+											}}
+										>
+											Edit
+										</span>{" "}
+										<i className="pi pi-pencil ml-2"></i>
 									</div>
 
 									<hr className="h-1 w-6rem -mr-3 -ml-3" />
@@ -116,67 +150,130 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 					</div>
 				</div>
 				<div className="ml-3 text-700">
-					<p>{post.description}</p>
+					{isEditing && (
+						<InputTextarea
+							value={description}
+							onChange={e => setDescription(e.target.value)}
+							rows={5}
+							cols={30}
+							autoResize
+							className=" mt-1 w-10  h-5rem"
+						/>
+					)}
+
+					{!isEditing && <p>{post.description}</p>}
 				</div>
-				<div className={classes.postImgContainer}>
-					<Image
-						src={post._id ? `${urlImgString}${post.image}` : `${post.image}`}
-						alt="Image"
-						width="100%"
-						className="mb-4"
-						preview
-					/>
-				</div>
+				{!isEditing && (
+					<div className={classes.postImgContainer}>
+						<Image
+							src={post._id ? `${urlImgString}${post.image}` : `${post.image}`}
+							alt="Image"
+							width="100%"
+							className="mb-4"
+							preview
+						/>
+					</div>
+				)}
+				{isEditing && (
+					<div className="flex mx-auto flex-column">
+						<div>
+							<span className="opacity-60 text-lg ">Select Media</span>
+						</div>
+						<label htmlFor="postImageInput" className="flex cursor-pointer">
+							{!selectedPostImageFile.text && (
+								<PermMediaIcon className="mx-1 text-red-400 font-bold w-12" />
+							)}
+							{selectedPostImageFile.text && (
+								<div
+									className={`
+									${classes.postImgContainer}
+									 flex mx-auto flex-column`}
+								>
+									<img
+										src={selectedPostImageFile.preview}
+										alt=""
+										width="50%"
+										className="ml-2 border-round"
+									/>
+								</div>
+							)}
+							<input
+								id="postImageInput"
+								type="file"
+								onChange={handleFileSelect}
+							/>
+						</label>
+					</div>
+				)}
 				<div className="flex justify-content-between gap-2 mb-3">
-					<div className="flex mt-2 md:flex-row">
-						<div className={!post._id ? `${classes.disableInteractions}` : ""}>
-							{post._id && (
-								<Avatar
-									icon="pi pi-thumbs-up-fill cursor-pointer"
-									shape="circle"
-									className={`mr-1 ml-3 mb-2 bg-blue-500 
+					{!isEditing && (
+						<div className="flex mt-2 md:flex-row">
+							<div
+								className={!post._id ? `${classes.disableInteractions}` : ""}
+							>
+								{post._id && (
+									<Avatar
+										icon="pi pi-thumbs-up-fill cursor-pointer"
+										shape="circle"
+										className={`mr-1 ml-3 mb-2 bg-blue-500 
 							${isLiked ? "text-color" : "text-white"}
 							border-circle`}
-									onClick={handleLike}
-								/>
-							)}
-							{!post._id && (
-								<Avatar
-									icon="pi pi-thumbs-up-fill cursor-pointer"
-									shape="circle"
-									className={`mr-1 ml-3 mb-2 bg-blue-500 text-white
+										onClick={handleLike}
+									/>
+								)}
+								{!post._id && (
+									<Avatar
+										icon="pi pi-thumbs-up-fill cursor-pointer"
+										shape="circle"
+										className={`mr-1 ml-3 mb-2 bg-blue-500 text-white
 							border-circle`}
-									onClick={handleLike}
-								/>
-							)}
-						</div>
-						<div className={!post._id ? `${classes.disableInteractions}` : ""}>
-							{post._id && (
-								<Avatar
-									icon="pi pi-bookmark-fill cursor-pointer"
-									className={`bg-red-600 ${
-										isBookmarked ? "text-color" : "text-white"
-									} border-circle`}
-									onClick={handleBookmark}
-								/>
-							)}
-							{!post._id && (
-								<Avatar
-									icon="pi pi-bookmark-fill"
-									className={`bg-red-600 text-white
-									border-circle`}
-								/>
-							)}
-						</div>
-						<div>
-							<span
-								className="opacity-70 text-sm mx-1 cursor-pointer"
-								onClick={() => setVisible(true)}
+										onClick={handleLike}
+									/>
+								)}
+							</div>
+							<div
+								className={!post._id ? `${classes.disableInteractions}` : ""}
 							>
-								{post.likes.length > 0 ? `${post.likes.length} likes` : ""}
-							</span>
+								{post._id && (
+									<Avatar
+										icon="pi pi-bookmark-fill cursor-pointer"
+										className={`bg-red-600 ${
+											isBookmarked ? "text-color" : "text-white"
+										} border-circle`}
+										onClick={handleBookmark}
+									/>
+								)}
+								{!post._id && (
+									<Avatar
+										icon="pi pi-bookmark-fill"
+										className={`bg-red-600 text-white
+									border-circle`}
+									/>
+								)}
+							</div>
+							<div>
+								<span
+									className="opacity-70 text-sm mx-1 cursor-pointer"
+									onClick={() => setVisible(true)}
+								>
+									{post.likes.length > 0 ? `${post.likes.length} likes` : ""}
+								</span>
+							</div>
 						</div>
-					</div>
+					)}
+					{isEditing && (
+						<div className="flex gap-1">
+							<Button
+								label="Update"
+								className="w-min p-button-success ml-4 mt-1 py-2  font-bold"
+							/>
+							<Button
+								label="Cancel"
+								className="w-min p-button-danger mt-1 py-2  font-bold"
+								onClick={() => setIsEditing(false)}
+							/>
+						</div>
+					)}
 					<div className="flex justify-content-even opacity-60 mr-1">
 						{showComments ? (
 							<Link

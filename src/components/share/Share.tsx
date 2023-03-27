@@ -10,12 +10,7 @@ import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { urlImgString } from "../../utils/constants/constants";
 import { Skeleton } from "primereact/skeleton";
-
-type ImageFileType = {
-	preview: string;
-	data: File | null;
-	text: string | null;
-};
+import { ImageFileType } from "../../models/imageFileType";
 
 const Share: FC<{
 	currentUser: any;
