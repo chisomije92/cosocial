@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
+import { updateUserPost } from "../../utils/post-api";
 import {
 	getAuthUser,
 	readAllNotifications,
@@ -28,6 +29,10 @@ const AuthContext = createContext<{
 	changeNotificationStatus: (id: string) => void;
 	changeAllNotificationStatus: () => void;
 	changeNotificationsToUnread: () => void;
+	updatePost: (
+		id: string,
+		data: { image?: File; post: string }
+	) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
@@ -49,6 +54,7 @@ const AuthContext = createContext<{
 	changeNotificationStatus: async (id: string) => {},
 	changeAllNotificationStatus: () => {},
 	changeNotificationsToUnread: () => {},
+	updatePost: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 });
@@ -138,6 +144,14 @@ export const AuthProvider: React.FC<{
 		setCurrentUser(user);
 	};
 
+	const updatePost = async (
+		id: string,
+		data: { image?: File; post: string }
+	) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await updateUserPost(id, parsedUser.token, data);
+	};
+
 	useEffect(() => {
 		if (authUser && authUser.userId) {
 			setUserId(authUser.userId);
@@ -191,6 +205,7 @@ export const AuthProvider: React.FC<{
 		changeNotificationStatus,
 		changeAllNotificationStatus,
 		changeNotificationsToUnread,
+		updatePost,
 		setAuthUser,
 	};
 

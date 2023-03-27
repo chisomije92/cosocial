@@ -40,7 +40,9 @@ export const setDataToLocalStorage = () => {
     const expirationDuration =
       new Date(parsedUser.expirationTimer).getTime() - new Date().getTime();
     if (expirationDuration < 900000) {
+
       const dateTimer = addMinutes(parsedUser.expirationTimer, 15);
+      console.log(dateTimer)
       const authUser = JSON.stringify({
         ...parsedUser,
         expirationTimer: dateTimer.toISOString()
