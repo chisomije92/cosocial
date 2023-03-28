@@ -11,10 +11,13 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { urlImgString } from "../../utils/constants/constants";
 import { Skeleton } from "primereact/skeleton";
 import { ImageFileType } from "../../models/imageFileType";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 const Share: FC<{
 	currentUser: any;
 }> = ({ currentUser }) => {
+	const { createPost, isLoading, isSubmitting, setIsLoading, setIsSubmitting } =
+		useAuth();
 	const [inputText, setInputText] = useState("");
 	const [selectedImageFile, setSelectedImageFile] = useState<{
 		preview: string;
@@ -39,10 +42,34 @@ const Share: FC<{
 	};
 
 	const onSubmitPost = () => {
-		console.log({
-			inputText,
-			imageFile: selectedImageFile.data,
-		});
+		setIsSubmitting(false);
+		setIsLoading(false);
+		try {
+			if (selectedImageFile.data) {
+				try {
+					createPost({
+						image: selectedImageFile.data,
+						post: inputText,
+					});
+					setIsSubmitting(true);
+					setIsLoading(true);
+				} catch (err) {
+					throw err;
+				}
+			} else {
+				try {
+					createPost({
+						post: inputText,
+					});
+					setIsSubmitting(true);
+					setIsLoading(true);
+				} catch (err) {
+					throw err;
+				}
+			}
+		} catch (err) {
+			throw err;
+		}
 	};
 	return (
 		<div

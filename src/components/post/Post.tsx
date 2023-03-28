@@ -93,7 +93,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 								</span>
 							</Link>
 							<span className=" opacity-70 text-sm">
-								<ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
+								<ReactTimeAgo date={new Date(post.updatedAt)} locale="en-US" />
 							</span>
 						</div>
 						{isAuthUser && (

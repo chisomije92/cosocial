@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
-import { updateUserPost } from "../../utils/post-api";
+import { createUserPost, updateUserPost } from "../../utils/post-api";
 import {
 	getAuthUser,
 	readAllNotifications,
@@ -37,6 +37,9 @@ const AuthContext = createContext<{
 		id: string,
 		data: { image?: File; post: string }
 	) => Promise<string>;
+	createPost: (
+		data: { image?: File; post: string }
+	) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
@@ -61,6 +64,7 @@ const AuthContext = createContext<{
 	changeAllNotificationStatus: () => {},
 	changeNotificationsToUnread: () => {},
 	updatePost: async () => Promise.resolve(""),
+	createPost: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -161,13 +165,10 @@ export const AuthProvider: React.FC<{
 		return await updateUserPost(id, parsedUser.token, data);
 	};
 
-	//const createPost = async (
-	//	id: string,
-	//	data: { image?: File; post: string }
-	//) => {
-	//	const parsedUser = getDataFromLocalStorage();
-	//	return await createPost(id, parsedUser.token, data);
-	//};
+	const createPost = async (data: { image?: File; post: string }) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await createUserPost(parsedUser.token, data);
+	};
 
 	useEffect(() => {
 		let submitTimer: any;
@@ -220,6 +221,7 @@ export const AuthProvider: React.FC<{
 		changeAllNotificationStatus,
 		changeNotificationsToUnread,
 		updatePost,
+		createPost,
 		setAuthUser,
 		setIsLoading,
 		setIsSubmitting,

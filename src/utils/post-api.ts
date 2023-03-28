@@ -70,7 +70,7 @@ export const getSinglePost = async (id: string, token: string) => {
 
 }
 
-export const createPost = async (token: string, data: { image?: File, post: string }) => {
+export const createUserPost = async (token: string, data: { image?: File, post: string }) => {
   try {
     const formData = new FormData()
     if (data.image) {
