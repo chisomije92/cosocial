@@ -7,6 +7,8 @@ import classes from "./error.module.css";
 
 const Error = () => {
 	const error = useRouteError();
+	console.log(error);
+	console.log(isRouteErrorResponse(error));
 	if (isRouteErrorResponse(error)) {
 		return (
 			<Card id="error-content" className={`${classes.error} surface-100`}>

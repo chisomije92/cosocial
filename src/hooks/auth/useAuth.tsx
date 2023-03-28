@@ -26,6 +26,10 @@ const AuthContext = createContext<{
 	userId: string | null;
 	errorMsg: string | null;
 	currentUser: any;
+	isLoading: boolean;
+	isSubmitting: boolean;
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	changeNotificationStatus: (id: string) => void;
 	changeAllNotificationStatus: () => void;
 	changeNotificationsToUnread: () => void;
@@ -48,6 +52,8 @@ const AuthContext = createContext<{
 	userId: null,
 	errorMsg: null,
 	currentUser: null,
+	isLoading: false,
+	isSubmitting: false,
 	authenticateUser: async () => {},
 	logout: () => {},
 	autoLogout: () => {},
@@ -57,6 +63,8 @@ const AuthContext = createContext<{
 	updatePost: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
+	setIsLoading: () => {},
+	setIsSubmitting: () => {},
 });
 
 export const AuthProvider: React.FC<{
@@ -77,6 +85,8 @@ export const AuthProvider: React.FC<{
 	const [userId, setUserId] = useState<string | null>(null);
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
 	const [currentUser, setCurrentUser] = useState<any>();
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const navigate = useNavigate();
 
 	const authenticateUser = async (
@@ -151,6 +161,25 @@ export const AuthProvider: React.FC<{
 		return await updateUserPost(id, parsedUser.token, data);
 	};
 
+	//const createPost = async (
+	//	id: string,
+	//	data: { image?: File; post: string }
+	//) => {
+	//	const parsedUser = getDataFromLocalStorage();
+	//	return await createPost(id, parsedUser.token, data);
+	//};
+
+	useEffect(() => {
+		let submitTimer: any;
+		if (isSubmitting) {
+			submitTimer = setTimeout(() => {
+				navigate(0);
+			}, 1000);
+		}
+		return () => clearTimeout(submitTimer);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isSubmitting]);
+
 	useEffect(() => {
 		if (authUser && authUser.userId) {
 			setUserId(authUser.userId);
@@ -181,6 +210,8 @@ export const AuthProvider: React.FC<{
 		userId,
 		errorMsg,
 		currentUser,
+		isSubmitting,
+		isLoading,
 		authenticateUser,
 		logout,
 		autoLogout,
@@ -190,6 +221,8 @@ export const AuthProvider: React.FC<{
 		changeNotificationsToUnread,
 		updatePost,
 		setAuthUser,
+		setIsLoading,
+		setIsSubmitting,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

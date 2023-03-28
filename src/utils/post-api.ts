@@ -70,10 +70,12 @@ export const getSinglePost = async (id: string, token: string) => {
 
 }
 
-export const createPost = async (token: string, data: { image: File, post: string }) => {
+export const createPost = async (token: string, data: { image?: File, post: string }) => {
   try {
     const formData = new FormData()
-    formData.append("image", data.image)
+    if (data.image) {
+      formData.append("image", data.image)
+    }
     formData.append("description", data.post)
     const res = await fetch(`${urlString}/posts`, {
       method: "POST",

@@ -2,8 +2,8 @@
 
 import { InputTextarea } from "primereact/inputtextarea";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
-import React from "react";
-import { Form } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Form, useNavigate, useSubmit } from "react-router-dom";
 import classes from "./post.module.css";
 import { ImageFileType } from "../../models/imageFileType";
 import { Button } from "primereact/button";
@@ -24,7 +24,8 @@ const EditPost: React.FC<{
 	setSelectedPostImageFile,
 	setEditing,
 }) => {
-	const { updatePost } = useAuth();
+	const { updatePost, isSubmitting, setIsSubmitting, isLoading, setIsLoading } =
+		useAuth();
 
 	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let img: ImageFileType = {
@@ -43,19 +44,37 @@ const EditPost: React.FC<{
 	};
 
 	const handleSubmit = () => {
-		//if (selectedPostImageFile.data) {
-		//	updatePost(postId, {
-		//		image: selectedPostImageFile.data,
-		//		post: description,
-		//	});
-		//} else {
-		//	updatePost(postId, {
-		//		post: description,
-		//	});
-		//}
+		setIsSubmitting(false);
+		setIsLoading(false);
+		try {
+			if (selectedPostImageFile.data) {
+				try {
+					updatePost(postId, {
+						image: selectedPostImageFile.data,
+						post: description,
+					});
+					setIsSubmitting(true);
+					setIsLoading(true);
+				} catch (err) {
+					throw err;
+				}
+			} else {
+				try {
+					updatePost(postId, {
+						post: description,
+					});
+					setIsSubmitting(true);
+					setIsLoading(true);
+				} catch (err) {
+					throw err;
+				}
+			}
+		} catch (err) {
+			throw err;
+		}
 	};
 	return (
-		<Form>
+		<>
 			<div className="ml-3 text-700">
 				<InputTextarea
 					value={description}
@@ -64,13 +83,15 @@ const EditPost: React.FC<{
 					cols={30}
 					autoResize
 					className=" mt-1 w-10  h-5rem"
+					name="description"
+					id="description"
 				/>
 			</div>
 			<div className="flex mx-auto flex-column">
 				<div className="mx-auto">
 					<span className="opacity-60 text-lg ">Select Media</span>
 				</div>
-				<label htmlFor="postImageInput" className="flex cursor-pointer">
+				<label htmlFor="image" className="flex cursor-pointer">
 					{!selectedPostImageFile.text && (
 						<PermMediaIcon className="mx-1 text-red-400 font-bold w-12" />
 					)}
@@ -88,24 +109,34 @@ const EditPost: React.FC<{
 							/>
 						</div>
 					)}
-					<input id="postImageInput" type="file" onChange={handleFileSelect} />
+					<input
+						id="image"
+						name="image"
+						type="file"
+						onChange={handleFileSelect}
+					/>
 				</label>
 			</div>
 			<div className="flex justify-content-between gap-2 mb-3">
 				<div className="flex gap-1">
 					<Button
+						type="submit"
 						label="Update"
-						className="w-min p-button-success ml-4 mt-1 py-2  font-bold"
+						className={`w-min p-button-success ml-4 mt-1 py-2  font-bold	${
+							isLoading ? "p-disabled" : ""
+						}`}
 						onClick={handleSubmit}
 					/>
 					<Button
 						label="Cancel"
-						className="w-min p-button-danger mt-1 py-2  font-bold"
+						className={`w-min p-button-danger mt-1 py-2  font-bold 	${
+							isLoading ? "p-disabled" : ""
+						}`}
 						onClick={() => setEditing(false)}
 					/>
 				</div>
 			</div>
-		</Form>
+		</>
 	);
 };
 

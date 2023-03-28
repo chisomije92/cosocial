@@ -1,11 +1,11 @@
 /** @format */
 
 import { Suspense } from "react";
-import { Await, defer, useLoaderData } from "react-router-dom";
+import { Await, defer, redirect, useLoaderData } from "react-router-dom";
 import Feeds from "../../components/feeds/Feeds";
 import RightBar from "../../components/right-bar/RightBar";
 import SideBar from "../../components/side-bar/SideBar";
-import { getPostsOnTl } from "../../utils/post-api";
+import { getPostsOnTl, updateUserPost } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";

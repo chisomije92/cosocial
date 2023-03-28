@@ -110,15 +110,11 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 								<OverlayPanel ref={op} className="mt-2 -ml-6">
 									<div
 										className={`flex text-blue-400 font-medium ${classes.actions} cursor-pointer`}
+										onClick={() => {
+											setIsEditing(!isEditing);
+										}}
 									>
-										<span
-											onClick={() => {
-												setIsEditing(!isEditing);
-											}}
-										>
-											Edit
-										</span>{" "}
-										<i className="pi pi-pencil ml-2"></i>
+										<span>Edit</span> <i className="pi pi-pencil ml-2"></i>
 									</div>
 
 									<hr className="h-1 w-6rem -mr-3 -ml-3" />
