@@ -1,8 +1,5 @@
 import { urlString } from "./constants/constants"
 import { checkResponseForError } from "./util"
-import openSocket from "socket.io-client";
-
-
 
 
 export const getUserPosts = async (token: string, userId: string) => {
@@ -31,7 +28,6 @@ export const getPostsOnTl = async (token: string, userId: string) => {
       },
     })
     const resData = await checkResponseForError(res)
-    //const socket = openSocket(urlString);
     return resData
   } catch (err: any) {
     return err.message
@@ -87,7 +83,6 @@ export const createUserPost = async (token: string, data: { image?: File, post: 
       body: formData
     })
     const resData = await checkResponseForError(res)
-    //const socket = openSocket(urlString);
 
     return resData
   } catch (err: any) {
@@ -116,7 +111,7 @@ export const updateUserPost = async (id: string, token: string, data: { image?: 
   }
 }
 
-export const deletePost = async (id: string, token: string, data: { image: File, post: string }) => {
+export const deleteUserPost = async (id: string, token: string) => {
   try {
     const res = await fetch(`${urlString}/posts/${id}`, {
       method: "DELETE",

@@ -3,14 +3,14 @@
 import classes from "./post.module.css";
 import { Avatar } from "primereact/avatar";
 import { Dialog } from "primereact/dialog";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
 import Likes from "../likes/Likes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
-import { urlImgString } from "../../utils/constants/constants";
+import { socket, urlImgString } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
 import EditPost from "./EditPost";
 
@@ -19,12 +19,19 @@ interface PostProp {
 	user?: any;
 	showComments?: boolean;
 	isAuthUser?: boolean;
+	onDeletePost?: any;
 }
 
-const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
+const Post: FC<PostProp> = ({
+	post,
+	user,
+	showComments,
+	isAuthUser,
+	onDeletePost,
+}) => {
 	const op = useRef<any>(null);
-	const { updatePost } = useAuth();
-
+	const { deletePost, setLoadedPosts, loadedPosts, setPost } = useAuth();
+	const navigate = useNavigate();
 	const [like, setLike] = useState(post.like);
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
@@ -36,6 +43,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 		text: string | null;
 	}>({ preview: "", data: null, text: null });
 	const [isEditing, setIsEditing] = useState(false);
+	const [deletedPost, setDeletedPost] = useState(false);
 
 	const handleLike = () => {
 		setLike(isLiked ? like - 1 : like + 1);
@@ -70,6 +78,34 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 
 		return imgString;
 	};
+
+	useEffect(() => {
+		let deleteTimer: any;
+		if (deletedPost) {
+			deleteTimer = setTimeout(() => {
+				navigate(0);
+				setDeletedPost(false);
+			}, 200);
+		}
+
+		return () => clearTimeout(deleteTimer);
+	}, [deletedPost]);
+
+	const handleDelete = () => {
+		deletePost(post._id);
+		//socket.on("posts", data => {
+		//	if (data.action === "delete") {
+		//		const filteredPosts = [...loadedPosts].filter(
+		//			(p: any) => p._id !== data.post._id
+		//		);
+		//		setLoadedPosts(filteredPosts);
+
+		//	}
+		//});
+		setDeletedPost(true);
+		op.current.hide();
+	};
+
 	return (
 		<>
 			<div
@@ -112,6 +148,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 										className={`flex text-blue-400 font-medium ${classes.actions} cursor-pointer`}
 										onClick={() => {
 											setIsEditing(!isEditing);
+											op.current.hide();
 										}}
 									>
 										<span>Edit</span> <i className="pi pi-pencil ml-2"></i>
@@ -120,6 +157,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 									<hr className="h-1 w-6rem -mr-3 -ml-3" />
 									<div
 										className={`flex text-red-500 font-medium ${classes.actions} cursor-pointer`}
+										onClick={handleDelete}
 									>
 										<span>Delete</span> <i className="pi pi-trash ml-2"></i>
 									</div>

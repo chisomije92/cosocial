@@ -5,7 +5,12 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
-import { createUserPost, updateUserPost } from "../../utils/post-api";
+import { socket } from "../../utils/constants/constants";
+import {
+	createUserPost,
+	deleteUserPost,
+	updateUserPost,
+} from "../../utils/post-api";
 import {
 	getAuthUser,
 	readAllNotifications,
@@ -29,6 +34,7 @@ const AuthContext = createContext<{
 	isLoading: boolean;
 	isSubmitting: boolean;
 	post: any;
+	loadedPosts: any;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	changeNotificationStatus: (id: string) => void;
@@ -39,12 +45,14 @@ const AuthContext = createContext<{
 		data: { image?: File; post: string }
 	) => Promise<string>;
 	createPost: (data: { image?: File; post: string }) => Promise<string>;
+	deletePost: (postId: string) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
-	setPost: React.Dispatch<React.SetStateAction<string | null>>;
+	setPost: React.Dispatch<React.SetStateAction<any | null>>;
 	setAuthUser: (data: any) => void;
+	setLoadedPosts: React.Dispatch<React.SetStateAction<any | null>>;
 }>({
 	authUser: {
 		token: "",
@@ -58,6 +66,7 @@ const AuthContext = createContext<{
 	currentUser: null,
 	isLoading: false,
 	isSubmitting: false,
+	loadedPosts: null,
 	authenticateUser: async () => {},
 	logout: () => {},
 	autoLogout: () => {},
@@ -66,11 +75,13 @@ const AuthContext = createContext<{
 	changeNotificationsToUnread: () => {},
 	updatePost: async () => Promise.resolve(""),
 	createPost: async () => Promise.resolve(""),
+	deletePost: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
 	setPost: () => {},
 	setIsSubmitting: () => {},
+	setLoadedPosts: () => {},
 });
 
 export const AuthProvider: React.FC<{
@@ -94,6 +105,7 @@ export const AuthProvider: React.FC<{
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [post, setPost] = useState<any>(null);
+	const [loadedPosts, setLoadedPosts] = useState<any>(null);
 	const navigate = useNavigate();
 
 	const authenticateUser = async (
@@ -174,6 +186,12 @@ export const AuthProvider: React.FC<{
 		return userPost;
 	};
 
+	const deletePost = async (postId: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		const userPost = await deleteUserPost(postId, parsedUser.token);
+		return userPost;
+	};
+
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
@@ -218,6 +236,7 @@ export const AuthProvider: React.FC<{
 		isSubmitting,
 		isLoading,
 		post,
+		loadedPosts,
 		authenticateUser,
 		logout,
 		autoLogout,
@@ -227,10 +246,12 @@ export const AuthProvider: React.FC<{
 		changeNotificationsToUnread,
 		updatePost,
 		createPost,
+		deletePost,
 		setAuthUser,
 		setIsLoading,
 		setIsSubmitting,
 		setPost,
+		setLoadedPosts,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -8,11 +8,14 @@ import { useState, FC } from "react";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { urlImgString, socketUrl } from "../../utils/constants/constants";
+import {
+	urlImgString,
+	socketUrl,
+	socket,
+} from "../../utils/constants/constants";
 import { Skeleton } from "primereact/skeleton";
 import { ImageFileType } from "../../models/imageFileType";
 import { useAuth } from "../../hooks/auth/useAuth";
-import openSocket from "socket.io-client";
 
 const Share: FC<{
 	currentUser: any;
@@ -51,49 +54,25 @@ const Share: FC<{
 	const onSubmitPost = () => {
 		setIsSubmitting(false);
 		setIsLoading(false);
-		try {
-			if (selectedImageFile.data) {
-				try {
-					createPost({
-						image: selectedImageFile.data,
-						post: inputText,
-					});
-					const socket = openSocket(socketUrl);
-					socket.on("posts", data => {
-						if (data.action === "create") {
-							console.log(data.post);
-							setPost(data.post);
-						}
-					});
-					setIsSubmitting(true);
-					setIsLoading(true);
-				} catch (err) {
-					throw err;
-				}
-			} else {
-				try {
-					createPost({
-						post: inputText,
-					});
-					console.log("No Image here");
-					const socket = openSocket(socketUrl);
-					socket.on("posts", data => {
-						if (data.action === "create") {
-							console.log(data.post);
-							setPost(data.post);
-						}
-					});
-					setIsSubmitting(true);
-					setIsLoading(true);
-				} catch (err) {
-					throw err;
-				}
-				setInputText("");
-				setSelectedImageFile({ preview: "", data: null, text: null });
-			}
-		} catch (err) {
-			throw err;
+		if (selectedImageFile.data) {
+			createPost({
+				image: selectedImageFile.data,
+				post: inputText,
+			});
+		} else {
+			createPost({
+				post: inputText,
+			});
 		}
+		socket.on("posts", data => {
+			if (data.action === "create") {
+				setPost(data.post);
+			}
+		});
+		setIsSubmitting(true);
+		setIsLoading(true);
+		setInputText("");
+		setSelectedImageFile({ preview: "", data: null, text: null });
 	};
 	return (
 		<div

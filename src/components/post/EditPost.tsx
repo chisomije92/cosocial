@@ -8,6 +8,7 @@ import classes from "./post.module.css";
 import { ImageFileType } from "../../models/imageFileType";
 import { Button } from "primereact/button";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { socket } from "../../utils/constants/constants";
 
 const EditPost: React.FC<{
 	postId: any;
@@ -24,8 +25,14 @@ const EditPost: React.FC<{
 	setSelectedPostImageFile,
 	setEditing,
 }) => {
-	const { updatePost, isSubmitting, setIsSubmitting, isLoading, setIsLoading } =
-		useAuth();
+	const {
+		updatePost,
+		setIsSubmitting,
+		isLoading,
+		setIsLoading,
+		loadedPosts,
+		setLoadedPosts,
+	} = useAuth();
 
 	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let img: ImageFileType = {
@@ -48,26 +55,31 @@ const EditPost: React.FC<{
 		setIsLoading(false);
 		try {
 			if (selectedPostImageFile.data) {
-				try {
-					updatePost(postId, {
-						image: selectedPostImageFile.data,
-						post: description,
-					});
-					setIsSubmitting(true);
-					setIsLoading(true);
-				} catch (err) {
-					throw err;
-				}
+				updatePost(postId, {
+					image: selectedPostImageFile.data,
+					post: description,
+				});
+				setIsSubmitting(true);
+				setIsLoading(true);
 			} else {
-				try {
-					updatePost(postId, {
-						post: description,
-					});
-					setIsSubmitting(true);
-					setIsLoading(true);
-				} catch (err) {
-					throw err;
-				}
+				updatePost(postId, {
+					post: description,
+				});
+
+				socket.on("posts", data => {
+					if (data.action === "update") {
+						const index = loadedPosts.findIndex(
+							(p: any) => p._id === data.post._id
+						);
+						const updatedPosts = [...loadedPosts];
+						const updatedPost = data.post;
+						updatedPosts[index] = updatedPost;
+						setLoadedPosts(updatedPosts);
+					}
+				});
+				setIsSubmitting(true);
+				setIsLoading(true);
+				setEditing(false);
 			}
 		} catch (err) {
 			throw err;
