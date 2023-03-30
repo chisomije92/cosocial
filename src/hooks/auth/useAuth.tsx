@@ -28,6 +28,7 @@ const AuthContext = createContext<{
 	currentUser: any;
 	isLoading: boolean;
 	isSubmitting: boolean;
+	post: any;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	changeNotificationStatus: (id: string) => void;
@@ -37,13 +38,12 @@ const AuthContext = createContext<{
 		id: string,
 		data: { image?: File; post: string }
 	) => Promise<string>;
-	createPost: (
-		data: { image?: File; post: string }
-	) => Promise<string>;
+	createPost: (data: { image?: File; post: string }) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
+	setPost: React.Dispatch<React.SetStateAction<string | null>>;
 	setAuthUser: (data: any) => void;
 }>({
 	authUser: {
@@ -52,6 +52,7 @@ const AuthContext = createContext<{
 		expirationTimer: "",
 		loggedInTime: "",
 	},
+	post: null,
 	userId: null,
 	errorMsg: null,
 	currentUser: null,
@@ -68,6 +69,7 @@ const AuthContext = createContext<{
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
+	setPost: () => {},
 	setIsSubmitting: () => {},
 });
 
@@ -91,6 +93,7 @@ export const AuthProvider: React.FC<{
 	const [currentUser, setCurrentUser] = useState<any>();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [post, setPost] = useState<any>(null);
 	const navigate = useNavigate();
 
 	const authenticateUser = async (
@@ -167,18 +170,19 @@ export const AuthProvider: React.FC<{
 
 	const createPost = async (data: { image?: File; post: string }) => {
 		const parsedUser = getDataFromLocalStorage();
-		return await createUserPost(parsedUser.token, data);
+		const userPost = await createUserPost(parsedUser.token, data);
+		return userPost;
 	};
 
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
 			submitTimer = setTimeout(() => {
-				navigate(0);
+				setIsSubmitting(false);
+				setIsLoading(false);
 			}, 1000);
 		}
 		return () => clearTimeout(submitTimer);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isSubmitting]);
 
 	useEffect(() => {
@@ -213,6 +217,7 @@ export const AuthProvider: React.FC<{
 		currentUser,
 		isSubmitting,
 		isLoading,
+		post,
 		authenticateUser,
 		logout,
 		autoLogout,
@@ -225,6 +230,7 @@ export const AuthProvider: React.FC<{
 		setAuthUser,
 		setIsLoading,
 		setIsSubmitting,
+		setPost,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

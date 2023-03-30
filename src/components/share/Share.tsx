@@ -8,16 +8,23 @@ import { useState, FC } from "react";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { urlImgString } from "../../utils/constants/constants";
+import { urlImgString, socketUrl } from "../../utils/constants/constants";
 import { Skeleton } from "primereact/skeleton";
 import { ImageFileType } from "../../models/imageFileType";
 import { useAuth } from "../../hooks/auth/useAuth";
+import openSocket from "socket.io-client";
 
 const Share: FC<{
 	currentUser: any;
 }> = ({ currentUser }) => {
-	const { createPost, isLoading, isSubmitting, setIsLoading, setIsSubmitting } =
-		useAuth();
+	const {
+		createPost,
+		isLoading,
+		isSubmitting,
+		setIsLoading,
+		setIsSubmitting,
+		setPost,
+	} = useAuth();
 	const [inputText, setInputText] = useState("");
 	const [selectedImageFile, setSelectedImageFile] = useState<{
 		preview: string;
@@ -51,6 +58,13 @@ const Share: FC<{
 						image: selectedImageFile.data,
 						post: inputText,
 					});
+					const socket = openSocket(socketUrl);
+					socket.on("posts", data => {
+						if (data.action === "create") {
+							console.log(data.post);
+							setPost(data.post);
+						}
+					});
 					setIsSubmitting(true);
 					setIsLoading(true);
 				} catch (err) {
@@ -61,11 +75,21 @@ const Share: FC<{
 					createPost({
 						post: inputText,
 					});
+					console.log("No Image here");
+					const socket = openSocket(socketUrl);
+					socket.on("posts", data => {
+						if (data.action === "create") {
+							console.log(data.post);
+							setPost(data.post);
+						}
+					});
 					setIsSubmitting(true);
 					setIsLoading(true);
 				} catch (err) {
 					throw err;
 				}
+				setInputText("");
+				setSelectedImageFile({ preview: "", data: null, text: null });
 			}
 		} catch (err) {
 			throw err;
@@ -144,7 +168,9 @@ const Share: FC<{
 				</div>
 				<Button
 					label="Post"
-					className="w-min p-button-success ml-0 mt-1 py-1 ml-auto mr-4 font-bold"
+					className={`w-min p-button-success ml-0 mt-1 py-1 ml-auto mr-4 font-bold ${
+						isLoading ? "p-disabled" : ""
+					}`}
 					onClick={onSubmitPost}
 				/>
 			</div>

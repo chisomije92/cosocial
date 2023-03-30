@@ -1,6 +1,6 @@
 /** @format */
 
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
 import NoPosts from "../no-posts/NoPosts";
 import Post from "../post/Post";
@@ -22,14 +22,28 @@ const Feeds: FC<FeedsInterface> = ({
 	isExploring,
 	currentUser,
 }) => {
-	const { authUser } = useAuth();
+	const { authUser, post } = useAuth();
+	const [loadedPosts, setLoadedPosts] = useState<any>(posts);
+
+	useEffect(() => {
+		if (post) {
+			setLoadedPosts((prev: any) => {
+				if (prev.findIndex((p: any) => p._id === post._id) >= 0) {
+					return [...prev];
+				} else {
+					return [post, ...prev];
+				}
+			});
+		}
+	}, [post]);
+
 	return (
 		<div className={`${classes.feeds}`}>
 			<div className="p-4 flex flex-column">
 				{!isExploring && <Share currentUser={currentUser} />}
 				{!areTherePosts && <NoPosts />}
 				{areTherePosts &&
-					posts.map((p: any) => (
+					loadedPosts.map((p: any) => (
 						<Post
 							post={p}
 							user={user}

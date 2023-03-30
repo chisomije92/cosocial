@@ -134,15 +134,19 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 							<p>{post.description}</p>
 						</div>
 						<div className={classes.postImgContainer}>
-							<Image
-								src={
-									post._id ? `${urlImgString}${post.image}` : `${post.image}`
-								}
-								alt="Image"
-								width="100%"
-								className="mb-4"
-								preview
-							/>
+							{post.image ? (
+								<Image
+									src={
+										post._id ? `${urlImgString}${post.image}` : `${post.image}`
+									}
+									alt="Image"
+									width="100%"
+									className="mb-4"
+									preview
+								/>
+							) : (
+								<></>
+							)}
 						</div>
 						<div className="flex justify-content-between gap-2 mb-3">
 							<div className="flex mt-2 md:flex-row">
