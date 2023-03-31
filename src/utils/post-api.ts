@@ -125,3 +125,18 @@ export const deleteUserPost = async (id: string, token: string) => {
     return err.message
   }
 }
+
+export const likePost = async (id: string, token: string) => {
+  try {
+    const res = await fetch(`${urlString}/posts/${id}/like`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    })
+    const resData = await checkResponseForError(res)
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}

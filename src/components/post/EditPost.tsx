@@ -59,8 +59,6 @@ const EditPost: React.FC<{
 					image: selectedPostImageFile.data,
 					post: description,
 				});
-				setIsSubmitting(true);
-				setIsLoading(true);
 			} else {
 				updatePost(postId, {
 					post: description,

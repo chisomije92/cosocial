@@ -9,6 +9,7 @@ import { socket } from "../../utils/constants/constants";
 import {
 	createUserPost,
 	deleteUserPost,
+	likePost,
 	updateUserPost,
 } from "../../utils/post-api";
 import {
@@ -46,6 +47,7 @@ const AuthContext = createContext<{
 	) => Promise<string>;
 	createPost: (data: { image?: File; post: string }) => Promise<string>;
 	deletePost: (postId: string) => Promise<string>;
+	handleLikePost: (postId: string) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
@@ -76,6 +78,7 @@ const AuthContext = createContext<{
 	updatePost: async () => Promise.resolve(""),
 	createPost: async () => Promise.resolve(""),
 	deletePost: async () => Promise.resolve(""),
+	handleLikePost: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -192,6 +195,12 @@ export const AuthProvider: React.FC<{
 		return userPost;
 	};
 
+	const handleLikePost = async (postId: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		const userPost = await likePost(postId, parsedUser.token);
+		return userPost;
+	};
+
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
@@ -247,6 +256,7 @@ export const AuthProvider: React.FC<{
 		updatePost,
 		createPost,
 		deletePost,
+		handleLikePost,
 		setAuthUser,
 		setIsLoading,
 		setIsSubmitting,

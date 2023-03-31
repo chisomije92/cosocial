@@ -30,7 +30,14 @@ const Post: FC<PostProp> = ({
 	onDeletePost,
 }) => {
 	const op = useRef<any>(null);
-	const { deletePost, setLoadedPosts, loadedPosts, setPost } = useAuth();
+	const {
+		deletePost,
+		setLoadedPosts,
+		loadedPosts,
+		setPost,
+		userId,
+		handleLikePost,
+	} = useAuth();
 	const navigate = useNavigate();
 	const [like, setLike] = useState(post.like);
 	const [isBookmarked, setIsBookmarked] = useState(false);
@@ -48,6 +55,7 @@ const Post: FC<PostProp> = ({
 	const handleLike = () => {
 		setLike(isLiked ? like - 1 : like + 1);
 		setIsLiked(!isLiked);
+		handleLikePost(post._id);
 	};
 
 	const handleBookmark = () => {
@@ -99,7 +107,6 @@ const Post: FC<PostProp> = ({
 		//			(p: any) => p._id !== data.post._id
 		//		);
 		//		setLoadedPosts(filteredPosts);
-
 		//	}
 		//});
 		setDeletedPost(true);
@@ -196,7 +203,7 @@ const Post: FC<PostProp> = ({
 											icon="pi pi-thumbs-up-fill cursor-pointer"
 											shape="circle"
 											className={`mr-1 ml-3 mb-2 bg-blue-500 
-							${isLiked ? "text-color" : "text-white"}
+							${isLiked || post.likes.includes(userId) ? "text-color" : "text-white"}
 							border-circle`}
 											onClick={handleLike}
 										/>
