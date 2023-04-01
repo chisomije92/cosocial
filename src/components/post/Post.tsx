@@ -39,7 +39,7 @@ const Post: FC<PostProp> = ({
 		handleLikePost,
 	} = useAuth();
 	const navigate = useNavigate();
-	const [like, setLike] = useState(post.like);
+	//const [like, setLike] = useState(post.like);
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
@@ -51,12 +51,33 @@ const Post: FC<PostProp> = ({
 	}>({ preview: "", data: null, text: null });
 	const [isEditing, setIsEditing] = useState(false);
 	const [deletedPost, setDeletedPost] = useState(false);
-
 	const handleLike = () => {
-		setLike(isLiked ? like - 1 : like + 1);
+		//setLike(isLiked ? like - 1 : like + 1);
 		setIsLiked(!isLiked);
 		handleLikePost(post._id);
+		//socket.on("posts", data => {
+		//	if (data.action === "like") {
+		//		const index = loadedPosts.findIndex(
+		//			(p: any) => p._id === data.post._id
+		//		);
+		//		console.log(data.post);
+		//		const updatedPosts = [...loadedPosts];
+		//		const updatedPost = data.post;
+		//		updatedPosts[index] = updatedPost;
+		//		setLoadedPosts(updatedPosts);
+		//	}
+		//});
 	};
+
+	useEffect(() => {
+		if (post.likes.findIndex((v: any) => v._id === userId) >= 0) {
+			//console.log(true);
+			setIsLiked(true);
+		} else {
+			//console.log(false);
+			setIsLiked(false);
+		}
+	}, [post]);
 
 	const handleBookmark = () => {
 		setIsBookmarked(prev => !prev);
@@ -203,7 +224,7 @@ const Post: FC<PostProp> = ({
 											icon="pi pi-thumbs-up-fill cursor-pointer"
 											shape="circle"
 											className={`mr-1 ml-3 mb-2 bg-blue-500 
-							${isLiked || post.likes.includes(userId) ? "text-color" : "text-white"}
+							${isLiked ? "text-color" : "text-white"}
 							border-circle`}
 											onClick={handleLike}
 										/>
