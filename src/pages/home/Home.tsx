@@ -40,8 +40,7 @@ export default function Home() {
 							<SideBar />
 							<Feeds
 								currentUser={data.userData}
-								posts={sortData(data.loadedPosts, "updatedAt")}
-								//posts={addPosts(data.loadedPosts)}
+								posts={sortData(data.loadedPosts, "createdAt")}
 								areTherePosts={data.loadedPosts.length > 0}
 							/>
 

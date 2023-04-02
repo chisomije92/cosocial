@@ -47,7 +47,7 @@ const loadData = async (paramsId?: string) => {
 		loadedPosts = await getUserPosts(parsedUser.token, parsedUser.userId);
 	} else {
 		user = await getUser(paramsId, parsedUser.token);
-		loadedPosts = await getUserPosts(parsedUser.token, parsedUser.userId);
+		loadedPosts = await getUserPosts(parsedUser.token, user._id);
 	}
 
 	return {

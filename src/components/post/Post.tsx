@@ -39,7 +39,6 @@ const Post: FC<PostProp> = ({
 		handleLikePost,
 	} = useAuth();
 	const navigate = useNavigate();
-	//const [like, setLike] = useState(post.like);
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
@@ -51,30 +50,26 @@ const Post: FC<PostProp> = ({
 	}>({ preview: "", data: null, text: null });
 	const [isEditing, setIsEditing] = useState(false);
 	const [deletedPost, setDeletedPost] = useState(false);
+
 	const handleLike = () => {
-		//setLike(isLiked ? like - 1 : like + 1);
-		setIsLiked(!isLiked);
 		handleLikePost(post._id);
-		//socket.on("posts", data => {
-		//	if (data.action === "like") {
-		//		const index = loadedPosts.findIndex(
-		//			(p: any) => p._id === data.post._id
-		//		);
-		//		console.log(data.post);
-		//		const updatedPosts = [...loadedPosts];
-		//		const updatedPost = data.post;
-		//		updatedPosts[index] = updatedPost;
-		//		setLoadedPosts(updatedPosts);
-		//	}
-		//});
+		socket.on("posts", data => {
+			if (data.action === "like") {
+				const index =
+					loadedPosts &&
+					loadedPosts.findIndex((p: any) => p._id === data.post._id);
+				const updatedPosts = [...loadedPosts];
+				const updatedPost = data.post;
+				updatedPosts[index] = updatedPost;
+				setLoadedPosts(updatedPosts);
+			}
+		});
 	};
 
 	useEffect(() => {
 		if (post.likes.findIndex((v: any) => v._id === userId) >= 0) {
-			//console.log(true);
 			setIsLiked(true);
 		} else {
-			//console.log(false);
 			setIsLiked(false);
 		}
 	}, [post]);
@@ -157,7 +152,7 @@ const Post: FC<PostProp> = ({
 								</span>
 							</Link>
 							<span className=" opacity-70 text-sm">
-								<ReactTimeAgo date={new Date(post.updatedAt)} locale="en-US" />
+								<ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
 							</span>
 						</div>
 						{isAuthUser && (
@@ -225,6 +220,7 @@ const Post: FC<PostProp> = ({
 											shape="circle"
 											className={`mr-1 ml-3 mb-2 bg-blue-500 
 							${isLiked ? "text-color" : "text-white"}
+
 							border-circle`}
 											onClick={handleLike}
 										/>
