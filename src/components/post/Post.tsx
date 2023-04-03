@@ -37,6 +37,7 @@ const Post: FC<PostProp> = ({
 		setPost,
 		userId,
 		handleLikePost,
+		setIsPostDeleted,
 	} = useAuth();
 	const navigate = useNavigate();
 	const [isBookmarked, setIsBookmarked] = useState(false);
@@ -103,29 +104,32 @@ const Post: FC<PostProp> = ({
 		return imgString;
 	};
 
-	useEffect(() => {
-		let deleteTimer: any;
-		if (deletedPost) {
-			deleteTimer = setTimeout(() => {
-				navigate(0);
-				setDeletedPost(false);
-			}, 200);
-		}
+	//useEffect(() => {
+	//	let deleteTimer: any;
+	//	if (deletedPost) {
+	//		deleteTimer = setTimeout(() => {
+	//			navigate(0);
+	//			setDeletedPost(false);
+	//		}, 200);
+	//	}
 
-		return () => clearTimeout(deleteTimer);
-	}, [deletedPost]);
+	//	return () => clearTimeout(deleteTimer);
+	//}, [deletedPost]);
 
 	const handleDelete = () => {
 		deletePost(post._id);
-		//socket.on("posts", data => {
-		//	if (data.action === "delete") {
-		//		const filteredPosts = [...loadedPosts].filter(
-		//			(p: any) => p._id !== data.post._id
-		//		);
-		//		setLoadedPosts(filteredPosts);
-		//	}
-		//});
-		setDeletedPost(true);
+		socket.on("posts", data => {
+			if (data.action === "delete") {
+				//const filteredPosts = [...loadedPosts].filter(
+				//	(p: any) => p._id !== data.post._id
+				//);
+				//setLoadedPosts(filteredPosts);
+				//console.log(data.post);
+				setIsPostDeleted(true);
+				setPost(data.post);
+			}
+		});
+		//setDeletedPost(true);
 		op.current.hide();
 	};
 

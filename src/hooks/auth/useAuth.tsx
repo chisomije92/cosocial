@@ -36,6 +36,7 @@ const AuthContext = createContext<{
 	isSubmitting: boolean;
 	post: any;
 	loadedPosts: any;
+	isPostDeleted: boolean;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	changeNotificationStatus: (id: string) => void;
@@ -55,6 +56,7 @@ const AuthContext = createContext<{
 	setPost: React.Dispatch<React.SetStateAction<any | null>>;
 	setAuthUser: (data: any) => void;
 	setLoadedPosts: React.Dispatch<React.SetStateAction<any | null>>;
+	setIsPostDeleted: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
 	authUser: {
 		token: "",
@@ -69,6 +71,7 @@ const AuthContext = createContext<{
 	isLoading: false,
 	isSubmitting: false,
 	loadedPosts: null,
+	isPostDeleted: false,
 	authenticateUser: async () => {},
 	logout: () => {},
 	autoLogout: () => {},
@@ -85,6 +88,7 @@ const AuthContext = createContext<{
 	setPost: () => {},
 	setIsSubmitting: () => {},
 	setLoadedPosts: () => {},
+	setIsPostDeleted: () => {},
 });
 
 export const AuthProvider: React.FC<{
@@ -107,6 +111,7 @@ export const AuthProvider: React.FC<{
 	const [currentUser, setCurrentUser] = useState<any>();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isPostDeleted, setIsPostDeleted] = useState<boolean>(false);
 	const [post, setPost] = useState<any>(null);
 	const [loadedPosts, setLoadedPosts] = useState<any>(null);
 	const navigate = useNavigate();
@@ -246,6 +251,7 @@ export const AuthProvider: React.FC<{
 		isLoading,
 		post,
 		loadedPosts,
+		isPostDeleted,
 		authenticateUser,
 		logout,
 		autoLogout,
@@ -262,6 +268,7 @@ export const AuthProvider: React.FC<{
 		setIsSubmitting,
 		setPost,
 		setLoadedPosts,
+		setIsPostDeleted,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -24,7 +24,15 @@ const Feeds: FC<FeedsInterface> = ({
 	isExploring,
 	currentUser,
 }) => {
-	const { authUser, post, loadedPosts, setLoadedPosts, deletePost } = useAuth();
+	const {
+		authUser,
+		post,
+		loadedPosts,
+		setLoadedPosts,
+		deletePost,
+		isPostDeleted,
+		setIsPostDeleted,
+	} = useAuth();
 
 	useEffect(() => {
 		setLoadedPosts(posts);
@@ -32,13 +40,42 @@ const Feeds: FC<FeedsInterface> = ({
 
 	useEffect(() => {
 		if (post) {
-			setLoadedPosts((prevLoadedPosts: any) => {
-				if (prevLoadedPosts.findIndex((p: any) => p._id === post._id) >= 0) {
-					return [...prevLoadedPosts];
+			//setLoadedPosts((prevLoadedPosts: any) => {
+			//	if (prevLoadedPosts.findIndex((p: any) => p._id === post._id) >= 0) {
+			//		return [...prevLoadedPosts];
+			//	} else {
+			//		return [post, ...prevLoadedPosts];
+			//	}
+			//});
+			//const isPostFound =
+			//	loadedPosts.findIndex((p: any) => p._id === post._id) >= 0;
+			//if(isPostFound && isPostDeleted){
+			//const filteredPosts = [...loadedPosts].filter(
+			//	(p: any) => p._id !== post._id
+			//);
+			//	setLoadedPosts(filteredPosts)
+			//}else if (isPostFound && !isPostDeleted){
+
+			//}
+			setLoadedPosts((prevPosts: any) => {
+				const isPostFound =
+					prevPosts.findIndex((p: any) => p._id === post._id) >= 0;
+				if (isPostFound && isPostDeleted) {
+					const filteredPosts = prevPosts.filter(
+						(p: any) => p._id !== post._id
+					);
+					console.log("post is found and deleted is true");
+					setIsPostDeleted(false);
+					return [...filteredPosts];
+				} else if (isPostFound && !isPostDeleted) {
+					console.log("post is found and deleted is false");
+					return [...prevPosts];
 				} else {
-					return [post, ...prevLoadedPosts];
+					console.log("post is not found and deleted is false");
+					return [post, ...prevPosts];
 				}
 			});
+			console.log(loadedPosts);
 		}
 	}, [post]);
 
