@@ -23,8 +23,8 @@ const ExplorePage = () => {
 						<>
 							<SideBar />
 							<Feeds
-								//posts={data.loadedPosts}
-								posts={sortData(data.loadedPosts, "updatedAt")}
+								posts={data.loadedPosts}
+								//posts={sortData(data.loadedPosts, "updatedAt")}
 								areTherePosts={data.loadedPosts.length > 0}
 								currentUser={data.userData}
 							/>

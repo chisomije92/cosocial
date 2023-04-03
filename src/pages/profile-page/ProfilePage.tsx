@@ -26,7 +26,7 @@ const ProfilePage = () => {
 							<SideBar />
 							<Profile
 								user={data.userData}
-								userPosts={sortData(data.loadedPosts, "updatedAt")}
+								userPosts={sortData(data.loadedPosts, "createdAt")}
 							/>
 							<SearchFriend />
 						</>
