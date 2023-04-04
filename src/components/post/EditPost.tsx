@@ -2,8 +2,7 @@
 
 import { InputTextarea } from "primereact/inputtextarea";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
-import React, { useEffect, useState } from "react";
-import { Form, useNavigate, useSubmit } from "react-router-dom";
+import React from "react";
 import classes from "./post.module.css";
 import { ImageFileType } from "../../models/imageFileType";
 import { Button } from "primereact/button";

@@ -1,6 +1,6 @@
 /** @format */
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Await, defer, redirect, useLoaderData } from "react-router-dom";
 import Feeds from "../../components/feeds/Feeds";
 import RightBar from "../../components/right-bar/RightBar";
@@ -9,44 +9,39 @@ import { getPostsOnTl, updateUserPost } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
-import openSocket from "socket.io-client";
-import { urlString } from "../../utils/constants/constants";
+import { socket } from "../../utils/constants/constants";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 export default function Home() {
 	const { data }: any = useLoaderData();
-	//const [loadedPosts, setLoadedPosts] = useState([]);
+	const { setLoadedPosts, loadedPosts } = useAuth();
 
-	const addPosts = (posts: any) => {
-		const socket = openSocket("http://localhost:8000");
-		let updatedPosts = posts;
-		//console.log(updatedPosts);
+	useEffect(() => {
 		socket.on("posts", data => {
-			if (data.action === "create") {
-				console.log(data.post);
-				updatedPosts = [data.post, ...posts];
+			if (data.action === "getPostsOnTL") {
+				setLoadedPosts(data.posts);
 			}
 		});
-		return updatedPosts;
-	};
-	//const socket = openSocket(urlString);
-	//socket.connect();
+	}, []);
 	return (
 		<>
 			<Suspense fallback={<HomeSkeleton />}>
 				<Await
 					resolve={data}
-					children={data => (
-						<>
-							<SideBar />
-							<Feeds
-								currentUser={data.userData}
-								posts={sortData(data.loadedPosts, "createdAt")}
-								areTherePosts={data.loadedPosts.length > 0}
-							/>
+					children={data => {
+						return (
+							<>
+								<SideBar />
+								<Feeds
+									currentUser={data.userData}
+									posts={sortData(loadedPosts, "createdAt")}
+									areTherePosts={data.loadedPosts.length > 0}
+								/>
 
-							<RightBar />
-						</>
-					)}
+								<RightBar />
+							</>
+						);
+					}}
 				/>
 			</Suspense>
 		</>

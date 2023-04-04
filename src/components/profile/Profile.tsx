@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import Post from "../post/Post";
@@ -24,11 +24,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);
-	const { authUser, setLoadedPosts, loadedPosts } = useAuth();
-
-	useEffect(() => {
-		setLoadedPosts(userPosts);
-	}, [userPosts]);
+	const { authUser } = useAuth();
 
 	const editProfileForm = (
 		<Dialog
@@ -151,8 +147,8 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 			{editProfileForm}
 
 			<div className="">
-				{loadedPosts &&
-					loadedPosts.map((p: any) => (
+				{userPosts &&
+					userPosts.map((p: any) => (
 						<Post
 							key={p._id}
 							post={p}

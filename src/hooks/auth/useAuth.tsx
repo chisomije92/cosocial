@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
-import { socket } from "../../utils/constants/constants";
 import {
 	createUserPost,
 	deleteUserPost,
@@ -241,6 +240,26 @@ export const AuthProvider: React.FC<{
 			clearTimeout(timer);
 		};
 	}, [errorMsg]);
+
+	useEffect(() => {
+		if (post) {
+			setLoadedPosts((prevPosts: any) => {
+				const isPostFound =
+					prevPosts.findIndex((p: any) => p._id === post._id) >= 0;
+				if (isPostFound && isPostDeleted) {
+					const filteredPosts = prevPosts.filter(
+						(p: any) => p._id !== post._id
+					);
+
+					return [...filteredPosts];
+				} else if (isPostFound && !isPostDeleted) {
+					return [...prevPosts];
+				} else {
+					return [post, ...prevPosts];
+				}
+			});
+		}
+	}, [post, isPostDeleted]);
 
 	const value = {
 		authUser,

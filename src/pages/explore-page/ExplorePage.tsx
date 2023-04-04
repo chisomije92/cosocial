@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Await, defer, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 import Feeds from "../../components/feeds/Feeds";
@@ -8,11 +8,22 @@ import RightBar from "../../components/right-bar/RightBar";
 import SideBar from "../../components/side-bar/SideBar";
 import { getPostsOnExplore } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
-import { getDataFromLocalStorage, sortData } from "../../utils/util";
+import { getDataFromLocalStorage } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
+import { socket } from "../../utils/constants/constants";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 const ExplorePage = () => {
 	const { data }: any = useLoaderData();
+	const { setLoadedPosts, loadedPosts } = useAuth();
+
+	useEffect(() => {
+		socket.on("posts", data => {
+			if (data.action === "getPostsOnExplore") {
+				setLoadedPosts(data.posts);
+			}
+		});
+	}, []);
 
 	return (
 		<>
@@ -23,8 +34,7 @@ const ExplorePage = () => {
 						<>
 							<SideBar />
 							<Feeds
-								posts={data.loadedPosts}
-								//posts={sortData(data.loadedPosts, "updatedAt")}
+								posts={loadedPosts}
 								areTherePosts={data.loadedPosts.length > 0}
 								currentUser={data.userData}
 							/>

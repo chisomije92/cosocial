@@ -7,7 +7,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Image } from "primereact/image";
 import Likes from "../likes/Likes";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
 import { socket, urlImgString } from "../../utils/constants/constants";
@@ -39,7 +39,7 @@ const Post: FC<PostProp> = ({
 		handleLikePost,
 		setIsPostDeleted,
 	} = useAuth();
-	const navigate = useNavigate();
+
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
@@ -50,7 +50,6 @@ const Post: FC<PostProp> = ({
 		text: string | null;
 	}>({ preview: "", data: null, text: null });
 	const [isEditing, setIsEditing] = useState(false);
-	const [deletedPost, setDeletedPost] = useState(false);
 
 	const handleLike = () => {
 		handleLikePost(post._id);
@@ -104,32 +103,15 @@ const Post: FC<PostProp> = ({
 		return imgString;
 	};
 
-	//useEffect(() => {
-	//	let deleteTimer: any;
-	//	if (deletedPost) {
-	//		deleteTimer = setTimeout(() => {
-	//			navigate(0);
-	//			setDeletedPost(false);
-	//		}, 200);
-	//	}
-
-	//	return () => clearTimeout(deleteTimer);
-	//}, [deletedPost]);
-
 	const handleDelete = () => {
 		deletePost(post._id);
 		socket.on("posts", data => {
 			if (data.action === "delete") {
-				//const filteredPosts = [...loadedPosts].filter(
-				//	(p: any) => p._id !== data.post._id
-				//);
-				//setLoadedPosts(filteredPosts);
-				//console.log(data.post);
 				setIsPostDeleted(true);
 				setPost(data.post);
 			}
 		});
-		//setDeletedPost(true);
+
 		op.current.hide();
 	};
 

@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import Profile from "../../components/profile/Profile";
 
 import SideBar from "../../components/side-bar/SideBar";
@@ -12,9 +12,20 @@ import { getAuthUser, getUser } from "../../utils/user-api";
 import { getUserPosts } from "../../utils/post-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import ProfilePageSkeleton from "../../components/loading-skeleton/ProfilePageSkeleton";
+import { socket } from "../../utils/constants/constants";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 const ProfilePage = () => {
 	const { data } = useLoaderData() as any;
+	const { setLoadedPosts, loadedPosts } = useAuth();
+
+	useEffect(() => {
+		socket.on("posts", data => {
+			if (data.action === "getUserPosts") {
+				setLoadedPosts(data.posts);
+			}
+		});
+	}, []);
 
 	return (
 		<>
@@ -26,7 +37,7 @@ const ProfilePage = () => {
 							<SideBar />
 							<Profile
 								user={data.userData}
-								userPosts={sortData(data.loadedPosts, "createdAt")}
+								userPosts={sortData(loadedPosts, "createdAt")}
 							/>
 							<SearchFriend />
 						</>
