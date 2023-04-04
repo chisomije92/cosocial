@@ -34,6 +34,9 @@ const Post: FC<PostProp> = ({
 		deletePost,
 		setLoadedPosts,
 		loadedPosts,
+		currentUser,
+		setCurrentUser,
+		handleBookmarkPost,
 		setPost,
 		userId,
 		handleLikePost,
@@ -66,6 +69,17 @@ const Post: FC<PostProp> = ({
 		});
 	};
 
+	const handleBookmark = () => {
+		handleBookmarkPost(post._id);
+		socket.on("posts", data => {
+			if (data.action === "bookmark" && data.user._id === currentUser._id) {
+				//&& data.user._id === currentUser.id
+				console.log(data.user);
+				console.log(currentUser);
+				setCurrentUser(data.user);
+			}
+		});
+	};
 	useEffect(() => {
 		if (post.likes.findIndex((v: any) => v._id === userId) >= 0) {
 			setIsLiked(true);
@@ -74,9 +88,16 @@ const Post: FC<PostProp> = ({
 		}
 	}, [post]);
 
-	const handleBookmark = () => {
-		setIsBookmarked(prev => !prev);
-	};
+	useEffect(() => {
+		if (
+			currentUser &&
+			currentUser.bookmarks.findIndex((v: any) => v._id === post._id) >= 0
+		) {
+			setIsBookmarked(true);
+		} else {
+			setIsBookmarked(false);
+		}
+	}, [post, currentUser]);
 
 	const likesDialogue = (
 		<Dialog

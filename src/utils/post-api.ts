@@ -140,3 +140,36 @@ export const likePost = async (id: string, token: string) => {
     return err.message
   }
 }
+
+export const bookmarkPost = async (id: string, token: string) => {
+  try {
+    const res = await fetch(`${urlString}/posts/${id}/bookmark`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+    },
+    )
+    const resData = await checkResponseForError(res)
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+export const getBookmarks = async (token: string) => {
+  try {
+    const res = await fetch(`${urlString}/posts/bookmark`, {
+      method: "GET",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+    },
+    )
+    const resData = await checkResponseForError(res)
+    return resData
+  } catch (err: any) {
+    console.log(err)
+    return err.message
+  }
+}

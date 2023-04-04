@@ -6,6 +6,7 @@ import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 import {
+	bookmarkPost,
 	createUserPost,
 	deleteUserPost,
 	likePost,
@@ -20,6 +21,7 @@ import {
 	unreadAllNotifications,
 } from "../../utils/user-api";
 import { addMinutes, getDataFromLocalStorage } from "../../utils/util";
+import { socket } from "../../utils/constants/constants";
 
 const AuthContext = createContext<{
 	authUser: {
@@ -48,6 +50,7 @@ const AuthContext = createContext<{
 	createPost: (data: { image?: File; post: string }) => Promise<string>;
 	deletePost: (postId: string) => Promise<string>;
 	handleLikePost: (postId: string) => Promise<string>;
+	handleBookmarkPost: (postId: string) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
@@ -55,6 +58,7 @@ const AuthContext = createContext<{
 	setPost: React.Dispatch<React.SetStateAction<any | null>>;
 	setAuthUser: (data: any) => void;
 	setLoadedPosts: React.Dispatch<React.SetStateAction<any | null>>;
+	setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
 	setIsPostDeleted: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
 	authUser: {
@@ -81,12 +85,14 @@ const AuthContext = createContext<{
 	createPost: async () => Promise.resolve(""),
 	deletePost: async () => Promise.resolve(""),
 	handleLikePost: async () => Promise.resolve(""),
+	handleBookmarkPost: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
 	setPost: () => {},
 	setIsSubmitting: () => {},
 	setLoadedPosts: () => {},
+	setCurrentUser: () => {},
 	setIsPostDeleted: () => {},
 });
 
@@ -205,6 +211,12 @@ export const AuthProvider: React.FC<{
 		return userPost;
 	};
 
+	const handleBookmarkPost = async (postId: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		const response = await bookmarkPost(postId, parsedUser.token);
+		return response;
+	};
+
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
@@ -222,6 +234,7 @@ export const AuthProvider: React.FC<{
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
 			});
+			socket.emit("sendClientId", authUser.userId);
 		} else {
 			setCurrentUser(null);
 			setUserId(null);
@@ -282,7 +295,9 @@ export const AuthProvider: React.FC<{
 		createPost,
 		deletePost,
 		handleLikePost,
+		handleBookmarkPost,
 		setAuthUser,
+		setCurrentUser,
 		setIsLoading,
 		setIsSubmitting,
 		setPost,

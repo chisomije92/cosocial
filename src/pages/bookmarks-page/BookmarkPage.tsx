@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Await, defer, useLoaderData } from "react-router-dom";
 import Bookmarks from "../../components/bookmarks/Bookmarks";
 
@@ -9,10 +9,30 @@ import BookmarksPageSkeleton from "../../components/loading-skeleton/BookmarksPa
 import RightBar from "../../components/right-bar/RightBar";
 import SideBar from "../../components/side-bar/SideBar";
 import { getAuthUser } from "../../utils/user-api";
+import { getBookmarks } from "../../utils/post-api";
 import { getDataFromLocalStorage } from "../../utils/util";
+import { socket } from "../../utils/constants/constants";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 const BookmarkPage = () => {
 	const { data }: any = useLoaderData();
+	const { setCurrentUser, currentUser, setLoadedPosts, loadedPosts } =
+		useAuth();
+
+	useEffect(() => {
+		socket.on("posts", data => {
+			if (data.action === "getBookmarks") {
+				//setCurrentUser((prevUser: any) => ({
+				//	...prevUser,
+				//	bookmarks: data.posts,
+				//}));
+				setLoadedPosts(data.posts);
+			}
+			//if (data.action === "bookmark") {
+			//	setCurrentUser(data.user);
+			//}
+		});
+	}, []);
 	return (
 		<>
 			<Suspense fallback={<BookmarksPageSkeleton />}>
@@ -21,7 +41,13 @@ const BookmarkPage = () => {
 					children={data => (
 						<>
 							<SideBar />
-							<Bookmarks posts={data.userData} />
+							{/*{!currentUser.bookmarks && (
+								<div className="flex">
+									<p>You have no bookmarks yet</p>
+								</div>
+							)}*/}
+							{/*<Bookmarks posts={currentUser && currentUser.bookmarks} />*/}
+							<Bookmarks posts={loadedPosts} />
 							<RightBar />
 						</>
 					)}
@@ -33,10 +59,8 @@ const BookmarkPage = () => {
 
 const loadData = async () => {
 	const parsedUser = getDataFromLocalStorage();
-	const user = await getAuthUser(parsedUser.token);
-	return {
-		userData: [...user.bookmarks],
-	};
+	const bookmarks = await getBookmarks(parsedUser.token);
+	return { bookmarks };
 };
 
 export const bookmarksLoader = async () => {

@@ -228,6 +228,8 @@ export const unFollowUser = async (id: string, token: string) => {
   }
 }
 
+
+
 export const getNonFollowing = async (token: string) => {
   try {
     const res = await fetch(`${urlString}/users/notfollowing`, {
