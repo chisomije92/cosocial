@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import Post from "../post/Post";
@@ -25,7 +25,11 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);
 	const { authUser } = useAuth();
+	const profileRef = useRef<any>(null);
 
+	useEffect(() => {
+		profileRef.current?.focus();
+	});
 	const editProfileForm = (
 		<Dialog
 			header={`${showForm === 1 ? "Edit Profile" : "Change Password"}`}
@@ -59,7 +63,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	};
 
 	return (
-		<div className={`${classes.profile} mx-3 mt-2`}>
+		<div className={`${classes.profile} mx-3 mt-2`} ref={profileRef}>
 			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
 				<div className={`${classes.imgContainer}`}>
 					<Image

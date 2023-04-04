@@ -112,7 +112,7 @@ export const AuthProvider: React.FC<{
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isPostDeleted, setIsPostDeleted] = useState<boolean>(false);
 	const [post, setPost] = useState<any>(null);
-	const [loadedPosts, setLoadedPosts] = useState<any>(null);
+	const [loadedPosts, setLoadedPosts] = useState<any>([]);
 	const navigate = useNavigate();
 
 	const authenticateUser = async (

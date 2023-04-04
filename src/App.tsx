@@ -80,11 +80,7 @@ function App() {
 							element={<BookmarkPage />}
 							loader={bookmarksLoader}
 						/>
-						<Route
-							path="/post/:id"
-							element={<SinglePostPage />}
-							loader={singlePostPageLoader}
-						/>
+						<Route path="/post/:id" element={<SinglePostPage />} />
 					</Route>{" "}
 					<Route path="/sign-up" element={<SignUpPage />} />
 					<Route path="/login" element={<LoginPage />} />
