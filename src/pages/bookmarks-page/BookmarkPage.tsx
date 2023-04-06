@@ -18,39 +18,52 @@ const BookmarkPage = () => {
 	const { data }: any = useLoaderData();
 	const { setCurrentUser, currentUser, setLoadedPosts, loadedPosts } =
 		useAuth();
+	const [posts, setPosts] = React.useState<any>();
 
 	useEffect(() => {
-		socket.on("posts", data => {
-			if (data.action === "getBookmarks") {
-				//setCurrentUser((prevUser: any) => ({
-				//	...prevUser,
-				//	bookmarks: data.posts,
-				//}));
-				setLoadedPosts(data.posts);
-			}
-			//if (data.action === "bookmark") {
-			//	setCurrentUser(data.user);
-			//}
-		});
+		//socket.on("posts", data => {
+		//	if (data.action === "getBookmarks") {
+		//		//setCurrentUser((prevUser: any) => ({
+		//		//	...prevUser,
+		//		//	bookmarks: data.posts,
+		//		//}));
+		//		setLoadedPosts(data.posts);
+		//	}
+		//	//if (data.action === "bookmark") {
+		//	//	setCurrentUser(data.user);
+		//	//}
+		//});
+		function getDataPosts(data: any) {
+			console.log(data.posts);
+		}
+		//socket.on("bookmarks", (data: any) => {
+		//	console.log(data.posts);
+		//});
+		//socket.emit("bookmarks", "test", (res: any) => {
+		//	console.log(res.posts);
+		//	setLoadedPosts(res.posts);
+		//});
 	}, []);
 	return (
 		<>
 			<Suspense fallback={<BookmarksPageSkeleton />}>
 				<Await
 					resolve={data}
-					children={data => (
-						<>
-							<SideBar />
-							{/*{!currentUser.bookmarks && (
+					children={data => {
+						return (
+							<>
+								<SideBar />
+								{/*{!currentUser.bookmarks && (
 								<div className="flex">
 									<p>You have no bookmarks yet</p>
 								</div>
 							)}*/}
-							{/*<Bookmarks posts={currentUser && currentUser.bookmarks} />*/}
-							<Bookmarks posts={loadedPosts} />
-							<RightBar />
-						</>
-					)}
+								{/*<Bookmarks posts={currentUser && currentUser.bookmarks} />*/}
+								<Bookmarks posts={currentUser && currentUser.bookmarks} />
+								<RightBar />
+							</>
+						);
+					}}
 				/>
 			</Suspense>
 		</>

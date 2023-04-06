@@ -234,7 +234,13 @@ export const AuthProvider: React.FC<{
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
 			});
-			socket.emit("sendClientId", authUser.userId);
+			socket.emit(
+				"sendClientId",
+				authUser.userId
+				//(res: any) => {
+				//	console.log(res);
+				//}
+			);
 		} else {
 			setCurrentUser(null);
 			setUserId(null);
