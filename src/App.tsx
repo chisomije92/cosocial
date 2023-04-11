@@ -19,9 +19,7 @@ import ProfilePage, {
 import NotificationsPage from "./pages/notifications-page/NotificationsPage";
 import MessagesPage from "./pages/messages-page/MessagesPage";
 import ErrorPage from "./pages/error-page/ErrorPage";
-import BookmarkPage, {
-	bookmarksLoader,
-} from "./pages/bookmarks-page/BookmarkPage";
+import BookmarkPage from "./pages/bookmarks-page/BookmarkPage";
 import LoginPage from "./pages/login-page.tsx/LoginPage";
 import SignUpPage from "./pages/sign-up-page/SignUpPage";
 import SinglePostPage, {
@@ -78,7 +76,7 @@ function App() {
 						<Route
 							path="/bookmarks"
 							element={<BookmarkPage />}
-							loader={bookmarksLoader}
+							//loader={bookmarksLoader}
 						/>
 						<Route path="/post/:id" element={<SinglePostPage />} />
 					</Route>{" "}

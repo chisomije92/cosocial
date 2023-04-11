@@ -37,6 +37,7 @@ const AuthContext = createContext<{
 	isSubmitting: boolean;
 	post: any;
 	loadedPosts: any;
+	bookmarks: any;
 	isPostDeleted: boolean;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,6 +59,7 @@ const AuthContext = createContext<{
 	setPost: React.Dispatch<React.SetStateAction<any | null>>;
 	setAuthUser: (data: any) => void;
 	setLoadedPosts: React.Dispatch<React.SetStateAction<any | null>>;
+	setBookmarks: React.Dispatch<React.SetStateAction<any | null>>;
 	setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
 	setIsPostDeleted: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
@@ -74,6 +76,7 @@ const AuthContext = createContext<{
 	isLoading: false,
 	isSubmitting: false,
 	loadedPosts: null,
+	bookmarks: [],
 	isPostDeleted: false,
 	authenticateUser: async () => {},
 	logout: () => {},
@@ -94,6 +97,7 @@ const AuthContext = createContext<{
 	setLoadedPosts: () => {},
 	setCurrentUser: () => {},
 	setIsPostDeleted: () => {},
+	setBookmarks: () => {},
 });
 
 export const AuthProvider: React.FC<{
@@ -119,6 +123,7 @@ export const AuthProvider: React.FC<{
 	const [isPostDeleted, setIsPostDeleted] = useState<boolean>(false);
 	const [post, setPost] = useState<any>(null);
 	const [loadedPosts, setLoadedPosts] = useState<any>([]);
+	const [bookmarks, setBookmarks] = useState<any>([]);
 	const navigate = useNavigate();
 
 	const authenticateUser = async (
@@ -289,6 +294,7 @@ export const AuthProvider: React.FC<{
 		isLoading,
 		post,
 		loadedPosts,
+		bookmarks,
 		isPostDeleted,
 		authenticateUser,
 		logout,
@@ -308,6 +314,7 @@ export const AuthProvider: React.FC<{
 		setIsSubmitting,
 		setPost,
 		setLoadedPosts,
+		setBookmarks,
 		setIsPostDeleted,
 	};
 

@@ -17,7 +17,7 @@ const NavBar = () => {
 	const { authUser, logout, userId, currentUser } = useAuth();
 	const [theme, setTheme] = useLocalStorage<any>(
 		"theme",
-		"bootstrap4-dark-blue.css"
+		"lara-light-indigo.css"
 	);
 
 	const logOut = () => {
