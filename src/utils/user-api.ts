@@ -378,3 +378,26 @@ export const unreadAllNotifications = async (token: string) => {
     return err.message
   }
 }
+
+export const deleteSingleNotification = async (token: string, id: string) => {
+  try {
+    const res = await fetch(`${urlString}/users/notifications/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+
+    },
+    )
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
+    }
+
+    const resData = await checkResponseForError(res)
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}

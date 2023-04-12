@@ -15,16 +15,32 @@ const Notifications = () => {
 		changeNotificationStatus,
 		changeAllNotificationStatus,
 		changeNotificationsToUnread,
+		handleDeleteSingleNotification,
+		setCurrentUser,
 		currentUser,
 	} = useAuth();
 	const [notifsRead, setNotifsRead] = React.useState<boolean>(false);
 	const navigate = useNavigate();
+
+	const onDeleteNotification = (notificationId: string) => {
+		handleDeleteSingleNotification(notificationId);
+
+		const filteredNotifications = currentUser.notifications.filter(
+			(n: any) => n._id !== notificationId
+		);
+		const updatedUser = {
+			...currentUser,
+			notifications: filteredNotifications,
+		};
+		setCurrentUser(updatedUser);
+	};
+
 	return (
 		<div className={`${classes.notifications} mx-auto  flex flex-column w-6`}>
 			<ul className="list-none flex flex-column ">
 				<li className="flex justify-content-between surface-200">
 					<div className="text-2xl p-4 font-bold">Notifications</div>
-					<div className="mt-4 mr-3">
+					<div className="mt-4 mr-3 flex flex-column">
 						<Button
 							label={`Mark all as ${notifsRead ? "read" : "unread"}`}
 							className="px-2 py-2 surface-200 text-primary font-semibold"
@@ -80,7 +96,7 @@ const Notifications = () => {
 									</div>
 								</div>
 							</div>
-							<div className={`${classes.timeContainer}`}>
+							<div className={`${classes.timeContainer} flex flex-column`}>
 								<div className="opacity-70">
 									{
 										<ReactTimeAgo
@@ -89,6 +105,13 @@ const Notifications = () => {
 										/>
 									}
 								</div>
+								<span>
+									<i
+										className="pi pi-trash ml-4 mt-2 cursor-pointer"
+										style={{ color: "red", fontSize: "1.3rem" }}
+										onClick={() => onDeleteNotification(n._id)}
+									></i>
+								</span>
 							</div>
 						</li>
 					))}

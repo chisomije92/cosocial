@@ -13,6 +13,7 @@ import {
 	updateUserPost,
 } from "../../utils/post-api";
 import {
+	deleteSingleNotification,
 	getAuthUser,
 	readAllNotifications,
 	readNotification,
@@ -53,6 +54,7 @@ const AuthContext = createContext<{
 	handleLikePost: (postId: string) => Promise<string>;
 	handleBookmarkPost: (postId: string) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
+	handleDeleteSingleNotification: (notifId: string) => Promise<any>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -89,6 +91,7 @@ const AuthContext = createContext<{
 	deletePost: async () => Promise.resolve(""),
 	handleLikePost: async () => Promise.resolve(""),
 	handleBookmarkPost: async () => Promise.resolve(""),
+	handleDeleteSingleNotification: async () => Promise.resolve([]),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -222,6 +225,15 @@ export const AuthProvider: React.FC<{
 		return response;
 	};
 
+	const handleDeleteSingleNotification = async (notifId: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		const filteredNotifications = await deleteSingleNotification(
+			parsedUser.token,
+			notifId
+		);
+		return filteredNotifications;
+	};
+
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
@@ -239,13 +251,7 @@ export const AuthProvider: React.FC<{
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
 			});
-			socket.emit(
-				"sendClientId",
-				authUser.userId
-				//(res: any) => {
-				//	console.log(res);
-				//}
-			);
+			socket.emit("sendClientId", authUser.userId);
 		} else {
 			setCurrentUser(null);
 			setUserId(null);
@@ -308,6 +314,7 @@ export const AuthProvider: React.FC<{
 		deletePost,
 		handleLikePost,
 		handleBookmarkPost,
+		handleDeleteSingleNotification,
 		setAuthUser,
 		setCurrentUser,
 		setIsLoading,
