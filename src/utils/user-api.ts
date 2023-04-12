@@ -70,16 +70,28 @@ export const updateUser = async (id: string, token: string, data: Partial<{
   description: string;
   email: string;
   username: string;
-  image: string
+  image: File
 }>) => {
   try {
+    const formData = new FormData()
+    if (data.image) {
+      formData.append("image", data.image)
+    }
+    if (data.description) {
+      formData.append("description", data.description)
+    }
+    if (data.email) {
+      formData.append("email", data.email)
+    }
+    if (data.username) {
+      formData.append("username", data.username)
+    }
     const res = await fetch(`${urlString}/users/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `bearer ${token}`
       },
-      body: JSON.stringify(data),
+      body: formData,
 
     },
     )

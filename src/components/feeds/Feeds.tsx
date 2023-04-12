@@ -29,7 +29,7 @@ const Feeds: FC<FeedsInterface> = ({
 		<div className={`${classes.feeds}`}>
 			<div className="p-4 flex flex-column">
 				{!isExploring && <Share currentUser={currentUser} />}
-				{!areTherePosts && !loadedPosts && <NoPosts />}
+				{posts.length <= 0 && <NoPosts />}
 
 				{posts &&
 					posts.map((p: any) => (

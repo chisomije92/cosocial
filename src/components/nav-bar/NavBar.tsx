@@ -171,6 +171,7 @@ const NavBar = () => {
 					<Link
 						to={`profile`}
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer no-underline`}
+						onClick={() => op.current.hide()}
 					>
 						<span className="text-sm">Profile</span>{" "}
 						<i className="pi pi-user ml-2 text-sm"></i>
@@ -179,7 +180,10 @@ const NavBar = () => {
 					<hr className="h-1 min-w-full $ -ml-3 -mr-3" />
 					<div
 						className={`flex text-red-500 ${classes.actions} font-medium cursor-pointer`}
-						onClick={logOut}
+						onClick={() => {
+							logOut();
+							op.current.hide();
+						}}
 					>
 						<span className="-mt-1">Logout</span>
 						<code>&nbsp;</code>

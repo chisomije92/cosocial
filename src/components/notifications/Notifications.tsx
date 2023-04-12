@@ -105,9 +105,9 @@ const Notifications = () => {
 										/>
 									}
 								</div>
-								<span>
+								<span className={`${classes.deleteIconContainer}`}>
 									<i
-										className="pi pi-trash ml-4 mt-2 cursor-pointer"
+										className="pi pi-trash  mt-2 cursor-pointer"
 										style={{ color: "red", fontSize: "1.3rem" }}
 										onClick={() => onDeleteNotification(n._id)}
 									></i>

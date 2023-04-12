@@ -12,14 +12,14 @@ const RootLayout = () => {
 
 	const parsedUser = getDataFromLocalStorage();
 	useEffect(() => {
-		let timer: any;
+		let expTimer: any;
 		if (parsedUser) {
 			const expirationDuration =
 				new Date(parsedUser.expirationTimer).getTime() - new Date().getTime();
 			const authDuration =
 				new Date(parsedUser.loggedInTime).getTime() - new Date().getTime();
-			if (expirationDuration > authDuration) {
-				timer = setTimeout(() => {
+			if (expirationDuration >= authDuration) {
+				expTimer = setTimeout(() => {
 					logout();
 				}, 0);
 			}
@@ -30,13 +30,12 @@ const RootLayout = () => {
 					expirationTimer: dateTimer.toISOString(),
 				});
 				localStorage.setItem("authUser", authUser);
-				timer = setTimeout(() => {
-					console.log(expirationDuration);
+				expTimer = setTimeout(() => {
 					logout();
 				}, expirationDuration);
 			}
 
-			return () => clearTimeout(timer);
+			return () => clearTimeout(expTimer);
 		}
 	}, [parsedUser]);
 

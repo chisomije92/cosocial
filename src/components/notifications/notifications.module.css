@@ -4,9 +4,6 @@
 
 }
 
-
-
-
 .notifications li {
   margin-left: -12px;
   margin-right: 10px;
@@ -41,6 +38,11 @@
  margin-right: 12px;
  position: relative;
  
+}
+
+.deleteIconContainer {
+  position: relative;
+  left: 50%
 }
 
 .notifications [class*="p-button"]{

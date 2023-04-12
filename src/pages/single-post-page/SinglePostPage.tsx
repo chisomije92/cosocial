@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Post from "../../components/post/Post";
 import Replies from "../../components/replies/Replies";
 import SideBar from "../../components/side-bar/SideBar";
@@ -11,18 +11,13 @@ import { getDataFromLocalStorage } from "../../utils/util";
 import { useAuth } from "../../hooks/auth/useAuth";
 
 const SinglePostPage = () => {
-	//const { selectedPost }: any = useLoaderData();
 	const params = useParams();
 	const [singlePost, setSinglePost] = useState<any>();
 	const { loadedPosts } = useAuth();
-	const navigate = useNavigate();
 
 	const length = loadedPosts.length;
 
 	useEffect(() => {
-		if (length <= 0) {
-			navigate(-1);
-		}
 		setSinglePost(loadedPosts.find((p: any) => p._id === params.id));
 	}, [loadedPosts, length, params.id]);
 

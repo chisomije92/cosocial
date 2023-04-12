@@ -10,13 +10,17 @@ import * as Yup from "yup";
 import { classNames } from "primereact/utils";
 import { Profile } from "../../models/profile";
 import classes from "./profile.module.css";
+import { useAuth } from "../../hooks/auth/useAuth";
+import { ImageFileType } from "../../models/imageFileType";
+import { useNavigate } from "react-router-dom";
 
-const EditProfile = () => {
-	const [selectedImageFile, setSelectedImageFile] = React.useState<{
-		preview: string;
-		data: File | null;
-		text: string | null;
-	}>({ preview: "", data: null, text: null });
+const EditProfile: React.FC<{
+	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ setVisible }) => {
+	const [selectedImageFile, setSelectedImageFile] =
+		React.useState<ImageFileType>({ preview: "", data: null, text: null });
+	const { handleUpdateUser, setCurrentUser } = useAuth();
+	const navigate = useNavigate();
 
 	const allValuesEmpty = () => {
 		return (
@@ -29,7 +33,7 @@ const EditProfile = () => {
 
 	type requestObjType = {
 		description?: string;
-		image?: string;
+		image?: File | null;
 		username?: string;
 		email?: string;
 	};
@@ -53,10 +57,18 @@ const EditProfile = () => {
 			requestObj["username"] = values.username;
 		}
 
-		if (!values.image) {
-			requestObj.image = values.image;
+		if (selectedImageFile.data) {
+			requestObj.image = selectedImageFile.data;
 		}
-		console.log({ ...requestObj, image: values.image });
+		handleUpdateUser(requestObj).then((user: any) => {
+			const updatedUser = {
+				...user,
+			};
+
+			setCurrentUser(updatedUser);
+			navigate("/profile");
+			setVisible(false);
+		});
 	};
 
 	const {

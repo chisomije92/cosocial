@@ -1,9 +1,8 @@
 /** @format */
 
-import React, { Suspense } from "react";
-import { Await, useLoaderData, useOutlet } from "react-router-dom";
-import { AuthProvider, useAuth } from "../../hooks/auth/useAuth";
-import { ProgressBar } from "primereact/progressbar";
+import React from "react";
+import { useLoaderData, useOutlet } from "react-router-dom";
+import { AuthProvider } from "../../hooks/auth/useAuth";
 
 export const AuthLayout = () => {
 	const outlet = useOutlet();

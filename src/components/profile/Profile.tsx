@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 import { urlImgString } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
+import NoPosts from "../no-posts/NoPosts";
 
 interface ProfileProps {
 	user: any;
@@ -40,7 +41,11 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 			}}
 			className="w-27rem"
 		>
-			{showForm === 1 ? <EditProfile /> : <ChangePassword />}
+			{showForm === 1 ? (
+				<EditProfile setVisible={setVisible} />
+			) : (
+				<ChangePassword />
+			)}
 		</Dialog>
 	);
 
@@ -151,6 +156,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 			{editProfileForm}
 
 			<div className="">
+				{userPosts.length <= 0 && <NoPosts />}
 				{userPosts &&
 					userPosts.map((p: any) => (
 						<Post

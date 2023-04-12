@@ -20,9 +20,9 @@ import {
 	signIn,
 	signUp,
 	unreadAllNotifications,
+	updateUser,
 } from "../../utils/user-api";
 import { addMinutes, getDataFromLocalStorage } from "../../utils/util";
-import { socket } from "../../utils/constants/constants";
 
 const AuthContext = createContext<{
 	authUser: {
@@ -55,6 +55,7 @@ const AuthContext = createContext<{
 	handleBookmarkPost: (postId: string) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	handleDeleteSingleNotification: (notifId: string) => Promise<any>;
+	handleUpdateUser: (data: any) => Promise<any>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -92,6 +93,7 @@ const AuthContext = createContext<{
 	handleLikePost: async () => Promise.resolve(""),
 	handleBookmarkPost: async () => Promise.resolve(""),
 	handleDeleteSingleNotification: async () => Promise.resolve([]),
+	handleUpdateUser: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -225,6 +227,21 @@ export const AuthProvider: React.FC<{
 		return response;
 	};
 
+	const handleUpdateUser = async (data: {
+		image?: File;
+		description?: string;
+		username?: string;
+		email?: string;
+	}) => {
+		const parsedUser = getDataFromLocalStorage();
+		const extractedUser = await updateUser(
+			parsedUser.userId,
+			parsedUser.token,
+			data
+		);
+		return extractedUser;
+	};
+
 	const handleDeleteSingleNotification = async (notifId: string) => {
 		const parsedUser = getDataFromLocalStorage();
 		const filteredNotifications = await deleteSingleNotification(
@@ -251,7 +268,6 @@ export const AuthProvider: React.FC<{
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
 			});
-			socket.emit("sendClientId", authUser.userId);
 		} else {
 			setCurrentUser(null);
 			setUserId(null);
@@ -315,6 +331,7 @@ export const AuthProvider: React.FC<{
 		handleLikePost,
 		handleBookmarkPost,
 		handleDeleteSingleNotification,
+		handleUpdateUser,
 		setAuthUser,
 		setCurrentUser,
 		setIsLoading,
