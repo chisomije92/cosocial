@@ -13,8 +13,6 @@ const BookmarkPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const userBookmarks = currentUser && currentUser.bookmarks.length > 0;
-	const noUserBookmarks =
-		currentUser && currentUser.bookmarks.length.length <= 0;
 
 	useEffect(() => {
 		if (userBookmarks) {
@@ -28,11 +26,8 @@ const BookmarkPage = () => {
 	return (
 		<>
 			<SideBar />
-			{/*{!currentUser && <BookmarkSkeleton />}
-			{noUserBookmarks && <NoBookmarks />}
-			{userBookmarks && !noUserBookmarks && <Bookmarks posts={userBookmarks} />}*/}
 			{(isLoading || !currentUser) && <BookmarkSkeleton />}
-			{noUserBookmarks && !isLoading && <NoBookmarks />}
+			{!userBookmarks && !isLoading && <NoBookmarks />}
 			{loadedPosts.length > 0 && !isLoading && (
 				<Bookmarks posts={loadedPosts} />
 			)}
