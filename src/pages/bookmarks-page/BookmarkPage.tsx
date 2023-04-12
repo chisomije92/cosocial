@@ -21,13 +21,13 @@ const BookmarkPage = () => {
 			setLoadedPosts([]);
 		}
 		setIsLoading(false);
-	}, [userBookmarks, currentUser]);
+	}, [userBookmarks, currentUser?.bookmarks]);
 
 	return (
 		<>
 			<SideBar />
 			{(isLoading || !currentUser) && <BookmarkSkeleton />}
-			{!userBookmarks && !isLoading && <NoBookmarks />}
+			{currentUser?.bookmarks.length <= 0 && !isLoading && <NoBookmarks />}
 			{loadedPosts.length > 0 && !isLoading && (
 				<Bookmarks posts={loadedPosts} />
 			)}
