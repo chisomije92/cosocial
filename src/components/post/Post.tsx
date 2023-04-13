@@ -223,7 +223,7 @@ const Post: FC<PostProp> = ({
 											icon="pi pi-thumbs-up-fill cursor-pointer"
 											shape="circle"
 											className={`mr-1 ml-3 mb-2 bg-blue-500 
-							${isLiked ? "text-color" : "text-white"}
+							${isLiked ? "text-blue-900" : "text-white"}
 
 							border-circle`}
 											onClick={handleLike}
@@ -246,7 +246,7 @@ const Post: FC<PostProp> = ({
 										<Avatar
 											icon="pi pi-bookmark-fill cursor-pointer"
 											className={`bg-red-600 ${
-												isBookmarked ? "text-color" : "text-white"
+												isBookmarked ? "text-blue-900" : "text-white"
 											} border-circle`}
 											onClick={handleBookmark}
 										/>
