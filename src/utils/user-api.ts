@@ -103,13 +103,13 @@ export const updateUser = async (id: string, token: string, data: Partial<{
   }
 }
 
-export const updatePassword = async (id: string, token: string, data: {
+export const updatePassword = async (token: string, data: {
   oldPassword: string;
   newPassword: string;
 }) => {
   try {
-    const res = await fetch(`${urlString}/users/${id}/update-password`, {
-      method: "POST",
+    const res = await fetch(`${urlString}/users/update-password`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `bearer ${token}`

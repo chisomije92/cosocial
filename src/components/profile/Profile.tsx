@@ -44,7 +44,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 			{showForm === 1 ? (
 				<EditProfile setVisible={setVisible} />
 			) : (
-				<ChangePassword />
+				<ChangePassword setVisible={setVisible} />
 			)}
 		</Dialog>
 	);

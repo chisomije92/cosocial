@@ -20,6 +20,7 @@ import {
 	signIn,
 	signUp,
 	unreadAllNotifications,
+	updatePassword,
 	updateUser,
 } from "../../utils/user-api";
 import { addMinutes, getDataFromLocalStorage } from "../../utils/util";
@@ -56,6 +57,7 @@ const AuthContext = createContext<{
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	handleDeleteSingleNotification: (notifId: string) => Promise<any>;
 	handleUpdateUser: (data: any) => Promise<any>;
+	handleUpdatePassword: (data: any) => Promise<any>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -94,6 +96,7 @@ const AuthContext = createContext<{
 	handleBookmarkPost: async () => Promise.resolve(""),
 	handleDeleteSingleNotification: async () => Promise.resolve([]),
 	handleUpdateUser: async () => Promise.resolve(""),
+	handleUpdatePassword: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -242,6 +245,14 @@ export const AuthProvider: React.FC<{
 		return extractedUser;
 	};
 
+	const handleUpdatePassword = async (data: {
+		newPassword: string;
+		oldPassword: string;
+	}) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await updatePassword(parsedUser.token, data);
+	};
+
 	const handleDeleteSingleNotification = async (notifId: string) => {
 		const parsedUser = getDataFromLocalStorage();
 		const filteredNotifications = await deleteSingleNotification(
@@ -332,6 +343,7 @@ export const AuthProvider: React.FC<{
 		handleBookmarkPost,
 		handleDeleteSingleNotification,
 		handleUpdateUser,
+		handleUpdatePassword,
 		setAuthUser,
 		setCurrentUser,
 		setIsLoading,

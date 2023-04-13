@@ -1,19 +1,28 @@
 /** @format */
 
-import React from "react";
+import React, { FC } from "react";
 import * as Yup from "yup";
 import { classNames } from "primereact/utils";
 import { useFormik } from "formik";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { PasswordValues } from "../../models/password";
+import { useAuth } from "../../hooks/auth/useAuth";
+import { useNavigate } from "react-router-dom";
 
-const ChangePassword = () => {
+const ChangePassword: FC<{
+	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ setVisible }) => {
+	const { handleUpdatePassword } = useAuth();
+	const navigate = useNavigate();
+
 	const onSubmit = (values: PasswordValues) => {
 		if (isValid) {
+			handleUpdatePassword(values);
 			resetForm();
+			setVisible(false);
+			navigate("/profile");
 		}
-		console.log(values);
 	};
 
 	const {

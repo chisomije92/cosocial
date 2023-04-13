@@ -135,7 +135,7 @@ const LoginForm = () => {
 						label="Login"
 						type="submit"
 						className="w-23rem font-bold"
-						disabled={isSubmitting || !isValid || !touched.email}
+						disabled={isSubmitting || !isValid}
 					/>
 					<span className="text-center text-red-500">{errorMsg}</span>
 					<div className="flex gap-1">
