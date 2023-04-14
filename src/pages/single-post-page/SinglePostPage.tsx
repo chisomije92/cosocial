@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import Post from "../../components/post/Post";
 import Replies from "../../components/replies/Replies";
 import SideBar from "../../components/side-bar/SideBar";
@@ -9,28 +9,29 @@ import { getSinglePost } from "../../utils/post-api";
 import { getDataFromLocalStorage } from "../../utils/util";
 
 import { useAuth } from "../../hooks/auth/useAuth";
+import PostSkeleton from "../../components/loading-skeleton/PostSkeleton";
 
 const SinglePostPage = () => {
-	const params = useParams();
-	const [singlePost, setSinglePost] = useState<any>();
-	const { loadedPosts } = useAuth();
-
-	const length = loadedPosts.length;
+	const [loading, setLoading] = useState<boolean>(true);
+	const { loadedPosts, setLoadedPosts } = useAuth();
+	const data = useLoaderData() as any;
 
 	useEffect(() => {
-		setSinglePost(loadedPosts.find((p: any) => p._id === params.id));
-	}, [loadedPosts, length, params.id]);
+		setLoadedPosts([{ ...data }]);
+		setLoading(false);
+	}, []);
 
 	return (
 		<>
 			<SideBar />
 			<div className="mx-2 lg:m-auto w-8 ">
-				{singlePost && (
+				{loadedPosts.length >= 1 && !loading && (
 					<>
-						<Post post={singlePost} />
-						<Replies replies={singlePost.comments} />
+						<Post post={loadedPosts[0]} />
+						<Replies replies={loadedPosts[0].comments} />
 					</>
 				)}
+				{loadedPosts.length === 0 && loading && <PostSkeleton />}
 			</div>
 		</>
 	);
@@ -39,7 +40,8 @@ const SinglePostPage = () => {
 export async function singlePostPageLoader({ params }: any) {
 	const parsedUser = getDataFromLocalStorage();
 	const selectedPost = await getSinglePost(params.id, parsedUser.token);
-	return { selectedPost };
+
+	return selectedPost;
 }
 
 export default SinglePostPage;

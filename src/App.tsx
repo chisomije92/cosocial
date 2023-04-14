@@ -73,12 +73,12 @@ function App() {
 						<Route path="/messages" element={<MessagesPage />}></Route>
 						<Route path="/messages/:id" element={<ChatPage />} />
 
+						<Route path="/bookmarks" element={<BookmarkPage />} />
 						<Route
-							path="/bookmarks"
-							element={<BookmarkPage />}
-							//loader={bookmarksLoader}
+							path="/post/:id"
+							element={<SinglePostPage />}
+							loader={singlePostPageLoader}
 						/>
-						<Route path="/post/:id" element={<SinglePostPage />} />
 					</Route>{" "}
 					<Route path="/sign-up" element={<SignUpPage />} />
 					<Route path="/login" element={<LoginPage />} />

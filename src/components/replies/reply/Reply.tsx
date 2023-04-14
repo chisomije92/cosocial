@@ -2,12 +2,13 @@
 
 import { Avatar } from "primereact/avatar";
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ReactTimeAgo from "react-time-ago";
 
 import { urlImgString } from "../../../utils/constants/constants";
 
 import classes from "./reply.module.css";
+import { useAuth } from "../../../hooks/auth/useAuth";
 
 interface ReplyProp {
 	reply: any;
@@ -17,6 +18,15 @@ interface ReplyProp {
 const Reply: FC<ReplyProp> = ({ reply, onClick }) => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [like, setLike] = useState(reply.like);
+	const { userId } = useAuth();
+	console.log(reply);
+	useEffect(() => {
+		if (reply.likes.findIndex((v: any) => v?._id === userId) >= 0) {
+			setIsLiked(true);
+		} else {
+			setIsLiked(false);
+		}
+	}, [reply]);
 
 	return (
 		<li className={`mt-2  p-2 ${classes.listReply}`} key={reply._id}>
