@@ -22,13 +22,7 @@ interface PostProp {
 	onDeletePost?: any;
 }
 
-const Post: FC<PostProp> = ({
-	post,
-	user,
-	showComments,
-	isAuthUser,
-	onDeletePost,
-}) => {
+const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	const op = useRef<any>(null);
 	const {
 		deletePost,

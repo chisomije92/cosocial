@@ -10,6 +10,7 @@ import {
 	createUserPost,
 	deleteUserPost,
 	likePost,
+	likeReply,
 	updateUserPost,
 } from "../../utils/post-api";
 import {
@@ -53,6 +54,7 @@ const AuthContext = createContext<{
 	createPost: (data: { image?: File; post: string }) => Promise<string>;
 	deletePost: (postId: string) => Promise<string>;
 	handleLikePost: (postId: string) => Promise<string>;
+	handleLikeReply: (postId: string, replyId: string) => Promise<string>;
 	handleBookmarkPost: (postId: string) => Promise<string>;
 	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
 	handleDeleteSingleNotification: (notifId: string) => Promise<any>;
@@ -93,6 +95,7 @@ const AuthContext = createContext<{
 	createPost: async () => Promise.resolve(""),
 	deletePost: async () => Promise.resolve(""),
 	handleLikePost: async () => Promise.resolve(""),
+	handleLikeReply: async () => Promise.resolve(""),
 	handleBookmarkPost: async () => Promise.resolve(""),
 	handleDeleteSingleNotification: async () => Promise.resolve([]),
 	handleUpdateUser: async () => Promise.resolve(""),
@@ -262,6 +265,11 @@ export const AuthProvider: React.FC<{
 		return filteredNotifications;
 	};
 
+	const handleLikeReply = async (id: string, replyId: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await likeReply(id, replyId, parsedUser.token);
+	};
+
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
@@ -340,6 +348,7 @@ export const AuthProvider: React.FC<{
 		createPost,
 		deletePost,
 		handleLikePost,
+		handleLikeReply,
 		handleBookmarkPost,
 		handleDeleteSingleNotification,
 		handleUpdateUser,

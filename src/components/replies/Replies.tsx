@@ -16,16 +16,16 @@ interface RepliesProp {
 const Replies: FC<RepliesProp> = ({ replies }) => {
 	const [visible, setVisible] = useState(false);
 
-	const likesDialogue = (
-		<Dialog
-			header="Cosocials who liked this post:"
-			visible={visible}
-			style={{ width: "50vw" }}
-			onHide={() => setVisible(false)}
-		>
-			<Likes users={Users} />
-		</Dialog>
-	);
+	//const likesDialogue = (
+	//	<Dialog
+	//		header="Cosocials who liked this post:"
+	//		visible={visible}
+	//		style={{ width: "50vw" }}
+	//		onHide={() => setVisible(false)}
+	//	>
+	//		<Likes users={Users} />
+	//	</Dialog>
+	//);
 	return (
 		<div className={`${classes.replies} card mt-2`}>
 			<div className={`${classes.inputContainer}`}>
@@ -40,12 +40,12 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 				{replies.map((reply: any) => (
 					<Reply
 						reply={reply}
-						onClick={() => setVisible(false)}
+						//onClick={() => setVisible(false)}
 						key={reply._id}
 					/>
 				))}
 			</ul>
-			{likesDialogue}
+			{/*{likesDialogue}*/}
 		</div>
 	);
 };

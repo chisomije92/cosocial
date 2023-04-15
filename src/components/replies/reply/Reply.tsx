@@ -5,34 +5,60 @@ import { Avatar } from "primereact/avatar";
 import React, { FC, useEffect, useState } from "react";
 import ReactTimeAgo from "react-time-ago";
 
-import { urlImgString } from "../../../utils/constants/constants";
+import { socket, urlImgString } from "../../../utils/constants/constants";
 
 import classes from "./reply.module.css";
 import { useAuth } from "../../../hooks/auth/useAuth";
+import { Dialog } from "primereact/dialog";
+import Likes from "../../likes/Likes";
 
 interface ReplyProp {
 	reply: any;
-	onClick: () => void;
 }
 
-const Reply: FC<ReplyProp> = ({ reply, onClick }) => {
+const Reply: FC<ReplyProp> = ({ reply }) => {
 	const [isLiked, setIsLiked] = useState(false);
-	const [like, setLike] = useState(reply.like);
-	const { userId } = useAuth();
-	console.log(reply);
+	const [visible, setVisible] = useState(false);
+
+	const { userId, handleLikeReply, loadedPosts, setLoadedPosts } = useAuth();
+
+	const handleReplyLike = () => {
+		handleLikeReply(loadedPosts[0]._id, reply._id);
+		socket.on("posts", data => {
+			if (data.action === "likeReply") {
+				const updatedPosts = [...loadedPosts];
+				const commentIndex = updatedPosts[0]?.comments.findIndex(
+					(v: any) => v._id === reply._id
+				);
+				updatedPosts[0].comments[commentIndex] = data.reply;
+				setLoadedPosts(updatedPosts);
+			}
+		});
+	};
+
 	useEffect(() => {
 		if (reply.likes.findIndex((v: any) => v?._id === userId) >= 0) {
+			console.log(true);
 			setIsLiked(true);
 		} else {
+			console.log(false);
 			setIsLiked(false);
 		}
-	}, [reply]);
+	}, [reply, userId]);
+
+	const likesDialogue = (
+		<Dialog
+			header="Cosocials who liked this post:"
+			visible={visible}
+			style={{ width: "50vw" }}
+			onHide={() => setVisible(false)}
+		>
+			<Likes users={reply.likes} />
+		</Dialog>
+	);
 
 	return (
 		<li className={`mt-2  p-2 ${classes.listReply}`} key={reply._id}>
-			{/*Ensure you get _id of reply, convert it to string and store it as replyId*/}
-			<input type="text" value={reply.replyId} hidden readOnly />
-
 			<div className="flex gap-2">
 				<Avatar
 					image={`${urlImgString}${reply.commenter.profilePicture}`}
@@ -61,19 +87,19 @@ const Reply: FC<ReplyProp> = ({ reply, onClick }) => {
 								isLiked ? "pi-thumbs-up-fill" : "pi-thumbs-up"
 							} cursor-pointer`}
 							onClick={() => {
-								setLike(isLiked ? like - 1 : like + 1);
-								setIsLiked(prev => !prev);
+								handleReplyLike();
 							}}
 						></i>
 						<span
 							className="opacity-70 text-sm mx-1  cursor-pointer"
-							onClick={onClick}
+							onClick={() => setVisible(true)}
 						>
 							{reply.likes.length > 0 ? `${reply.likes.length} likes` : ""}
 						</span>
 					</div>
 				</div>
 			</div>
+			{likesDialogue}
 		</li>
 	);
 };

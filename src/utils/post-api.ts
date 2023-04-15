@@ -173,3 +173,22 @@ export const getBookmarks = async (token: string) => {
     return err.message
   }
 }
+
+export const likeReply = async (id: string, replyId: string, token: string) => {
+  try {
+    const res = await fetch(`${urlString}/posts/${id}/reply/like`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${token}`
+      },
+      body: JSON.stringify({ replyId })
+    },
+    )
+    const resData = await checkResponseForError(res)
+    return resData
+  } catch (err: any) {
+    console.log(err)
+    return err.message
+  }
+}

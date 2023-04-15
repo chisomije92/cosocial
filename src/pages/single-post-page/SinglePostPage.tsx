@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import Post from "../../components/post/Post";
 import Replies from "../../components/replies/Replies";
 import SideBar from "../../components/side-bar/SideBar";
