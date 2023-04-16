@@ -1,51 +1,59 @@
 /** @format */
 
 import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
-import React, { useState, FC } from "react";
-import { Users } from "../../data/dummy-data";
-import Likes from "../likes/Likes";
+import { useState, FC } from "react";
 import classes from "./replies.module.css";
 import Reply from "./reply/Reply";
+import { useAuth } from "../../hooks/auth/useAuth";
+import { socket } from "../../utils/constants/constants";
 
 interface RepliesProp {
 	replies?: any;
 }
 
 const Replies: FC<RepliesProp> = ({ replies }) => {
-	const [visible, setVisible] = useState(false);
+	const [comment, setComment] = useState<string>("");
+	const { handleCommentOnPost, setLoadedPosts, loadedPosts } = useAuth();
 
-	//const likesDialogue = (
-	//	<Dialog
-	//		header="Cosocials who liked this post:"
-	//		visible={visible}
-	//		style={{ width: "50vw" }}
-	//		onHide={() => setVisible(false)}
-	//	>
-	//		<Likes users={Users} />
-	//	</Dialog>
-	//);
+	const onComment = () => {
+		const replyId = loadedPosts[0]._id;
+		if (comment.length > 0) {
+			handleCommentOnPost(replyId, comment);
+			socket.on("posts", data => {
+				if (data.action === "comment") {
+					const updatedPost = [...loadedPosts];
+					updatedPost[0].comments = data.comments;
+					console.log(updatedPost);
+					setLoadedPosts(updatedPost);
+					setComment("");
+				}
+			});
+		}
+	};
+
 	return (
 		<div className={`${classes.replies} card mt-2`}>
 			<div className={`${classes.inputContainer}`}>
 				<InputTextarea
 					className="w-12 h-5rem p-2 border-1"
 					placeholder="Add a comment"
+					value={comment}
+					onChange={e => setComment(e.target.value)}
 					autoResize
 				/>
-				<Button label="Comment" className="p-2 text-white font-bold mt-1" />
+				<Button
+					label="Comment"
+					className="p-2 text-white font-bold mt-1"
+					onClick={() => onComment()}
+					disabled={comment.length === 0}
+				/>
 			</div>
 			<ul className="list-none">
-				{replies.map((reply: any) => (
-					<Reply
-						reply={reply}
-						//onClick={() => setVisible(false)}
-						key={reply._id}
-					/>
+				{replies?.map((reply: any) => (
+					<Reply reply={reply} key={reply._id} />
 				))}
 			</ul>
-			{/*{likesDialogue}*/}
 		</div>
 	);
 };

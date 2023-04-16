@@ -38,10 +38,8 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 
 	useEffect(() => {
 		if (reply.likes.findIndex((v: any) => v?._id === userId) >= 0) {
-			console.log(true);
 			setIsLiked(true);
 		} else {
-			console.log(false);
 			setIsLiked(false);
 		}
 	}, [reply, userId]);

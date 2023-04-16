@@ -174,6 +174,25 @@ export const getBookmarks = async (token: string) => {
   }
 }
 
+export const commentOnPost = async (id: string, comment: string, token: string) => {
+  try {
+    const res = await fetch(`${urlString}/posts/${id}/reply`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${token}`
+      },
+      body: JSON.stringify({ comment })
+    },
+    )
+    const resData = await checkResponseForError(res)
+    return resData
+  } catch (err: any) {
+    console.log(err)
+    return err.message
+  }
+}
+
 export const likeReply = async (id: string, replyId: string, token: string) => {
   try {
     const res = await fetch(`${urlString}/posts/${id}/reply/like`, {

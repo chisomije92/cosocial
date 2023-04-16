@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 import {
 	bookmarkPost,
+	commentOnPost,
 	createUserPost,
 	deleteUserPost,
 	likePost,
@@ -60,6 +61,7 @@ const AuthContext = createContext<{
 	handleDeleteSingleNotification: (notifId: string) => Promise<any>;
 	handleUpdateUser: (data: any) => Promise<any>;
 	handleUpdatePassword: (data: any) => Promise<any>;
+	handleCommentOnPost: (id: string, comment: string) => Promise<any>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -100,6 +102,7 @@ const AuthContext = createContext<{
 	handleDeleteSingleNotification: async () => Promise.resolve([]),
 	handleUpdateUser: async () => Promise.resolve(""),
 	handleUpdatePassword: async () => Promise.resolve(""),
+	handleCommentOnPost: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -270,6 +273,11 @@ export const AuthProvider: React.FC<{
 		return await likeReply(id, replyId, parsedUser.token);
 	};
 
+	const handleCommentOnPost = async (id: string, comment: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await commentOnPost(id, comment, parsedUser.token);
+	};
+
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
@@ -353,6 +361,7 @@ export const AuthProvider: React.FC<{
 		handleDeleteSingleNotification,
 		handleUpdateUser,
 		handleUpdatePassword,
+		handleCommentOnPost,
 		setAuthUser,
 		setCurrentUser,
 		setIsLoading,

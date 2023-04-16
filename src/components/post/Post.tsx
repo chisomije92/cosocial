@@ -275,7 +275,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 									</Link>
 								) : (
 									<span className="flex gap-1">
-										<span>{post.comment}</span>
+										<span>{post.comments.length}</span>
 										<span className="hidden md:block">comments</span>
 										<CommentIcon className="inline-block md:hidden" />
 									</span>
