@@ -20,7 +20,13 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
 
-	const { userId, handleLikeReply, loadedPosts, setLoadedPosts } = useAuth();
+	const {
+		userId,
+		handleLikeReply,
+		loadedPosts,
+		setLoadedPosts,
+		handleDeleteComment,
+	} = useAuth();
 
 	const handleReplyLike = () => {
 		handleLikeReply(loadedPosts[0]._id, reply._id);
@@ -33,6 +39,17 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 				updatedPosts[0].comments[commentIndex] = data.reply;
 				setLoadedPosts(updatedPosts);
 			}
+		});
+	};
+
+	const handleDeleteReply = () => {
+		handleDeleteComment(loadedPosts[0]._id, reply._id).then(v => {
+			const updatedPosts = [...loadedPosts];
+			const updatedComments = updatedPosts[0].comments.filter(
+				(v: any) => v._id !== reply._id
+			);
+			updatedPosts[0].comments = updatedComments;
+			setLoadedPosts(updatedPosts);
 		});
 	};
 
@@ -57,14 +74,14 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 
 	return (
 		<li className={`mt-2  p-2 ${classes.listReply}`} key={reply._id}>
-			<div className="flex gap-2">
+			<div className="flex gap-2 p-2">
 				<Avatar
 					image={`${urlImgString}${reply.commenter.profilePicture}`}
 					shape="circle"
 					className="text-center"
 				/>
 				<div className="flex flex-column gap-2">
-					<div className="flex gap-2 ">
+					<div className="flex gap-2">
 						<small className=" font-semibold text-base">
 							{reply.commenter.username}
 						</small>
@@ -73,30 +90,40 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 								<ReactTimeAgo
 									date={new Date(reply.dateOfReply)}
 									locale="en-US"
+									className="flex"
 								/>
 							}
 						</small>
 					</div>
 
 					<span>{reply.comment}</span>
-					<div className="flex mt-2">
-						<i
-							className={`pi ${
-								isLiked ? "pi-thumbs-up-fill" : "pi-thumbs-up"
-							} cursor-pointer`}
-							onClick={() => {
-								handleReplyLike();
-							}}
-						></i>
-						<span
-							className="opacity-70 text-sm mx-1  cursor-pointer"
-							onClick={() => setVisible(true)}
-						>
-							{reply.likes.length > 0 ? `${reply.likes.length} likes` : ""}
+					<div className="flex mt-2 ">
+						<span>
+							<i
+								className={`pi ${
+									isLiked ? "pi-thumbs-up-fill" : "pi-thumbs-up"
+								} cursor-pointer`}
+								onClick={() => {
+									handleReplyLike();
+								}}
+							></i>
+							<span
+								className="opacity-70 text-sm mx-1  cursor-pointer"
+								onClick={() => setVisible(true)}
+							>
+								{reply.likes.length > 0 ? `${reply.likes.length} likes` : ""}
+							</span>
 						</span>
 					</div>
 				</div>
+				{reply.commenter.userId === userId && (
+					<i
+						className="pi pi-trash ml-auto text-red-600 cursor-pointer"
+						onClick={() => handleDeleteReply()}
+					></i>
+				)}
 			</div>
+
 			{likesDialogue}
 		</li>
 	);

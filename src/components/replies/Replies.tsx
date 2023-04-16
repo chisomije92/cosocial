@@ -14,18 +14,21 @@ interface RepliesProp {
 
 const Replies: FC<RepliesProp> = ({ replies }) => {
 	const [comment, setComment] = useState<string>("");
+	const [loading, setLoading] = useState(false);
 	const { handleCommentOnPost, setLoadedPosts, loadedPosts } = useAuth();
 
 	const onComment = () => {
+		setLoading(true);
 		const replyId = loadedPosts[0]._id;
 		if (comment.length > 0) {
 			handleCommentOnPost(replyId, comment);
+
 			socket.on("posts", data => {
 				if (data.action === "comment") {
 					const updatedPost = [...loadedPosts];
 					updatedPost[0].comments = data.comments;
-					console.log(updatedPost);
 					setLoadedPosts(updatedPost);
+					setLoading(false);
 					setComment("");
 				}
 			});
@@ -46,7 +49,7 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 					label="Comment"
 					className="p-2 text-white font-bold mt-1"
 					onClick={() => onComment()}
-					disabled={comment.length === 0}
+					disabled={comment.length === 0 || loading}
 				/>
 			</div>
 			<ul className="list-none">

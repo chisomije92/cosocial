@@ -8,11 +8,7 @@ import { useState, FC } from "react";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
-import {
-	urlImgString,
-	socketUrl,
-	socket,
-} from "../../utils/constants/constants";
+import { urlImgString, socket } from "../../utils/constants/constants";
 import { Skeleton } from "primereact/skeleton";
 import { ImageFileType } from "../../models/imageFileType";
 import { useAuth } from "../../hooks/auth/useAuth";
@@ -20,14 +16,8 @@ import { useAuth } from "../../hooks/auth/useAuth";
 const Share: FC<{
 	currentUser: any;
 }> = ({ currentUser }) => {
-	const {
-		createPost,
-		isLoading,
-		isSubmitting,
-		setIsLoading,
-		setIsSubmitting,
-		setPost,
-	} = useAuth();
+	const { createPost, isLoading, setIsLoading, setIsSubmitting, setPost } =
+		useAuth();
 	const [inputText, setInputText] = useState("");
 	const [selectedImageFile, setSelectedImageFile] = useState<{
 		preview: string;

@@ -211,3 +211,22 @@ export const likeReply = async (id: string, replyId: string, token: string) => {
     return err.message
   }
 }
+
+export const deleteReply = async (id: string, replyId: string, token: string) => {
+  try {
+    const res = await fetch(`${urlString}/posts/${id}/reply`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${token}`
+      },
+      body: JSON.stringify({ replyId })
+    },
+    )
+    const resData = await checkResponseForError(res)
+    return resData
+  } catch (err: any) {
+    console.log(err)
+    return err.message
+  }
+}

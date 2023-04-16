@@ -9,6 +9,7 @@ import {
 	bookmarkPost,
 	commentOnPost,
 	createUserPost,
+	deleteReply,
 	deleteUserPost,
 	likePost,
 	likeReply,
@@ -62,6 +63,7 @@ const AuthContext = createContext<{
 	handleUpdateUser: (data: any) => Promise<any>;
 	handleUpdatePassword: (data: any) => Promise<any>;
 	handleCommentOnPost: (id: string, comment: string) => Promise<any>;
+	handleDeleteComment: (id: string, replyId: string) => Promise<any>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -103,6 +105,7 @@ const AuthContext = createContext<{
 	handleUpdateUser: async () => Promise.resolve(""),
 	handleUpdatePassword: async () => Promise.resolve(""),
 	handleCommentOnPost: async () => Promise.resolve(""),
+	handleDeleteComment: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -278,6 +281,11 @@ export const AuthProvider: React.FC<{
 		return await commentOnPost(id, comment, parsedUser.token);
 	};
 
+	const handleDeleteComment = async (id: string, replyId: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await deleteReply(id, replyId, parsedUser.token);
+	};
+
 	useEffect(() => {
 		let submitTimer: any;
 		if (isSubmitting) {
@@ -362,6 +370,7 @@ export const AuthProvider: React.FC<{
 		handleUpdateUser,
 		handleUpdatePassword,
 		handleCommentOnPost,
+		handleDeleteComment,
 		setAuthUser,
 		setCurrentUser,
 		setIsLoading,
