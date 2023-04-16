@@ -10,6 +10,7 @@ import { getDataFromLocalStorage } from "../../utils/util";
 
 import { useAuth } from "../../hooks/auth/useAuth";
 import PostSkeleton from "../../components/loading-skeleton/PostSkeleton";
+import { socket } from "../../utils/constants/constants";
 
 const SinglePostPage = () => {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -20,6 +21,18 @@ const SinglePostPage = () => {
 		setLoadedPosts([{ ...data }]);
 		setLoading(false);
 	}, []);
+
+	//useEffect(() => {
+	//	socket.on("posts", data => {
+	//		if (data.action === "comment") {
+	//			const updatedPost = [...loadedPosts];
+	//			updatedPost[0].comments = data?.comments;
+	//			setLoadedPosts(updatedPost);
+	//			//setLoading(false);
+	//			setComment("");
+	//		}
+	//	});
+	//}, [loadedPosts]);
 
 	return (
 		<>

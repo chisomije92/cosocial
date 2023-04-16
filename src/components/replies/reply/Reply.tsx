@@ -59,7 +59,7 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 		} else {
 			setIsLiked(false);
 		}
-	}, [reply, userId]);
+	}, [reply, userId, loadedPosts]);
 
 	const likesDialogue = (
 		<Dialog

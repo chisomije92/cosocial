@@ -26,10 +26,15 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 			socket.on("posts", data => {
 				if (data.action === "comment") {
 					const updatedPost = [...loadedPosts];
-					updatedPost[0].comments = data.comments;
-					setLoadedPosts(updatedPost);
-					setLoading(false);
-					setComment("");
+					const commentIndex = updatedPost[0].comments.findIndex(
+						(v: any) => v._id === data.reply._id
+					);
+					if (commentIndex < 0) {
+						updatedPost[0].comments.unshift(data.reply);
+						setLoadedPosts(updatedPost);
+						setLoading(false);
+						setComment("");
+					}
 				}
 			});
 		}
