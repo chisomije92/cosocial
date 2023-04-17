@@ -9,16 +9,18 @@ import { urlImgString } from "../../utils/constants/constants";
 import ReactTimeAgo from "react-time-ago";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { sortData } from "../../utils/util";
+import { useNotifCtx } from "../../context/NotificationContext";
 
 const Notifications = () => {
+	const { setCurrentUser, currentUser } = useAuth();
+
 	const {
 		changeNotificationStatus,
 		changeAllNotificationStatus,
 		changeNotificationsToUnread,
 		handleDeleteSingleNotification,
-		setCurrentUser,
-		currentUser,
-	} = useAuth();
+	} = useNotifCtx();
+
 	const [notifsRead, setNotifsRead] = React.useState<boolean>(false);
 	const navigate = useNavigate();
 

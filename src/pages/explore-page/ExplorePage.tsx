@@ -11,11 +11,12 @@ import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
 import { socket } from "../../utils/constants/constants";
-import { useAuth } from "../../hooks/auth/useAuth";
+
+import { usePostCtx } from "../../context/PostContext";
 
 const ExplorePage = () => {
 	const { data }: any = useLoaderData();
-	const { setLoadedPosts, loadedPosts } = useAuth();
+	const { setLoadedPosts, loadedPosts } = usePostCtx();
 
 	useEffect(() => {
 		socket.on("posts", data => {

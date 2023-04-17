@@ -7,9 +7,11 @@ import SideBar from "../../components/side-bar/SideBar";
 import { useAuth } from "../../hooks/auth/useAuth";
 import NoBookmarks from "../../components/bookmarks/NoBookmarks";
 import BookmarkSkeleton from "../../components/loading-skeleton/BookmarkSkeleton";
+import { usePostCtx } from "../../context/PostContext";
 
 const BookmarkPage = () => {
-	const { currentUser, setLoadedPosts, loadedPosts } = useAuth();
+	const { currentUser } = useAuth();
+	const { setLoadedPosts, loadedPosts } = usePostCtx();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const userBookmarks = currentUser && currentUser.bookmarks.length > 0;

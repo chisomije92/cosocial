@@ -5,8 +5,8 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { useState, FC } from "react";
 import classes from "./replies.module.css";
 import Reply from "./reply/Reply";
-import { useAuth } from "../../hooks/auth/useAuth";
 import { socket } from "../../utils/constants/constants";
+import { usePostCtx } from "../../context/PostContext";
 
 interface RepliesProp {
 	replies?: any;
@@ -15,7 +15,7 @@ interface RepliesProp {
 const Replies: FC<RepliesProp> = ({ replies }) => {
 	const [comment, setComment] = useState<string>("");
 	const [loading, setLoading] = useState(false);
-	const { handleCommentOnPost, setLoadedPosts, loadedPosts } = useAuth();
+	const { handleCommentOnPost, setLoadedPosts, loadedPosts } = usePostCtx();
 
 	const onComment = () => {
 		setLoading(true);

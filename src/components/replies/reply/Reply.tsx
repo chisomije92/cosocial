@@ -11,6 +11,7 @@ import classes from "./reply.module.css";
 import { useAuth } from "../../../hooks/auth/useAuth";
 import { Dialog } from "primereact/dialog";
 import Likes from "../../likes/Likes";
+import { usePostCtx } from "../../../context/PostContext";
 
 interface ReplyProp {
 	reply: any;
@@ -20,13 +21,10 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
 
-	const {
-		userId,
-		handleLikeReply,
-		loadedPosts,
-		setLoadedPosts,
-		handleDeleteComment,
-	} = useAuth();
+	const { userId } = useAuth();
+
+	const { handleLikeReply, loadedPosts, setLoadedPosts, handleDeleteComment } =
+		usePostCtx();
 
 	const handleReplyLike = () => {
 		handleLikeReply(loadedPosts[0]._id, reply._id);

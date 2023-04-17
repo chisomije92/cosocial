@@ -14,10 +14,11 @@ import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import ProfilePageSkeleton from "../../components/loading-skeleton/ProfilePageSkeleton";
 import { socket } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { usePostCtx } from "../../context/PostContext";
 
 const ProfilePage = () => {
 	const { data } = useLoaderData() as any;
-	const { setLoadedPosts, loadedPosts } = useAuth();
+	const { setLoadedPosts, loadedPosts } = usePostCtx();
 
 	useEffect(() => {
 		socket.on("posts", data => {

@@ -13,6 +13,7 @@ import ReactTimeAgo from "react-time-ago";
 import { socket, urlImgString } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
 import EditPost from "./EditPost";
+import { usePostCtx } from "../../context/PostContext";
 
 interface PostProp {
 	post: any;
@@ -24,18 +25,17 @@ interface PostProp {
 
 const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	const op = useRef<any>(null);
+	const { currentUser, setCurrentUser, userId } = useAuth();
+	const { handleBookmarkPost } = usePostCtx();
+
 	const {
 		deletePost,
 		setLoadedPosts,
 		loadedPosts,
-		currentUser,
-		setCurrentUser,
-		handleBookmarkPost,
-		setPost,
-		userId,
 		handleLikePost,
 		setIsPostDeleted,
-	} = useAuth();
+		setPost,
+	} = usePostCtx();
 
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
@@ -258,7 +258,9 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 										className="opacity-70 text-sm mx-1 cursor-pointer"
 										onClick={() => setVisible(true)}
 									>
-										{post.likes.length > 0 ? `${post.likes.length} likes` : ""}
+										{post?.likes.length > 0
+											? `${post?.likes.length} likes`
+											: ""}
 									</span>
 								</div>
 							</div>
@@ -269,13 +271,13 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 										to={`/post/${post._id}`}
 										className="no-underline text-900 flex gap-1 mt-2"
 									>
-										<span>{post.comments.length}</span>
+										<span>{post?.comments?.length}</span>
 										<span className="hidden md:block">comments</span>
 										<CommentIcon className="inline-block md:hidden" />
 									</Link>
 								) : (
 									<span className="flex gap-1">
-										<span>{post.comments.length}</span>
+										<span>{post?.comments?.length}</span>
 										<span className="hidden md:block">comments</span>
 										<CommentIcon className="inline-block md:hidden" />
 									</span>

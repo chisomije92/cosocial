@@ -19,11 +19,10 @@ interface FeedsInterface {
 const Feeds: FC<FeedsInterface> = ({
 	posts,
 	user,
-	areTherePosts,
 	isExploring,
 	currentUser,
 }) => {
-	const { authUser, loadedPosts } = useAuth();
+	const { authUser } = useAuth();
 
 	return (
 		<div className={`${classes.feeds}`}>

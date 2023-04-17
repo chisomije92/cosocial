@@ -8,6 +8,7 @@ import { ImageFileType } from "../../models/imageFileType";
 import { Button } from "primereact/button";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { socket } from "../../utils/constants/constants";
+import { usePostCtx } from "../../context/PostContext";
 
 const EditPost: React.FC<{
 	postId: any;
@@ -24,14 +25,9 @@ const EditPost: React.FC<{
 	setSelectedPostImageFile,
 	setEditing,
 }) => {
-	const {
-		updatePost,
-		setIsSubmitting,
-		isLoading,
-		setIsLoading,
-		loadedPosts,
-		setLoadedPosts,
-	} = useAuth();
+	const { setIsSubmitting, isLoading, setIsLoading } = useAuth();
+
+	const { loadedPosts, setLoadedPosts, updatePost } = usePostCtx();
 
 	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let img: ImageFileType = {

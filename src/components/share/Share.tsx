@@ -12,12 +12,14 @@ import { urlImgString, socket } from "../../utils/constants/constants";
 import { Skeleton } from "primereact/skeleton";
 import { ImageFileType } from "../../models/imageFileType";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { usePostCtx } from "../../context/PostContext";
 
 const Share: FC<{
 	currentUser: any;
 }> = ({ currentUser }) => {
-	const { createPost, isLoading, setIsLoading, setIsSubmitting, setPost } =
-		useAuth();
+	const { isLoading, setIsLoading, setIsSubmitting } = useAuth();
+	const { setPost, createPost } = usePostCtx();
+
 	const [inputText, setInputText] = useState("");
 	const [selectedImageFile, setSelectedImageFile] = useState<{
 		preview: string;
