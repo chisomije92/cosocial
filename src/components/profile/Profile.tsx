@@ -149,7 +149,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						</Link>
 
 						<ConfirmDialog />
-						{user.following.includes(authUser!.userId) && (
+						{authUser && user.following.includes(authUser.userId) && (
 							<span className="font-bold text-lg">Follows you</span>
 						)}
 						<Button

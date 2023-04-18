@@ -20,7 +20,7 @@ const EditProfile: React.FC<{
 }> = ({ setVisible }) => {
 	const [selectedImageFile, setSelectedImageFile] =
 		React.useState<ImageFileType>({ preview: "", data: null, text: null });
-	const { handleUpdateUser, setCurrentUser } = useAuth();
+	const { handleUpdateUser, setCurrentUser, currentUser } = useAuth();
 	const navigate = useNavigate();
 
 	const allValuesEmpty = () => {
@@ -87,9 +87,9 @@ const EditProfile: React.FC<{
 	} = useFormik({
 		initialValues: {
 			image: undefined,
-			username: "",
-			email: "",
-			desc: "",
+			username: currentUser?._id ? currentUser?.username : "",
+			email: currentUser?._id ? currentUser?.email : "",
+			desc: currentUser?._id ? currentUser?.description : "",
 		},
 		validationSchema: Yup.object({
 			username: Yup.string()

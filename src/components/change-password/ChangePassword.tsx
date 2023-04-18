@@ -98,6 +98,7 @@ const ChangePassword: FC<{
 							"p-invalid": isFormFieldInvalid("oldPassword"),
 						})}`}
 						toggleMask
+						autoComplete="on"
 					/>
 
 					{getFormErrorMessage("oldPassword")}
@@ -115,6 +116,7 @@ const ChangePassword: FC<{
 							"p-invalid": isFormFieldInvalid("newPassword"),
 						})}`}
 						toggleMask
+						autoComplete="on"
 					/>
 					{getFormErrorMessage("newPassword")}
 				</div>
