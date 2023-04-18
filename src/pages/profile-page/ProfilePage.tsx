@@ -15,9 +15,10 @@ import ProfilePageSkeleton from "../../components/loading-skeleton/ProfilePageSk
 import { socket } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { usePostCtx } from "../../context/PostContext";
+import { LoaderData } from "../../models/loader-data";
 
 const ProfilePage = () => {
-	const { data } = useLoaderData() as any;
+	const { data } = useLoaderData() as LoaderData;
 	const { setLoadedPosts, loadedPosts } = usePostCtx();
 
 	useEffect(() => {

@@ -32,6 +32,10 @@ border-radius: 50%;
   width: 100%;
 }
 
+.imgContainer:focus-within {
+  outline: none;
+}
+
 .profile button {
   opacity: 1;
 }

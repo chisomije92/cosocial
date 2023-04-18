@@ -8,7 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
 const ChatBox = () => {
-	const inputRef = useRef<any>(null);
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	useEffect(() => {
 		inputRef.current?.focus();

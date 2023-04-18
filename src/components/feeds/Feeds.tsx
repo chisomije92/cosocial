@@ -7,13 +7,15 @@ import NoPosts from "../no-posts/NoPosts";
 import Post from "../post/Post";
 import Share from "../share/Share";
 import classes from "./feeds.module.css";
+import { Post as PostType } from "../../models/post";
+import { User } from "../../models/user";
 
 interface FeedsInterface {
-	posts: any;
-	user?: any;
+	posts: PostType[];
+	user?: User;
 	isExploring?: boolean;
 	areTherePosts?: boolean;
-	currentUser: any;
+	currentUser: User;
 }
 
 const Feeds: FC<FeedsInterface> = ({
@@ -31,7 +33,7 @@ const Feeds: FC<FeedsInterface> = ({
 				{posts.length <= 0 && <NoPosts />}
 
 				{posts &&
-					posts.map((p: any) => (
+					posts.map(p => (
 						<Post
 							post={p}
 							user={user}

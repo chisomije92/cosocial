@@ -15,10 +15,12 @@ import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 import { urlImgString } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
 import NoPosts from "../no-posts/NoPosts";
+import { Post as PostType } from "../../models/post";
+import { User } from "../../models/user";
 
 interface ProfileProps {
-	user: any;
-	userPosts: any;
+	user: User;
+	userPosts: PostType[];
 }
 
 const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
@@ -26,11 +28,12 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);
 	const { authUser } = useAuth();
-	const profileRef = useRef<any>(null);
+	const profileRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
 		profileRef.current?.focus();
-	});
+	}, []);
+
 	const editProfileForm = (
 		<Dialog
 			header={`${showForm === 1 ? "Edit Profile" : "Change Password"}`}
@@ -68,9 +71,13 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	};
 
 	return (
-		<div className={`${classes.profile} mx-3 mt-2`} ref={profileRef}>
+		<div className={`${classes.profile} mx-3 mt-2`}>
 			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
-				<div className={`${classes.imgContainer}`}>
+				<div
+					className={`${classes.imgContainer}`}
+					ref={profileRef}
+					tabIndex={0}
+				>
 					<Image
 						src={`${urlImgString}${user.profilePicture}`}
 						alt=""
@@ -142,7 +149,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						</Link>
 
 						<ConfirmDialog />
-						{user.following.includes(authUser?.userId) && (
+						{user.following.includes(authUser!.userId) && (
 							<span className="font-bold text-lg">Follows you</span>
 						)}
 						<Button
@@ -158,7 +165,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 			<div className="">
 				{userPosts.length <= 0 && <NoPosts />}
 				{userPosts &&
-					userPosts.map((p: any) => (
+					userPosts.map(p => (
 						<Post
 							key={p._id}
 							post={p}

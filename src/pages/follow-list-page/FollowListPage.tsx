@@ -7,10 +7,11 @@ import SearchFriend from "../../components/search-friend/SearchFriend";
 import SideBar from "../../components/side-bar/SideBar";
 import { getFollowers, getFollowing } from "../../utils/user-api";
 import { getDataFromLocalStorage } from "../../utils/util";
+import { User } from "../../models/user";
 
 const FollowListPage = () => {
 	const { follow } = useParams();
-	const userData = useLoaderData();
+	const userData = useLoaderData() as User[];
 	return (
 		<>
 			<SideBar />
@@ -23,7 +24,7 @@ const FollowListPage = () => {
 export const followListPageLoader = async ({ params }: any) => {
 	const { follow, id } = params;
 
-	let userData: any;
+	let userData;
 	const parsedUser = getDataFromLocalStorage();
 
 	if (follow === "following") {

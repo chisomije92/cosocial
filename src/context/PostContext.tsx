@@ -12,10 +12,11 @@ import {
 	likeReply,
 	updateUserPost,
 } from "../utils/post-api";
+import { Post } from "../models/post";
 
 const PostContext = createContext<{
-	post: any;
-	loadedPosts: any;
+	post: Post | null;
+	loadedPosts: Post[];
 	isPostDeleted: boolean;
 	updatePost: (
 		id: string,
@@ -25,12 +26,12 @@ const PostContext = createContext<{
 	deletePost: (postId: string) => Promise<string>;
 	handleLikePost: (postId: string) => Promise<string>;
 	handleBookmarkPost: (postId: string) => Promise<string>;
-	handleCommentOnPost: (id: string, comment: string) => Promise<any>;
-	handleDeleteComment: (id: string, replyId: string) => Promise<any>;
+	handleCommentOnPost: (id: string, comment: string) => Promise<string>;
+	handleDeleteComment: (id: string, replyId: string) => Promise<string>;
 	handleLikeReply: (postId: string, replyId: string) => Promise<string>;
-	setLoadedPosts: React.Dispatch<React.SetStateAction<any | null>>;
+	setLoadedPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 	setIsPostDeleted: React.Dispatch<React.SetStateAction<boolean>>;
-	setPost: React.Dispatch<React.SetStateAction<any | null>>;
+	setPost: React.Dispatch<React.SetStateAction<Post | null>>;
 }>({
 	post: null,
 	loadedPosts: [],
@@ -53,8 +54,8 @@ export const PostProvider: React.FC<{
 }> = ({ children }) => {
 	const [isPostDeleted, setIsPostDeleted] = useState<boolean>(false);
 
-	const [post, setPost] = useState<any>(null);
-	const [loadedPosts, setLoadedPosts] = useState<any>([]);
+	const [post, setPost] = useState<Post | null>(null);
+	const [loadedPosts, setLoadedPosts] = useState<Post[]>([]);
 	const createPost = async (data: { image?: File; post: string }) => {
 		const parsedUser = getDataFromLocalStorage();
 		const userPost = await createUserPost(parsedUser.token, data);
@@ -63,13 +64,10 @@ export const PostProvider: React.FC<{
 
 	useEffect(() => {
 		if (post) {
-			setLoadedPosts((prevPosts: any) => {
-				const isPostFound =
-					prevPosts.findIndex((p: any) => p._id === post._id) >= 0;
+			setLoadedPosts(prevPosts => {
+				const isPostFound = prevPosts.findIndex(p => p._id === post._id) >= 0;
 				if (isPostFound && isPostDeleted) {
-					const filteredPosts = prevPosts.filter(
-						(p: any) => p._id !== post._id
-					);
+					const filteredPosts = prevPosts.filter(p => p._id !== post._id);
 
 					return [...filteredPosts];
 				} else if (isPostFound && !isPostDeleted) {

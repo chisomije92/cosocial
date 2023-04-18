@@ -1,18 +1,34 @@
-export interface PostType {
-  id: string
+export interface ActionUser {
+  username: string;
+  email: string;
+  profilePicture: string;
+  _id: string
+}
+
+
+export interface Post {
+  _id: string
   userId: string;
+  linkedUser: ActionUser;
   description: string;
   image: string;
-  likes: string[];
+  likes: ActionUser[];
   comments: Reply[]
   updatedAt: string;
   createdAt: string
 }
 
-interface Reply {
-  id: string;
+export interface Reply {
+  _id: string;
   comment: string;
-  commenterId: string
+  commenter: {
+    username: string;
+    email: string;
+    profilePicture: string;
+    userId: string
+  }
   dateOfReply: string
-  likes: string[];
+  likes: ActionUser[];
 }
+
+export interface PostValues { image?: File, post: string }

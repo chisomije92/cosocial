@@ -4,17 +4,11 @@ import React, { FC } from "react";
 import classes from "./bookmarks.module.css";
 import Post from "../post/Post";
 
-const NoBookmarks: FC<{
-	posts?: any;
-}> = ({ posts }) => {
+const NoBookmarks: FC<{}> = () => {
 	return (
 		<div className={`${classes.noBookmarks} mx-3`}>
-			{/*{posts.map((p: any) => (
-				<Post post={p} key={1} />
-			))}*/}
 			<Post
-				post={{
-					//_id: 1,
+				noPostObj={{
 					image: "/assets/bookmarks.jpg",
 					description:
 						"Share and connect with loved ones. Share your thoughts, opinions and memories. Be seen and heard",
@@ -22,6 +16,7 @@ const NoBookmarks: FC<{
 					likes: new Array(1000),
 					comments: [],
 					linkedUser: {
+						_id: "124",
 						profilePicture: "/assets/cosocial-logo.png",
 						email: "Cosocial@cosocial.com",
 						username: "Cosocial",

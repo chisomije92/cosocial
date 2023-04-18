@@ -7,9 +7,10 @@ import classes from "./replies.module.css";
 import Reply from "./reply/Reply";
 import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
+import { Reply as ReplyType } from "../../models/post";
 
 interface RepliesProp {
-	replies?: any;
+	replies?: ReplyType[];
 }
 
 const Replies: FC<RepliesProp> = ({ replies }) => {
@@ -27,7 +28,7 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 				if (data.action === "comment") {
 					const updatedPost = [...loadedPosts];
 					const commentIndex = updatedPost[0].comments.findIndex(
-						(v: any) => v._id === data.reply._id
+						v => v._id === data.reply._id
 					);
 					if (commentIndex < 0) {
 						updatedPost[0].comments.unshift(data.reply);
@@ -58,7 +59,7 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 				/>
 			</div>
 			<ul className="list-none">
-				{replies?.map((reply: any) => (
+				{replies?.map(reply => (
 					<Reply reply={reply} key={reply._id} />
 				))}
 			</ul>

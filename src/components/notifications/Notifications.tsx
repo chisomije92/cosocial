@@ -10,6 +10,7 @@ import ReactTimeAgo from "react-time-ago";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { sortData } from "../../utils/util";
 import { useNotifCtx } from "../../context/NotificationContext";
+import { Notification } from "../../models/notification";
 
 const Notifications = () => {
 	const { setCurrentUser, currentUser } = useAuth();
@@ -27,14 +28,16 @@ const Notifications = () => {
 	const onDeleteNotification = (notificationId: string) => {
 		handleDeleteSingleNotification(notificationId);
 
-		const filteredNotifications = currentUser.notifications.filter(
-			(n: any) => n._id !== notificationId
-		);
-		const updatedUser = {
-			...currentUser,
-			notifications: filteredNotifications,
-		};
-		setCurrentUser(updatedUser);
+		if (currentUser?._id) {
+			const filteredNotifications = currentUser!.notifications.filter(
+				n => n?._id !== notificationId
+			);
+			const updatedUser = {
+				...currentUser,
+				notifications: filteredNotifications,
+			};
+			setCurrentUser(updatedUser);
+		}
 	};
 
 	return (
@@ -59,64 +62,66 @@ const Notifications = () => {
 					</div>
 				</li>
 				{currentUser &&
-					sortData(currentUser.notifications, "dateOfAction").map((n: any) => (
-						<li
-							className={`flex ${!n.read ? "surface-400" : "surface-200"} `}
-							key={n._id}
-						>
-							<div className="flex my-auto ml-2">
-								{!n.read && (
-									<i
-										className={`pi pi-circle-fill  text-primary absolute -ml-2 -mt-1`}
-										style={{ fontSize: "0.5rem", cursor: "pointer" }}
-									></i>
-								)}
-							</div>
+					sortData(currentUser.notifications, "dateOfAction").map(
+						(n: Notification) => (
+							<li
+								className={`flex ${!n.read ? "surface-400" : "surface-200"} `}
+								key={n._id}
+							>
+								<div className="flex my-auto ml-2">
+									{!n.read && (
+										<i
+											className={`pi pi-circle-fill  text-primary absolute -ml-2 -mt-1`}
+											style={{ fontSize: "0.5rem", cursor: "pointer" }}
+										></i>
+									)}
+								</div>
 
-							<div className="flex gap-2 p-2">
-								<Avatar
-									shape="circle"
-									size="large"
-									image={`${urlImgString}${n.actionUser.profilePicture}`}
-								/>
-								<div>
-									<div className="font-semibold">{n.actionUser.username}</div>
-									<div className="mt-1">
-										<span
-											className="no-underline text-primary cursor-pointer"
-											onClick={() => {
-												changeNotificationStatus(n._id);
-												navigate(
-													n.actionPostId
-														? `/post/${n.actionPostId}`
-														: `/profile/${n.actionUser.userId}`
-												);
-											}}
-										>
-											{n.actions}
-										</span>
+								<div className="flex gap-2 p-2">
+									<Avatar
+										shape="circle"
+										size="large"
+										image={`${urlImgString}${n.actionUser.profilePicture}`}
+									/>
+									<div>
+										<div className="font-semibold">{n.actionUser.username}</div>
+										<div className="mt-1">
+											<span
+												className="no-underline text-primary cursor-pointer"
+												onClick={() => {
+													changeNotificationStatus(n._id);
+													navigate(
+														n.actionPostId
+															? `/post/${n.actionPostId}`
+															: `/profile/${n.actionUser.userId}`
+													);
+												}}
+											>
+												{n.actions}
+											</span>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div className={`${classes.timeContainer} flex flex-column`}>
-								<div className="opacity-70">
-									{
-										<ReactTimeAgo
-											date={new Date(n.dateOfAction)}
-											locale="en-US"
-										/>
-									}
+								<div className={`${classes.timeContainer} flex flex-column`}>
+									<div className="opacity-70">
+										{
+											<ReactTimeAgo
+												date={new Date(n.dateOfAction)}
+												locale="en-US"
+											/>
+										}
+									</div>
+									<span className={`${classes.deleteIconContainer}`}>
+										<i
+											className="pi pi-trash  mt-2 cursor-pointer"
+											style={{ color: "red", fontSize: "1.3rem" }}
+											onClick={() => onDeleteNotification(n._id)}
+										></i>
+									</span>
 								</div>
-								<span className={`${classes.deleteIconContainer}`}>
-									<i
-										className="pi pi-trash  mt-2 cursor-pointer"
-										style={{ color: "red", fontSize: "1.3rem" }}
-										onClick={() => onDeleteNotification(n._id)}
-									></i>
-								</span>
-							</div>
-						</li>
-					))}
+							</li>
+						)
+					)}
 			</ul>
 		</div>
 	);

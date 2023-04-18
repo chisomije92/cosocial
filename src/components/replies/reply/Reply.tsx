@@ -12,9 +12,10 @@ import { useAuth } from "../../../hooks/auth/useAuth";
 import { Dialog } from "primereact/dialog";
 import Likes from "../../likes/Likes";
 import { usePostCtx } from "../../../context/PostContext";
+import { Reply as ReplyType } from "../../../models/post";
 
 interface ReplyProp {
-	reply: any;
+	reply: ReplyType;
 }
 
 const Reply: FC<ReplyProp> = ({ reply }) => {
@@ -32,7 +33,7 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 			if (data.action === "likeReply") {
 				const updatedPosts = [...loadedPosts];
 				const commentIndex = updatedPosts[0]?.comments.findIndex(
-					(v: any) => v._id === reply._id
+					v => v._id === reply._id
 				);
 				updatedPosts[0].comments[commentIndex] = data.reply;
 				setLoadedPosts(updatedPosts);
@@ -44,7 +45,7 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 		handleDeleteComment(loadedPosts[0]._id, reply._id).then(v => {
 			const updatedPosts = [...loadedPosts];
 			const updatedComments = updatedPosts[0].comments.filter(
-				(v: any) => v._id !== reply._id
+				v => v._id !== reply._id
 			);
 			updatedPosts[0].comments = updatedComments;
 			setLoadedPosts(updatedPosts);
@@ -52,7 +53,7 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 	};
 
 	useEffect(() => {
-		if (reply.likes.findIndex((v: any) => v?._id === userId) >= 0) {
+		if (reply.likes.findIndex(v => v?._id === userId) >= 0) {
 			setIsLiked(true);
 		} else {
 			setIsLiked(false);

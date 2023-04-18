@@ -11,9 +11,10 @@ import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
 import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
+import { LoaderData } from "../../models/loader-data";
 
 export default function Home() {
-	const { data }: any = useLoaderData();
+	const { data } = useLoaderData() as LoaderData;
 	const { setLoadedPosts, loadedPosts } = usePostCtx();
 
 	useEffect(() => {

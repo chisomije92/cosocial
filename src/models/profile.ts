@@ -4,3 +4,10 @@ export interface Profile {
   email?: string;
   desc?: string
 }
+
+export interface ProfileType {
+  description: string;
+  email: string;
+  username: string;
+  image: File
+}

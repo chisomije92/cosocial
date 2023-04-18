@@ -1,3 +1,4 @@
+import { PostValues } from "../models/post"
 import { urlString } from "./constants/constants"
 import { checkResponseForError } from "./util"
 
@@ -68,7 +69,7 @@ export const getSinglePost = async (id: string, token: string) => {
 
 }
 
-export const createUserPost = async (token: string, data: { image?: File, post: string }) => {
+export const createUserPost = async (token: string, data: PostValues) => {
   try {
     const formData = new FormData()
     if (data.image) {
@@ -90,7 +91,7 @@ export const createUserPost = async (token: string, data: { image?: File, post: 
   }
 }
 
-export const updateUserPost = async (id: string, token: string, data: { image?: File, post: string }) => {
+export const updateUserPost = async (id: string, token: string, data: PostValues) => {
   try {
     const formData = new FormData()
     if (data.image) {

@@ -13,9 +13,10 @@ import { Skeleton } from "primereact/skeleton";
 import { ImageFileType } from "../../models/imageFileType";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { usePostCtx } from "../../context/PostContext";
+import { User as UserType } from "../../models/user";
 
 const Share: FC<{
-	currentUser: any;
+	currentUser: Partial<UserType>;
 }> = ({ currentUser }) => {
 	const { isLoading, setIsLoading, setIsSubmitting } = useAuth();
 	const { setPost, createPost } = usePostCtx();

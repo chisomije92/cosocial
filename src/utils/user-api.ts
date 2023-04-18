@@ -1,13 +1,16 @@
 
 
+import { LoginValues, RegisterValues } from "../models/authForm";
 import CustomError from "../models/custom-error";
+import { PasswordValues } from "../models/password";
+import { ProfileType } from "../models/profile";
 import { urlString } from "./constants/constants";
 import { checkResponseForError } from "./util";
 
 
 
 
-export const signIn = async (data: { email: string; password: string },
+export const signIn = async (data: LoginValues,
 ) => {
   try {
     const res = await fetch(`${urlString}/auth/login`, {
@@ -41,7 +44,7 @@ export const signIn = async (data: { email: string; password: string },
 }
 
 
-export const signUp = async (data: { email: string; password: string; username: string },
+export const signUp = async (data: RegisterValues,
 ) => {
   try {
     const res = await fetch(`${urlString}/auth/sign-up`, {
@@ -66,12 +69,7 @@ export const signUp = async (data: { email: string; password: string; username: 
 
 }
 
-export const updateUser = async (id: string, token: string, data: Partial<{
-  description: string;
-  email: string;
-  username: string;
-  image: File
-}>) => {
+export const updateUser = async (id: string, token: string, data: Partial<ProfileType>) => {
   try {
     const formData = new FormData()
     if (data.image) {
@@ -103,10 +101,7 @@ export const updateUser = async (id: string, token: string, data: Partial<{
   }
 }
 
-export const updatePassword = async (token: string, data: {
-  oldPassword: string;
-  newPassword: string;
-}) => {
+export const updatePassword = async (token: string, data: PasswordValues) => {
   try {
     const res = await fetch(`${urlString}/users/update-password`, {
       method: "PUT",

@@ -13,6 +13,7 @@ import classes from "./profile.module.css";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { ImageFileType } from "../../models/imageFileType";
 import { useNavigate } from "react-router-dom";
+import { User } from "../../models/user";
 
 const EditProfile: React.FC<{
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +34,7 @@ const EditProfile: React.FC<{
 
 	type requestObjType = {
 		description?: string;
-		image?: File | null;
+		image?: File;
 		username?: string;
 		email?: string;
 	};
@@ -60,14 +61,16 @@ const EditProfile: React.FC<{
 		if (selectedImageFile.data) {
 			requestObj.image = selectedImageFile.data;
 		}
-		handleUpdateUser(requestObj).then((user: any) => {
-			const updatedUser = {
-				...user,
-			};
+		handleUpdateUser(requestObj).then((user: User | void) => {
+			if (user) {
+				const updatedUser = {
+					...user,
+				};
 
-			setCurrentUser(updatedUser);
-			navigate("/profile");
-			setVisible(false);
+				setCurrentUser(updatedUser);
+				navigate("/profile");
+				setVisible(false);
+			}
 		});
 	};
 

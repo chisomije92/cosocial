@@ -9,12 +9,13 @@ import {
 	unreadAllNotifications,
 } from "../utils/user-api";
 import { getDataFromLocalStorage } from "../utils/util";
+import { User } from "../models/user";
 
 const NotificationContext = createContext<{
 	changeNotificationStatus: (id: string) => void;
 	changeAllNotificationStatus: () => void;
 	changeNotificationsToUnread: () => void;
-	handleDeleteSingleNotification: (notifId: string) => Promise<any>;
+	handleDeleteSingleNotification: (notifId: string) => Promise<Notification[]>;
 }>({
 	changeNotificationStatus: async (id: string) => {},
 	changeAllNotificationStatus: () => {},
@@ -24,7 +25,7 @@ const NotificationContext = createContext<{
 
 export const NotificationProvider: React.FC<{
 	children: JSX.Element;
-	setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
+	setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
 }> = ({ children, setCurrentUser }) => {
 	const handleDeleteSingleNotification = async (notifId: string) => {
 		const parsedUser = getDataFromLocalStorage();

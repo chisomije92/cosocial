@@ -13,9 +13,16 @@ import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
 import { socket } from "../../utils/constants/constants";
 
 import { usePostCtx } from "../../context/PostContext";
+import { User } from "../../models/user";
+import { Post } from "../../models/post";
 
 const ExplorePage = () => {
-	const { data }: any = useLoaderData();
+	const { data } = useLoaderData() as {
+		data: {
+			userData: User;
+			loadedPosts: Post[];
+		};
+	};
 	const { setLoadedPosts, loadedPosts } = usePostCtx();
 
 	useEffect(() => {

@@ -15,7 +15,7 @@ import { urlImgString } from "../../utils/constants/constants";
 
 const NavBar = () => {
 	const { authUser, logout, userId, currentUser } = useAuth();
-	const [theme, setTheme] = useLocalStorage<any>(
+	const [theme, setTheme] = useLocalStorage<string>(
 		"theme",
 		"lara-light-indigo.css"
 	);
@@ -122,7 +122,7 @@ const NavBar = () => {
 						style={{ fontSize: "1.3rem", cursor: "pointer" }}
 					>
 						{currentUser ? (
-							currentUser.notifications?.some((n: any) => !n.read) && (
+							currentUser.notifications?.some(n => !n.read) && (
 								<i
 									className={`pi pi-circle-fill ${
 										!isThemeDark ? "text-red-500" : "text-green-500"
@@ -153,7 +153,7 @@ const NavBar = () => {
 				<span></span>
 				<div
 					className={`${classes.avatarImgContainer} flex flex-column ml-4 -mt-3 cursor-pointer`}
-					onClick={e => op.current.toggle(e)}
+					onClick={e => op.current?.toggle(e)}
 				>
 					<Avatar
 						image={
@@ -171,7 +171,7 @@ const NavBar = () => {
 					<Link
 						to={`profile`}
 						className={`flex text-blue-400 ${classes.actions} font-medium cursor-pointer no-underline`}
-						onClick={() => op.current.hide()}
+						onClick={() => op.current?.hide()}
 					>
 						<span className="text-sm">Profile</span>{" "}
 						<i className="pi pi-user ml-2 text-sm"></i>
@@ -182,7 +182,7 @@ const NavBar = () => {
 						className={`flex text-red-500 ${classes.actions} font-medium cursor-pointer`}
 						onClick={() => {
 							logOut();
-							op.current.hide();
+							op.current?.hide();
 						}}
 					>
 						<span className="-mt-1">Logout</span>

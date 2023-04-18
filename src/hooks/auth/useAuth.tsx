@@ -13,29 +13,31 @@ import {
 	updateUser,
 } from "../../utils/user-api";
 import { addMinutes, getDataFromLocalStorage } from "../../utils/util";
+import { AuthUser, User } from "../../models/user";
+import { LoginValues, RegisterValues } from "../../models/authForm";
+import { ProfileType } from "../../models/profile";
+import { PasswordValues } from "../../models/password";
 
 const AuthContext = createContext<{
-	authUser: {
-		token: string;
-		userId: string;
-		expirationTimer: string;
-		loggedInTime: string;
-	} | null;
+	authUser: AuthUser | null;
 	userId: string | null;
 	errorMsg: string | null;
-	currentUser: any;
+	currentUser: User | null;
 	isLoading: boolean;
 	isSubmitting: boolean;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
-	authenticateUser: (data: any, isSignUp: boolean) => Promise<void>;
-	handleUpdateUser: (data: any) => Promise<any>;
-	handleUpdatePassword: (data: any) => Promise<any>;
+	authenticateUser: (
+		data: { email: string; password: string; username?: string },
+		isSignUp: boolean
+	) => Promise<void>;
+	handleUpdateUser: (data: Partial<ProfileType>) => Promise<User | void>;
+	handleUpdatePassword: (data: PasswordValues) => Promise<string>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
-	setAuthUser: (data: any) => void;
-	setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
+	setAuthUser: (data: AuthUser | null) => void;
+	setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
 }>({
 	authUser: {
 		token: "",
@@ -51,7 +53,7 @@ const AuthContext = createContext<{
 	authenticateUser: async () => {},
 	logout: () => {},
 	autoLogout: () => {},
-	handleUpdateUser: async () => Promise.resolve(""),
+	handleUpdateUser: async () => Promise.resolve(),
 	handleUpdatePassword: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
@@ -77,25 +79,27 @@ export const AuthProvider: React.FC<{
 	} | null>("authUser", user);
 	const [userId, setUserId] = useState<string | null>(null);
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
-	const [currentUser, setCurrentUser] = useState<any>();
+	const [currentUser, setCurrentUser] = useState<User | null>(null);
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const navigate = useNavigate();
 
 	const authenticateUser = async (
-		data: { email: string; password: string; username: string },
+		data: { email: string; password: string; username?: string },
 		isSignUp: boolean
 	) => {
-		let resData: any;
+		let resData;
 		if (!isSignUp) {
 			resData = await signIn(data);
 		} else {
-			resData = await signUp({
-				email: data.email,
-				password: data.password,
-				username: data.username,
-			});
+			if (data.username) {
+				resData = await signUp({
+					email: data.email,
+					password: data.password,
+					username: data.username,
+				});
+			}
 		}
 		if (!resData?.userId) {
 			setErrorMsg(resData);
@@ -125,12 +129,7 @@ export const AuthProvider: React.FC<{
 		}, milliseconds);
 	};
 
-	const handleUpdateUser = async (data: {
-		image?: File;
-		description?: string;
-		username?: string;
-		email?: string;
-	}) => {
+	const handleUpdateUser = async (data: Partial<ProfileType>) => {
 		const parsedUser = getDataFromLocalStorage();
 		const extractedUser = await updateUser(
 			parsedUser.userId,
@@ -140,16 +139,13 @@ export const AuthProvider: React.FC<{
 		return extractedUser;
 	};
 
-	const handleUpdatePassword = async (data: {
-		newPassword: string;
-		oldPassword: string;
-	}) => {
+	const handleUpdatePassword = async (data: PasswordValues) => {
 		const parsedUser = getDataFromLocalStorage();
 		return await updatePassword(parsedUser.token, data);
 	};
 
 	useEffect(() => {
-		let submitTimer: any;
+		let submitTimer: NodeJS.Timeout;
 		if (isSubmitting) {
 			submitTimer = setTimeout(() => {
 				setIsSubmitting(false);

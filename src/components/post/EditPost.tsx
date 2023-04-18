@@ -2,7 +2,7 @@
 
 import { InputTextarea } from "primereact/inputtextarea";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import classes from "./post.module.css";
 import { ImageFileType } from "../../models/imageFileType";
 import { Button } from "primereact/button";
@@ -11,12 +11,22 @@ import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
 
 const EditPost: React.FC<{
-	postId: any;
+	postId: string;
 	description: string;
-	setDescription: any;
-	selectedPostImageFile: any;
-	setSelectedPostImageFile: any;
-	setEditing: any;
+	setDescription: Dispatch<SetStateAction<string>>;
+	selectedPostImageFile: {
+		preview: string;
+		data: File | null;
+		text: string | null;
+	};
+	setSelectedPostImageFile: Dispatch<
+		SetStateAction<{
+			preview: string;
+			data: File | null;
+			text: string | null;
+		}>
+	>;
+	setEditing: Dispatch<SetStateAction<boolean>>;
 }> = ({
 	postId,
 	description,
@@ -61,9 +71,7 @@ const EditPost: React.FC<{
 
 				socket.on("posts", data => {
 					if (data.action === "update") {
-						const index = loadedPosts.findIndex(
-							(p: any) => p._id === data.post._id
-						);
+						const index = loadedPosts.findIndex(p => p._id === data.post._id);
 						const updatedPosts = [...loadedPosts];
 						const updatedPost = data.post;
 						updatedPosts[index] = updatedPost;

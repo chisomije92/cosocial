@@ -29,7 +29,9 @@ const BookmarkPage = () => {
 		<>
 			<SideBar />
 			{(isLoading || !currentUser) && <BookmarkSkeleton />}
-			{currentUser?.bookmarks.length <= 0 && !isLoading && <NoBookmarks />}
+			{currentUser && currentUser.bookmarks?.length <= 0 && !isLoading && (
+				<NoBookmarks />
+			)}
 			{loadedPosts.length > 0 && !isLoading && (
 				<Bookmarks posts={loadedPosts} />
 			)}
