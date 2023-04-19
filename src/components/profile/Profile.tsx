@@ -10,7 +10,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import EditProfile from "./EditProfile";
 import ChangePassword from "../change-password/ChangePassword";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 import { urlImgString } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
@@ -27,8 +27,15 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 	const [visible, setVisible] = useState(false);
 	const [showForm, setShowForm] = useState(1);
 	const [isFollowing, setIsFollowing] = useState(false);
-	const { authUser } = useAuth();
+	const {
+		authUser,
+		currentUser,
+		setCurrentUser,
+		handleFollowUser,
+		handleUnFollowUser,
+	} = useAuth();
 	const profileRef = useRef<HTMLDivElement | null>(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		profileRef.current?.focus();
@@ -52,12 +59,22 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 		</Dialog>
 	);
 
+	const accept = () => {
+		handleUnFollowUser(user._id);
+		if (currentUser) {
+			const updatedUser = { ...currentUser };
+			const userFollowing = updatedUser.following.filter(v => v !== user._id);
+			updatedUser.following = userFollowing;
+			setCurrentUser(updatedUser);
+		}
+	};
+
 	const confirm = () => {
 		confirmDialog({
 			message: "Are you sure you want to stop following this user?",
 			header: "Confirmation",
 			icon: "pi pi-exclamation-triangle",
-			accept: () => setIsFollowing(false),
+			accept,
 			reject: () => setIsFollowing(true),
 		});
 	};
@@ -67,8 +84,31 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 			confirm();
 			return;
 		}
-		setIsFollowing(prev => !prev);
+		handleFollowUser(user._id);
+		if (currentUser) {
+			const updatedUser = { ...currentUser };
+			const userFollowing = [user._id, ...currentUser.following];
+			updatedUser.following = userFollowing;
+			setCurrentUser(updatedUser);
+		}
 	};
+
+	useEffect(() => {
+		if (currentUser?.following.includes(user._id)) {
+			if (!user.followers.includes(currentUser._id)) {
+				user.followers.unshift(currentUser._id);
+			}
+			setIsFollowing(true);
+		} else {
+			if (currentUser && user.followers.includes(currentUser._id)) {
+				const updatedFollowers = user.followers.filter(
+					v => v !== currentUser?._id
+				);
+				user.followers = updatedFollowers;
+				setIsFollowing(false);
+			}
+		}
+	}, [currentUser, user._id, user]);
 
 	return (
 		<div className={`${classes.profile} mx-3 mt-2`}>
@@ -105,7 +145,10 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						<span className="flex gap-2 cursor-pointer">
 							<span>Following:</span>
 							<span className="font-semibold opacity-90">
-								{user.following.length}
+								{/*{user.following.length}*/}
+								{user._id === currentUser?._id
+									? currentUser?.following?.length
+									: user.following.length}
 							</span>
 						</span>
 					</Link>

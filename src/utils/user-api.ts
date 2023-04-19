@@ -198,7 +198,7 @@ export const getFollowing = async (id: string, token: string) => {
   }
 }
 
-export const followUser = async (id: string, token: string) => {
+export const followUser = async (token: string, id: string) => {
   try {
     const res = await fetch(`${urlString}/users/${id}/follow`, {
       method: "PUT",
@@ -208,7 +208,11 @@ export const followUser = async (id: string, token: string) => {
 
     },
     )
-
+    if (!res.ok) {
+      const errorMessage = await res.json()
+      const errorData = errorMessage.message
+      throw new CustomError(errorData, 400);
+    }
 
     const resData = await checkResponseForError(res)
     return resData
@@ -217,7 +221,7 @@ export const followUser = async (id: string, token: string) => {
   }
 }
 
-export const unFollowUser = async (id: string, token: string) => {
+export const unFollowUser = async (token: string, id: string) => {
   try {
     const res = await fetch(`${urlString}/users/${id}/unfollow`, {
       method: "PUT",
@@ -408,3 +412,7 @@ export const deleteSingleNotification = async (token: string, id: string) => {
     return err.message
   }
 }
+
+
+
+

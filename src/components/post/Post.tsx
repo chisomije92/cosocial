@@ -16,6 +16,7 @@ import EditPost from "./EditPost";
 import { usePostCtx } from "../../context/PostContext";
 import { Post as PostType } from "../../models/post";
 import { User } from "../../models/user";
+import { date } from "yup";
 
 interface PostProp {
 	noPostObj?: Partial<PostType>;
@@ -42,7 +43,9 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
-	const [description, setDescription] = useState<string>(post!.description);
+	const [description, setDescription] = useState<string>(
+		post?.description ? post.description : ""
+	);
 	const [selectedPostImageFile, setSelectedPostImageFile] = useState<{
 		preview: string;
 		data: File | null;
@@ -51,7 +54,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 
 	const handleLike = () => {
-		handleLikePost(post!._id);
+		post && handleLikePost(post._id);
 		socket.on("posts", data => {
 			if (data.action === "like") {
 				const index =
@@ -65,7 +68,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	};
 
 	const handleBookmark = () => {
-		handleBookmarkPost(post!._id);
+		post && handleBookmarkPost(post._id);
 		socket.on("posts", data => {
 			if (data.action === "bookmark" && data.user._id === currentUser?._id) {
 				setCurrentUser(data.user);
@@ -73,7 +76,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 		});
 	};
 	useEffect(() => {
-		if (post!.likes.findIndex(v => v?._id === userId) >= 0) {
+		if (post && post?.likes.findIndex(v => v?._id === userId) >= 0) {
 			setIsLiked(true);
 		} else {
 			setIsLiked(false);
@@ -83,7 +86,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 	useEffect(() => {
 		if (
 			currentUser &&
-			currentUser.bookmarks.findIndex(v => v._id === post!._id) >= 0
+			currentUser.bookmarks.findIndex(v => v._id === post?._id) >= 0
 		) {
 			setIsBookmarked(true);
 		} else {
@@ -98,7 +101,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 			style={{ width: "50vw" }}
 			onHide={() => setVisible(false)}
 		>
-			<Likes users={post!.likes} />
+			{post && <Likes users={post.likes} />}
 		</Dialog>
 	);
 
@@ -107,17 +110,17 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 
 		if (user) {
 			imgString = `${urlImgString}${user.profilePicture}`;
-		} else if (!user && post!._id) {
-			imgString = `${urlImgString}${post!.linkedUser.profilePicture}`;
+		} else if (!user && post?._id) {
+			imgString = `${urlImgString}${post?.linkedUser.profilePicture}`;
 		} else {
-			imgString = `${post!.linkedUser.profilePicture}`;
+			imgString = `${post?.linkedUser.profilePicture}`;
 		}
 
 		return imgString;
 	};
 
 	const handleDelete = () => {
-		deletePost(post!._id);
+		post && deletePost(post._id);
 		socket.on("posts", data => {
 			if (data.action === "delete") {
 				setIsPostDeleted(true);
@@ -137,7 +140,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 					<div className="flex justify-content-between gap-2 ml-3 mt-2 -mb-2">
 						<div className="flex gap-2">
 							<Link
-								to={isAuthUser ? "/profile" : `/profile/${post!.userId}`}
+								to={isAuthUser ? "/profile" : `/profile/${post?.userId}`}
 								className="flex gap-1 no-underline text-color"
 							>
 								<Avatar
@@ -147,11 +150,18 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 									className=""
 								/>
 								<span className=" font-semibold">
-									{user ? user.username : post!.linkedUser.username}
+									{user ? user.username : post?.linkedUser.username}
 								</span>
 							</Link>
 							<span className=" opacity-70 text-sm">
-								<ReactTimeAgo date={new Date(post!.createdAt)} locale="en-US" />
+								<ReactTimeAgo
+									date={
+										new Date(
+											post?.createdAt ? post.createdAt : Date.now().toString()
+										)
+									}
+									locale="en-US"
+								/>
 							</span>
 						</div>
 						{isAuthUser && (
@@ -191,15 +201,15 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 				{!isEditing && (
 					<>
 						<div className="ml-3 text-700">
-							<p>{post!.description}</p>
+							<p>{post?.description}</p>
 						</div>
 						<div className={classes.postImgContainer}>
-							{post!.image ? (
+							{post?.image ? (
 								<Image
 									src={
-										post!._id
-											? `${urlImgString}${post!.image}`
-											: `${post!.image}`
+										post?._id
+											? `${urlImgString}${post?.image}`
+											: `${post?.image}`
 									}
 									alt="Image"
 									width="100%"
@@ -213,9 +223,9 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 						<div className="flex justify-content-between gap-2 mb-3">
 							<div className="flex mt-2 md:flex-row">
 								<div
-									className={!post!._id ? `${classes.disableInteractions}` : ""}
+									className={!post?._id ? `${classes.disableInteractions}` : ""}
 								>
-									{post!._id && (
+									{post?._id && (
 										<Avatar
 											icon="pi pi-thumbs-up-fill cursor-pointer"
 											shape="circle"
@@ -226,7 +236,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 											onClick={handleLike}
 										/>
 									)}
-									{!post!._id && (
+									{!post?._id && (
 										<Avatar
 											icon="pi pi-thumbs-up-fill cursor-pointer"
 											shape="circle"
@@ -237,9 +247,9 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 									)}
 								</div>
 								<div
-									className={!post!._id ? `${classes.disableInteractions}` : ""}
+									className={!post?._id ? `${classes.disableInteractions}` : ""}
 								>
-									{post!._id && (
+									{post?._id && (
 										<Avatar
 											icon="pi pi-bookmark-fill cursor-pointer"
 											className={`bg-red-600 ${
@@ -248,7 +258,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 											onClick={handleBookmark}
 										/>
 									)}
-									{!post!._id && (
+									{!post?._id && (
 										<Avatar
 											icon="pi pi-bookmark-fill"
 											className={`bg-red-600 text-white
@@ -261,7 +271,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 										className="opacity-70 text-sm mx-1 cursor-pointer"
 										onClick={() => setVisible(true)}
 									>
-										{post!.likes.length > 0
+										{post && post.likes.length > 0
 											? `${post?.likes.length} likes`
 											: ""}
 									</span>
@@ -271,7 +281,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 							<div className="flex justify-content-even opacity-60 mr-1">
 								{showComments ? (
 									<Link
-										to={`/post/${post!._id}`}
+										to={`/post/${post?._id}`}
 										className="no-underline text-900 flex gap-1 mt-2"
 									>
 										<span>{post?.comments?.length}</span>
@@ -293,7 +303,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 				)}
 				{isEditing && (
 					<EditPost
-						postId={post!._id}
+						postId={post ? post._id : ""}
 						description={description}
 						setDescription={setDescription}
 						selectedPostImageFile={selectedPostImageFile}

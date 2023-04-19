@@ -6,15 +6,16 @@ import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 import {
+	followUser,
 	getAuthUser,
 	signIn,
 	signUp,
+	unFollowUser,
 	updatePassword,
 	updateUser,
 } from "../../utils/user-api";
 import { addMinutes, getDataFromLocalStorage } from "../../utils/util";
 import { AuthUser, User } from "../../models/user";
-import { LoginValues, RegisterValues } from "../../models/authForm";
 import { ProfileType } from "../../models/profile";
 import { PasswordValues } from "../../models/password";
 
@@ -33,6 +34,8 @@ const AuthContext = createContext<{
 	) => Promise<void>;
 	handleUpdateUser: (data: Partial<ProfileType>) => Promise<User | void>;
 	handleUpdatePassword: (data: PasswordValues) => Promise<string>;
+	handleFollowUser: (id: string) => Promise<string>;
+	handleUnFollowUser: (id: string) => Promise<string>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -55,6 +58,8 @@ const AuthContext = createContext<{
 	autoLogout: () => {},
 	handleUpdateUser: async () => Promise.resolve(),
 	handleUpdatePassword: async () => Promise.resolve(""),
+	handleFollowUser: async () => Promise.resolve(""),
+	handleUnFollowUser: async () => Promise.resolve(""),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
@@ -144,6 +149,16 @@ export const AuthProvider: React.FC<{
 		return await updatePassword(parsedUser.token, data);
 	};
 
+	const handleFollowUser = async (id: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await followUser(parsedUser.token, id);
+	};
+
+	const handleUnFollowUser = async (id: string) => {
+		const parsedUser = getDataFromLocalStorage();
+		return await unFollowUser(parsedUser.token, id);
+	};
+
 	useEffect(() => {
 		let submitTimer: NodeJS.Timeout;
 		if (isSubmitting) {
@@ -193,6 +208,8 @@ export const AuthProvider: React.FC<{
 		setUserId,
 		handleUpdateUser,
 		handleUpdatePassword,
+		handleFollowUser,
+		handleUnFollowUser,
 		setAuthUser,
 		setCurrentUser,
 		setIsLoading,
