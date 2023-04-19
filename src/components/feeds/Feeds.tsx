@@ -1,6 +1,6 @@
 /** @format */
 
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
 import PostSkeleton from "../loading-skeleton/PostSkeleton";
 import NoPosts from "../no-posts/NoPosts";
@@ -9,7 +9,6 @@ import Share from "../share/Share";
 import classes from "./feeds.module.css";
 import { Post as PostType } from "../../models/post";
 import { User } from "../../models/user";
-import { usePostCtx } from "../../context/PostContext";
 
 interface FeedsInterface {
 	posts: PostType[];
@@ -26,7 +25,6 @@ const Feeds: FC<FeedsInterface> = ({
 	currentUser,
 }) => {
 	const { authUser } = useAuth();
-	const { loadedPosts } = usePostCtx();
 
 	return (
 		<div className={`${classes.feeds}`}>

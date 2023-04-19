@@ -143,6 +143,7 @@ const Share: FC<{
 					className={`w-min p-button-success ml-0 mt-1 py-1 ml-auto mr-4 font-bold ${
 						isLoading ? "p-disabled" : ""
 					}`}
+					disabled={inputText.length === 0 && !selectedImageFile.data}
 					onClick={onSubmitPost}
 				/>
 			</div>
