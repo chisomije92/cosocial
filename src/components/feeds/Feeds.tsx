@@ -1,6 +1,6 @@
 /** @format */
 
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
 import PostSkeleton from "../loading-skeleton/PostSkeleton";
 import NoPosts from "../no-posts/NoPosts";
@@ -9,6 +9,7 @@ import Share from "../share/Share";
 import classes from "./feeds.module.css";
 import { Post as PostType } from "../../models/post";
 import { User } from "../../models/user";
+import { usePostCtx } from "../../context/PostContext";
 
 interface FeedsInterface {
 	posts: PostType[];
@@ -25,12 +26,13 @@ const Feeds: FC<FeedsInterface> = ({
 	currentUser,
 }) => {
 	const { authUser } = useAuth();
+	const { loadedPosts } = usePostCtx();
 
 	return (
 		<div className={`${classes.feeds}`}>
 			<div className="p-4 flex flex-column">
 				{!isExploring && <Share currentUser={currentUser} />}
-				{posts.length <= 0 && <NoPosts />}
+				{posts.length === 0 && <NoPosts />}
 
 				{posts &&
 					posts.map(p => (

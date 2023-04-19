@@ -111,6 +111,7 @@ const LoginForm = () => {
 							className={`${classNames({
 								"p-invalid": isFormFieldInvalid("email"),
 							})} w-23rem`}
+							autoComplete="off"
 						/>
 						{getFormErrorMessage("email")}
 					</div>
@@ -127,6 +128,7 @@ const LoginForm = () => {
 							className={`${classNames({
 								"p-invalid": isFormFieldInvalid("password"),
 							})} w-23rem`}
+							autoComplete="off"
 						/>
 						{getFormErrorMessage("password")}
 					</div>

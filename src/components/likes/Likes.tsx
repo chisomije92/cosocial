@@ -6,16 +6,15 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { urlImgString } from "../../utils/constants/constants";
 import classes from "./likes.module.css";
-import { User } from "../../models/user";
 import { ActionUser } from "../../models/post";
 
 const Likes: FC<{
-	users: ActionUser[];
+	users?: ActionUser[];
 }> = ({ users }) => {
 	return (
 		<div className={`${classes.likesContainer}  m-0  overflow-x-hidden `}>
 			<ul className="list-none w-11">
-				{users.map(user => (
+				{users?.map(user => (
 					<li className="flex flex-column md:flex-row" key={user._id}>
 						<div className="flex  gap-1">
 							<Avatar

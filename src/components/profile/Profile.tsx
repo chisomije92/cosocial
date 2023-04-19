@@ -197,7 +197,7 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						)}
 						<Button
 							label={`${isFollowing ? "Following" : "Follow"}`}
-							className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold  bg-bluegray-900 `}
+							className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold bg-black-alpha-60 `}
 							onClick={setFollowStatus}
 						/>
 					</div>

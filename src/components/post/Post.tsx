@@ -16,7 +16,6 @@ import EditPost from "./EditPost";
 import { usePostCtx } from "../../context/PostContext";
 import { Post as PostType } from "../../models/post";
 import { User } from "../../models/user";
-import { date } from "yup";
 
 interface PostProp {
 	noPostObj?: Partial<PostType>;
@@ -26,7 +25,13 @@ interface PostProp {
 	isAuthUser?: boolean;
 }
 
-const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
+const Post: FC<PostProp> = ({
+	post,
+	user,
+	showComments,
+	isAuthUser,
+	noPostObj,
+}) => {
 	const op = useRef<any>(null);
 	const { currentUser, setCurrentUser, userId } = useAuth();
 	const { handleBookmarkPost } = usePostCtx();
@@ -81,7 +86,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 		} else {
 			setIsLiked(false);
 		}
-	}, [post]);
+	}, [post, userId]);
 
 	useEffect(() => {
 		if (
@@ -101,7 +106,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 			style={{ width: "50vw" }}
 			onHide={() => setVisible(false)}
 		>
-			{post && <Likes users={post.likes} />}
+			<Likes users={post ? post.likes : noPostObj?.likes} />
 		</Dialog>
 	);
 
@@ -113,7 +118,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 		} else if (!user && post?._id) {
 			imgString = `${urlImgString}${post?.linkedUser.profilePicture}`;
 		} else {
-			imgString = `${post?.linkedUser.profilePicture}`;
+			imgString = `${noPostObj?.linkedUser?.profilePicture}`;
 		}
 
 		return imgString;
@@ -153,16 +158,14 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 									{user ? user.username : post?.linkedUser.username}
 								</span>
 							</Link>
-							<span className=" opacity-70 text-sm">
-								<ReactTimeAgo
-									date={
-										new Date(
-											post?.createdAt ? post.createdAt : Date.now().toString()
-										)
-									}
-									locale="en-US"
-								/>
-							</span>
+							{post && (
+								<span className=" opacity-70 text-sm">
+									<ReactTimeAgo
+										date={new Date(post.createdAt)}
+										locale="en-US"
+									/>
+								</span>
+							)}
 						</div>
 						{isAuthUser && (
 							<>
@@ -201,7 +204,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 				{!isEditing && (
 					<>
 						<div className="ml-3 text-700">
-							<p>{post?.description}</p>
+							<p>{post ? post.description : noPostObj?.description}</p>
 						</div>
 						<div className={classes.postImgContainer}>
 							{post?.image ? (
@@ -217,7 +220,13 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 									preview
 								/>
 							) : (
-								<></>
+								<Image
+									src={noPostObj?.image}
+									alt="Image"
+									width="100%"
+									className="mb-4"
+									preview
+								/>
 							)}
 						</div>
 						<div className="flex justify-content-between gap-2 mb-3">
@@ -230,9 +239,8 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 											icon="pi pi-thumbs-up-fill cursor-pointer"
 											shape="circle"
 											className={`mr-1 ml-3 mb-2 bg-blue-500 
-							${isLiked ? "text-blue-900" : "text-white"}
-
-							border-circle`}
+											${isLiked ? "text-blue-900" : "text-white"}
+											border-circle`}
 											onClick={handleLike}
 										/>
 									)}
@@ -241,7 +249,7 @@ const Post: FC<PostProp> = ({ post, user, showComments, isAuthUser }) => {
 											icon="pi pi-thumbs-up-fill cursor-pointer"
 											shape="circle"
 											className={`mr-1 ml-3 mb-2 bg-blue-500 text-white
-							border-circle`}
+											border-circle`}
 											onClick={handleLike}
 										/>
 									)}
