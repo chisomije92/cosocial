@@ -13,6 +13,7 @@ import { Dialog } from "primereact/dialog";
 import Likes from "../../likes/Likes";
 import { usePostCtx } from "../../../context/PostContext";
 import { Reply as ReplyType } from "../../../models/post";
+import { useNavigate } from "react-router-dom";
 
 interface ReplyProp {
 	reply: ReplyType;
@@ -23,6 +24,7 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 	const [visible, setVisible] = useState(false);
 
 	const { userId } = useAuth();
+	const navigate = useNavigate();
 
 	const { handleLikeReply, loadedPosts, setLoadedPosts, handleDeleteComment } =
 		usePostCtx();
@@ -78,6 +80,7 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 					image={`${urlImgString}${reply.commenter.profilePicture}`}
 					shape="circle"
 					className="text-center"
+					onClick={() => navigate(`/profile/${reply.commenter.userId}`)}
 				/>
 				<div className="flex flex-column gap-2">
 					<div className="flex gap-2">
