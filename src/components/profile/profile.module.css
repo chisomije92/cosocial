@@ -4,30 +4,28 @@
 }
 
 .imgContainer {
-  margin-left: 10%;
+  margin-left: 19%;
+  max-width: 280px;
 }
 
 
 
 .imgContainer img {
   margin-right: 25px;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
+  border-radius: 10%;
+  -webkit-border-radius: 10%;
+  -moz-border-radius: 10%;
+  -ms-border-radius: 10%;
+  -o-border-radius: 10%;
   object-fit: cover;
   background-color: none;
-
 }
 
 .imgContainer [class*="p-image-preview-indicator"]{
   margin-right: 25px;
-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
+ 
+  border-radius: 10%;
+
   object-fit: cover;
   width: 100%;
 }

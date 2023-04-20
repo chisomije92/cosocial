@@ -112,96 +112,102 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 
 	return (
 		<div className={`${classes.profile} mx-3 mt-2`}>
-			<Card className="flex flex-column justify-content-center align-items-center card mt-2 surface-50">
-				<div
-					className={`${classes.imgContainer}`}
-					ref={profileRef}
-					tabIndex={0}
-				>
-					<Image
-						src={`${urlImgString}${user.profilePicture}`}
-						alt=""
-						height="260"
-						width="100%"
-						preview
-					/>
-				</div>
-				<div className="flex flex-column align-items-center mt-2 mb-2">
-					<div className="font-bold my-1">{user.username}</div>
-					<div className="opacity-80">{user.email}</div>
-					<div className="mt-1 font-medium ">{user.description}</div>
-				</div>
-				<div className="flex justify-content-center"></div>
-
-				<div className="flex gap-3 justify-content-around ">
-					<div className="flex gap-1">
-						<span>Posts:</span>
-						<span className="font-semibold opacity-90">{userPosts.length}</span>
-					</div>
-					<Link
-						className="text-color no-underline"
-						to={`/profile/${user._id}/following`}
+			<Card className="flex justify-content-center card mt-2 surface-50">
+				<div className="flex flex-column gap-5">
+					<div
+						className={`${classes.imgContainer}`}
+						ref={profileRef}
+						tabIndex={0}
 					>
-						<span className="flex gap-2 cursor-pointer">
-							<span>Following:</span>
-							<span className="font-semibold opacity-90">
-								{/*{user.following.length}*/}
-								{user._id === currentUser?._id
-									? currentUser?.following?.length
-									: user.following.length}
-							</span>
-						</span>
-					</Link>
-					<Link
-						className="text-color no-underline"
-						to={`/profile/${user._id}/followers`}
-					>
-						<span className="flex gap-2 cursor-pointer">
-							<span>Followers:</span>
-							<span className="font-semibold opacity-90">
-								{user.followers.length}
-							</span>
-						</span>
-					</Link>
-				</div>
-				{user._id === authUser?.userId && (
-					<div className="flex mt-1 ">
-						<Button
-							label="Edit profile"
-							className="p-2 m-auto surface-50 border-0 text-primary border-50"
-							onClick={() => {
-								setVisible(true);
-								setShowForm(1);
-							}}
-						/>
-						<Button
-							label="Change password"
-							className="p-2 m-auto surface-50 border-0 text-primary border-50"
-							onClick={() => {
-								setVisible(true);
-								setShowForm(2);
-							}}
+						<Image
+							src={`${urlImgString}${user.profilePicture}`}
+							alt=""
+							height="250"
+							width="100%"
+							preview
 						/>
 					</div>
-				)}
-				{user._id !== authUser?.userId && (
-					<div className="flex flex-column align-items-center gap-1 mt-1">
-						<Link to="/messages/1" className="flex no-underline gap-1">
-							<ChatRoundedIcon />
-							<span>Chat</span>
-						</Link>
 
-						<ConfirmDialog />
-						{authUser && user.following.includes(authUser.userId) && (
-							<span className="font-bold text-lg">Follows you</span>
+					<div className="">
+						<div className="flex flex-column align-items-center mt-2 mb-2">
+							<div className="font-bold my-1">{user.username}</div>
+							<div className="opacity-80">{user.email}</div>
+							<div className="mt-1 font-medium ">{user.description}</div>
+						</div>
+						<div className="flex justify-content-center"></div>
+
+						<div className="flex gap-3 justify-content-around ">
+							<div className="flex gap-1">
+								<span>Posts:</span>
+								<span className="font-semibold opacity-90">
+									{userPosts.length}
+								</span>
+							</div>
+							<Link
+								className="text-color no-underline"
+								to={`/profile/${user._id}/following`}
+							>
+								<span className="flex gap-2 cursor-pointer">
+									<span>Following:</span>
+									<span className="font-semibold opacity-90">
+										{user._id === currentUser?._id
+											? currentUser?.following?.length
+											: user.following.length}
+									</span>
+								</span>
+							</Link>
+							<Link
+								className="text-color no-underline"
+								to={`/profile/${user._id}/followers`}
+							>
+								<span className="flex gap-2 cursor-pointer">
+									<span>Followers:</span>
+									<span className="font-semibold opacity-90">
+										{user.followers.length}
+									</span>
+								</span>
+							</Link>
+						</div>
+						{user._id === authUser?.userId && (
+							<div className="flex mt-1 ">
+								<Button
+									label="Edit profile"
+									className="p-2 m-auto surface-50 border-0 text-primary border-50"
+									onClick={() => {
+										setVisible(true);
+										setShowForm(1);
+									}}
+								/>
+								<Button
+									label="Change password"
+									className="p-2 m-auto surface-50 border-0 text-primary border-50"
+									onClick={() => {
+										setVisible(true);
+										setShowForm(2);
+									}}
+								/>
+							</div>
 						)}
-						<Button
-							label={`${isFollowing ? "Following" : "Follow"}`}
-							className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold bg-black-alpha-60 `}
-							onClick={setFollowStatus}
-						/>
+						{user._id !== authUser?.userId && (
+							<div className="flex flex-column align-items-center gap-1 mt-1">
+								<Link to="/messages/1" className="flex no-underline gap-1">
+									<ChatRoundedIcon />
+									<span>Chat</span>
+								</Link>
+
+								<ConfirmDialog />
+								{authUser && user.following.includes(authUser.userId) && (
+									<span className="font-bold text-lg">Follows you</span>
+								)}
+								<Button
+									label={`${isFollowing ? "Following" : "Follow"}`}
+									className={`${classes.followBtn} p-2  border-50 text-center text-white w-4 font-bold bg-black-alpha-60 `}
+									onClick={setFollowStatus}
+								/>
+							</div>
+						)}
 					</div>
-				)}
+				</div>
 			</Card>
 			{editProfileForm}
 

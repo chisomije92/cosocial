@@ -82,6 +82,7 @@ const Notifications = () => {
 										shape="circle"
 										size="large"
 										image={`${urlImgString}${n.actionUser.profilePicture}`}
+										onClick={() => navigate(`/profile/${n.actionUser.userId}`)}
 									/>
 									<div>
 										<div className="font-semibold">{n.actionUser.username}</div>

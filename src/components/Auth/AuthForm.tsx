@@ -109,22 +109,6 @@ const AuthForm = () => {
 					<div className="font-bold text-3xl">Sign Up</div>
 					<div>
 						<InputText
-							id="username"
-							name="username"
-							placeholder="Username"
-							value={values.username}
-							onChange={e => {
-								setFieldValue("username", e.target.value);
-							}}
-							className={`${classNames({
-								"p-invalid": isFormFieldInvalid("username"),
-							})} w-23rem`}
-							autoComplete="off"
-						/>
-						{getFormErrorMessage("username")}
-					</div>
-					<div>
-						<InputText
 							id="email"
 							name="email"
 							placeholder="Email"
@@ -139,6 +123,22 @@ const AuthForm = () => {
 							autoComplete="off"
 						/>
 						{getFormErrorMessage("email")}
+					</div>
+					<div>
+						<InputText
+							id="username"
+							name="username"
+							placeholder="Username"
+							value={values.username}
+							onChange={e => {
+								setFieldValue("username", e.target.value);
+							}}
+							className={`${classNames({
+								"p-invalid": isFormFieldInvalid("username"),
+							})} w-23rem`}
+							autoComplete="off"
+						/>
+						{getFormErrorMessage("username")}
 					</div>
 
 					<div>
