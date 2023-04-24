@@ -27,7 +27,6 @@ const SearchFriend = () => {
 	const mutualFriend = followingUsers[0];
 
 	const search = (event: AutoCompleteCompleteEvent) => {
-		// Timeout to emulate a network connection
 		setTimeout(() => {
 			let _filteredUsers;
 			if (!event.query.trim().length) {
@@ -46,7 +45,6 @@ const SearchFriend = () => {
 	useEffect(() => {
 		if (authUser) {
 			getAllUsers(authUser.token).then(allUsers => {
-				//console.log(allUsers);
 				setUsers(allUsers);
 			});
 		}
