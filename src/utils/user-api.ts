@@ -158,6 +158,26 @@ export const getAuthUser = async (token: string) => {
   }
 }
 
+export const getAllUsers = async (token: string) => {
+  try {
+    const res = await fetch(`${urlString}/users/all-users`, {
+      method: "GET",
+      headers: {
+        Authorization: `bearer ${token}`
+      },
+
+    },
+    )
+    const resData = await checkResponseForError(res)
+
+
+    return resData
+  } catch (err: any) {
+    return err.message
+  }
+}
+
+
 export const getFollowers = async (id: string, token: string) => {
   try {
     const res = await fetch(`${urlString}/users/${id}/followers`, {

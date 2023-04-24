@@ -10,20 +10,26 @@ import {
 	AutoCompleteCompleteEvent,
 } from "primereact/autocomplete";
 import { useNavigate } from "react-router-dom";
+import { Chip } from "primereact/chip";
+import { urlImgString } from "../../utils/constants/constants";
+import { User } from "../../models/user";
+import { useAuth } from "../../hooks/auth/useAuth";
+import { getAllUsers } from "../../utils/user-api";
 
 const SearchFriend = () => {
 	const [users, setUsers] = useState<any[]>([]);
 	const [selectedUsers, setSelectedUsers] = useState<any>(null);
 	const [filteredUsers, setFilteredUsers] = useState<any[]>();
+
+	const { authUser, followingUsers } = useAuth();
 	const navigate = useNavigate();
 
-	const user = Users[2];
+	const mutualFriend = followingUsers[0];
 
 	const search = (event: AutoCompleteCompleteEvent) => {
 		// Timeout to emulate a network connection
 		setTimeout(() => {
 			let _filteredUsers;
-
 			if (!event.query.trim().length) {
 				_filteredUsers = [...users];
 			} else {
@@ -33,26 +39,36 @@ const SearchFriend = () => {
 						.startsWith(event.query.toLowerCase());
 				});
 			}
-
 			setFilteredUsers(_filteredUsers);
 		}, 250);
 	};
 
 	useEffect(() => {
-		setUsers(Users);
-	}, []);
+		if (authUser) {
+			getAllUsers(authUser.token).then(allUsers => {
+				//console.log(allUsers);
+				setUsers(allUsers);
+			});
+		}
 
-	const itemTemplate = (item: any) => {
+		setUsers(Users);
+	}, [authUser]);
+
+	const itemTemplate = (user: User) => {
 		return (
-			<div
-				className="flex align-items-center list-none"
-				key={item.id}
+			<Chip
+				label={user.username}
+				key={user.id}
+				image={`${urlImgString}${user.profilePicture}`}
+				className="bg-primary-reverse font-bold"
 				onClick={() => {
-					navigate(`/profile/${item.id}`);
+					if (user.id === authUser?.userId) {
+						navigate(`/profile`);
+					} else {
+						navigate(`/profile/${user.id}`);
+					}
 				}}
-			>
-				<div>{item.username}</div>
-			</div>
+			/>
 		);
 	};
 
@@ -61,7 +77,7 @@ const SearchFriend = () => {
 			<AutoComplete
 				field="username"
 				className=""
-				placeholder="Search for friend"
+				placeholder="Search for People"
 				suggestions={filteredUsers}
 				completeMethod={search}
 				value={selectedUsers}
@@ -70,13 +86,15 @@ const SearchFriend = () => {
 			/>
 
 			<div className="ml-5 mt-2">
-				<OnlineFriends
-					imageSrc={user.profilePicture}
-					name={user.username}
-					onClick={() => {
-						navigate(`/profile/${user._id}`);
-					}}
-				/>
+				{mutualFriend && (
+					<OnlineFriends
+						imageSrc={`${urlImgString}${mutualFriend.profilePicture}`}
+						name={mutualFriend.username}
+						onClick={() => {
+							navigate(`/profile/${mutualFriend.id}`);
+						}}
+					/>
+				)}
 			</div>
 		</div>
 	);
