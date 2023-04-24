@@ -8,6 +8,8 @@ import useLocalStorage from "use-local-storage";
 import {
 	followUser,
 	getAuthUser,
+	getFollowing,
+	getNonFollowing,
 	signIn,
 	signUp,
 	unFollowUser,
@@ -24,10 +26,14 @@ const AuthContext = createContext<{
 	userId: string | null;
 	errorMsg: string | null;
 	currentUser: User | null;
+	followingUsers: User[];
+	nonFollowingUsers: User[];
 	isLoading: boolean;
 	isSubmitting: boolean;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
+	setFollowingUsers: React.Dispatch<React.SetStateAction<User[]>>;
+	setNonFollowingUsers: React.Dispatch<React.SetStateAction<User[]>>;
 	authenticateUser: (
 		data: { email: string; password: string; username?: string },
 		isSignUp: boolean
@@ -36,6 +42,7 @@ const AuthContext = createContext<{
 	handleUpdatePassword: (data: PasswordValues) => Promise<string>;
 	handleFollowUser: (id: string) => Promise<string>;
 	handleUnFollowUser: (id: string) => Promise<string>;
+	handleGetFollowingUsers: () => Promise<User[] | void>;
 	logout: () => void;
 	autoLogout: (milliseconds: number) => void;
 	setUserId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -51,6 +58,8 @@ const AuthContext = createContext<{
 	userId: null,
 	errorMsg: null,
 	currentUser: null,
+	followingUsers: [],
+	nonFollowingUsers: [],
 	isLoading: false,
 	isSubmitting: false,
 	authenticateUser: async () => {},
@@ -60,11 +69,14 @@ const AuthContext = createContext<{
 	handleUpdatePassword: async () => Promise.resolve(""),
 	handleFollowUser: async () => Promise.resolve(""),
 	handleUnFollowUser: async () => Promise.resolve(""),
+	handleGetFollowingUsers: async () => Promise.resolve(),
 	setUserId: () => {},
 	setAuthUser: () => {},
 	setIsLoading: () => {},
 	setIsSubmitting: () => {},
 	setCurrentUser: () => {},
+	setFollowingUsers: () => {},
+	setNonFollowingUsers: () => {},
 });
 
 export const AuthProvider: React.FC<{
@@ -85,6 +97,8 @@ export const AuthProvider: React.FC<{
 	const [userId, setUserId] = useState<string | null>(null);
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
+	const [followingUsers, setFollowingUsers] = useState<User[]>([]);
+	const [nonFollowingUsers, setNonFollowingUsers] = useState<User[]>([]);
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -159,6 +173,16 @@ export const AuthProvider: React.FC<{
 		return await unFollowUser(parsedUser.token, id);
 	};
 
+	const handleGetFollowingUsers = async () => {
+		const parsedUser = getDataFromLocalStorage();
+		return await getFollowing(parsedUser.userId, parsedUser.token);
+	};
+
+	const handleGetNonFollowingUsers = async () => {
+		const parsedUser = getDataFromLocalStorage();
+		return await getNonFollowing(parsedUser.token);
+	};
+
 	useEffect(() => {
 		let submitTimer: NodeJS.Timeout;
 		if (isSubmitting) {
@@ -175,10 +199,18 @@ export const AuthProvider: React.FC<{
 			setUserId(authUser.userId);
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
+
+				handleGetFollowingUsers().then(users => {
+					setFollowingUsers(users);
+				});
+				handleGetNonFollowingUsers().then(nonFollowing =>
+					setNonFollowingUsers(nonFollowing)
+				);
 			});
 		} else {
 			setCurrentUser(null);
 			setUserId(null);
+			setFollowingUsers([]);
 			navigate("/login", { replace: true });
 		}
 	}, [authUser]);
@@ -202,6 +234,10 @@ export const AuthProvider: React.FC<{
 		currentUser,
 		isSubmitting,
 		isLoading,
+		followingUsers,
+		nonFollowingUsers,
+		setNonFollowingUsers,
+		setFollowingUsers,
 		authenticateUser,
 		logout,
 		autoLogout,
@@ -210,6 +246,7 @@ export const AuthProvider: React.FC<{
 		handleUpdatePassword,
 		handleFollowUser,
 		handleUnFollowUser,
+		handleGetFollowingUsers,
 		setAuthUser,
 		setCurrentUser,
 		setIsLoading,

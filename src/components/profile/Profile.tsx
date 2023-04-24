@@ -10,7 +10,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import EditProfile from "./EditProfile";
 import ChangePassword from "../change-password/ChangePassword";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 import { urlImgString } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
@@ -33,9 +33,9 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 		setCurrentUser,
 		handleFollowUser,
 		handleUnFollowUser,
+		setFollowingUsers,
 	} = useAuth();
 	const profileRef = useRef<HTMLDivElement | null>(null);
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		profileRef.current?.focus();
@@ -59,12 +59,15 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 		</Dialog>
 	);
 
-	const accept = () => {
-		handleUnFollowUser(user._id);
+	const accept = async () => {
+		await handleUnFollowUser(user._id);
 		if (currentUser) {
 			const updatedUser = { ...currentUser };
 			const userFollowing = updatedUser.following.filter(v => v !== user._id);
 			updatedUser.following = userFollowing;
+			setFollowingUsers(prevUsers => {
+				return prevUsers.filter(prevUser => prevUser.id !== user._id);
+			});
 			setCurrentUser(updatedUser);
 		}
 	};
@@ -79,16 +82,26 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 		});
 	};
 
-	const setFollowStatus = () => {
+	const setFollowStatus = async () => {
 		if (isFollowing) {
 			confirm();
 			return;
 		}
-		handleFollowUser(user._id);
+		await handleFollowUser(user._id);
 		if (currentUser) {
 			const updatedUser = { ...currentUser };
 			const userFollowing = [user._id, ...currentUser.following];
 			updatedUser.following = userFollowing;
+			setCurrentUser(updatedUser);
+			setFollowingUsers(prevUsers => {
+				return [
+					{
+						...user,
+						id: user._id,
+					},
+					...prevUsers,
+				];
+			});
 			setCurrentUser(updatedUser);
 		}
 	};

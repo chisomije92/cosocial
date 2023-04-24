@@ -3,15 +3,17 @@
 import { Avatar } from "primereact/avatar";
 import { Image } from "primereact/image";
 import { useNavigate } from "react-router-dom";
-import { Users } from "../../data/dummy-data";
 import OnlineFriends from "../online-friends/OnlineFriends";
 import { shuffleArray } from "../../utils/util";
 
 import classes from "./right-bar.module.css";
 import { adsArray } from "../../utils/ad-images-util";
+import { useAuth } from "../../hooks/auth/useAuth";
+import { urlImgString } from "../../utils/constants/constants";
 
 const RightBar = () => {
 	const navigate = useNavigate();
+	const { followingUsers } = useAuth();
 
 	const showAd = (data: string[]) => {
 		const arr = shuffleArray(data);
@@ -43,13 +45,13 @@ const RightBar = () => {
 			<div className="ml-3 text-sm">
 				<h3>Cosocials Online:</h3>
 				<ul>
-					{Users.map(user => (
+					{followingUsers.slice(0, 7).map(user => (
 						<OnlineFriends
-							key={user._id}
+							key={user.id}
 							name={user.username}
-							imageSrc={user.profilePicture}
+							imageSrc={`${urlImgString}${user.profilePicture}`}
 							onClick={() => {
-								navigate(`/profile/${user._id}`);
+								navigate(`/profile/${user.id}`);
 							}}
 						/>
 					))}

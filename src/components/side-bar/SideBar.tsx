@@ -13,13 +13,17 @@ import PersonIcon from "@mui/icons-material/Person";
 import ExploreIcon from "@mui/icons-material/Explore";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import Mutuals from "../mutuals/Mutuals";
-import { Users } from "../../data/dummy-data";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth/useAuth";
+import { urlImgString } from "../../utils/constants/constants";
 
 const SideBar = () => {
 	const navigate = useNavigate();
+	const { nonFollowingUsers } = useAuth();
 	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
-		return `text-color no-underline text-lg ${isActive ? "opacity-70" : ""}`;
+		return `text-color no-underline text-lg flex ${
+			isActive ? "opacity-70" : ""
+		}`;
 	};
 	return (
 		<div className={`${classes.sideBar} h-screen `}>
@@ -45,13 +49,13 @@ const SideBar = () => {
 					</li>
 					<li className="mb-4 flex">
 						<NavLink to="/bookmarks" className={navLinkCssClasses}>
-							<BookmarkIcon className="-mb-1" />
+							<BookmarkIcon className="" />
 							<span className="ml-3">Bookmarks</span>
 						</NavLink>
 					</li>
 					<li className="mb-4 flex">
 						<NavLink to="/notifications" className={navLinkCssClasses}>
-							<NotificationsNoneIcon className="-mb-1" />
+							<NotificationsNoneIcon className="" />
 							<span className="ml-3">Notifications</span>
 						</NavLink>
 					</li>
@@ -71,13 +75,13 @@ const SideBar = () => {
 				</ul>
 				<hr className="my-2 mx-0" />
 				<ul className={`list-none ${classes.friendList} `}>
-					{Users.slice(2, 8).map(user => (
+					{nonFollowingUsers.slice(0, 8).map(user => (
 						<Mutuals
-							key={user._id}
+							key={user.id}
 							name={user.username}
-							imageSrc={user.profilePicture}
+							imageSrc={`${urlImgString}${user.profilePicture}`}
 							onClick={() => {
-								navigate(`/profile/${user._id}`);
+								navigate(`/profile/${user.id}`);
 							}}
 						/>
 					))}
