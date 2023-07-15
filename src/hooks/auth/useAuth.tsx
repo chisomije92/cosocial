@@ -198,10 +198,10 @@ export const AuthProvider: React.FC<{
 	useEffect(() => {
 		if (authUser && authUser.userId) {
 			socket.connect();
-			//socket.emit("addUser", authUser!.userId);
-			//socket.on("getUsers", users => {
-			//	console.log(users);
-			//});
+			socket.emit("addUser", authUser.userId);
+			socket.on("getUsers", users => {
+				console.log(users);
+			});
 			setUserId(authUser.userId);
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
@@ -215,11 +215,11 @@ export const AuthProvider: React.FC<{
 			});
 		} else {
 			setCurrentUser(null);
-			socket.disconnect();
 
 			setUserId(null);
 			setFollowingUsers([]);
 			navigate("/login", { replace: true });
+			socket.disconnect();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser]);
