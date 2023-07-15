@@ -26,6 +26,7 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 
 			socket.on("posts", data => {
 				if (data.action === "comment") {
+					console.log("comment");
 					const updatedPost = [...loadedPosts];
 					const commentIndex = updatedPost[0].comments.findIndex(
 						v => v._id === data.reply._id

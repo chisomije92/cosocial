@@ -20,25 +20,36 @@ const ChatBox = () => {
 	const [text, setText] = useState("");
 	const [isSent, setIsSent] = useState(false);
 
-	const { userId } = authUser!;
-	useEffect(() => {
-		socket.emit("addUser", userId);
-		socket.on("getUsers", users => {
-			console.log(users);
-		});
-	}, [userId]);
+	//const { userId } = authUser!;
+	//useEffect(() => {
+	//	socket.emit("addUser", userId);
+	//	socket.on("getUsers", users => {
+	//		console.log(users);
+	//	});
+	//}, [userId]);
 
 	useEffect(() => {
 		inputRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [chats]);
 
+	//useEffect(() => {
+	//	if (isSent)
+	//		socket.on("messages", data => {
+	//			if (data.action === "sendMessages") {
+	//				console.log("data");
+	//				console.log(data.messages);
+	//				setChats(data.messages);
+	//			}
+	//		});
+	//}, [isSent]);
+
 	useEffect(() => {
 		id &&
 			getConversation(id).then((m: any) => {
-				console.log(m);
+				//console.log(m);
 				setChats(m.messages);
 			});
-	}, [id, isSent]);
+	}, [id]);
 
 	//useEffect(() => {
 
@@ -50,16 +61,23 @@ const ChatBox = () => {
 	//		});
 	//}, [id]);
 
-	const sendText = async () => {
+	const onSendText = () => {
 		setIsSent(false);
 		if (id) {
-			await chatWithUser({
+			chatWithUser({
 				receiverId: id,
 				senderId: authUser!.userId,
 				text: text,
 			});
 			setIsSent(true);
 			setText("");
+			socket.on("messages", data => {
+				if (data.action === "sendMessage") {
+					console.log("data");
+					console.log(data.messages);
+					setChats(data.messages);
+				}
+			});
 		}
 	};
 
@@ -122,7 +140,7 @@ const ChatBox = () => {
 				<Button
 					icon="pi pi-send"
 					disabled={text === ""}
-					onClick={sendText}
+					onClick={() => onSendText()}
 					className="mt-0"
 				/>
 			</div>

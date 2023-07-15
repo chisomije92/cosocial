@@ -19,7 +19,7 @@ const Messages = () => {
 	//const { authUser } = useAuth();
 	useEffect(() => {
 		getUsersForChat().then((users: any) => {
-			console.log(users);
+			//console.log(users);
 			setChatUsers(users);
 		});
 	}, []);
