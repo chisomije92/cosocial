@@ -203,7 +203,10 @@ const Profile: React.FC<ProfileProps> = ({ user, userPosts }) => {
 						)}
 						{user._id !== authUser?.userId && (
 							<div className="flex flex-column align-items-center gap-1 mt-1">
-								<Link to="/messages/1" className="flex no-underline gap-1">
+								<Link
+									to={`/messages/${user._id}`}
+									className="flex no-underline gap-1"
+								>
 									<ChatRoundedIcon />
 									<span>Chat</span>
 								</Link>

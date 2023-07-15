@@ -10,6 +10,7 @@ import {
 } from "../utils/user-api";
 import { getDataFromLocalStorage } from "../utils/util";
 import { User } from "../models/user";
+import { Notification } from "../models/notification";
 
 const NotificationContext = createContext<{
 	changeNotificationStatus: (id: string) => void;

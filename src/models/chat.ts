@@ -1,0 +1,1 @@
+export interface ChatType { senderId: string; receiverId: string; text: string }

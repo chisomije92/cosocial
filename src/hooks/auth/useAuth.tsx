@@ -20,6 +20,7 @@ import { addMinutes, getDataFromLocalStorage } from "../../utils/util";
 import { AuthUser, User } from "../../models/user";
 import { ProfileType } from "../../models/profile";
 import { PasswordValues } from "../../models/password";
+import { socket } from "../../utils/constants/constants";
 
 const AuthContext = createContext<{
 	authUser: AuthUser | null;
@@ -196,6 +197,11 @@ export const AuthProvider: React.FC<{
 
 	useEffect(() => {
 		if (authUser && authUser.userId) {
+			socket.connect();
+			//socket.emit("addUser", authUser!.userId);
+			//socket.on("getUsers", users => {
+			//	console.log(users);
+			//});
 			setUserId(authUser.userId);
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
@@ -209,11 +215,23 @@ export const AuthProvider: React.FC<{
 			});
 		} else {
 			setCurrentUser(null);
+			socket.disconnect();
+
 			setUserId(null);
 			setFollowingUsers([]);
 			navigate("/login", { replace: true });
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser]);
+
+	//useEffect(() => {
+	//	if (socket.connected) {
+	//		socket.emit("addUser", authUser!.userId);
+	//		socket.on("getUsers", users => {
+	//			console.log(users);
+	//		});
+	//	}
+	//}, [authUser]);
 
 	useEffect(() => {
 		let timer: NodeJS.Timeout;

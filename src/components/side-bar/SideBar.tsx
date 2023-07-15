@@ -13,16 +13,26 @@ import PersonIcon from "@mui/icons-material/Person";
 import ExploreIcon from "@mui/icons-material/Explore";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import Mutuals from "../mutuals/Mutuals";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { urlImgString } from "../../utils/constants/constants";
 
 const SideBar = () => {
 	const navigate = useNavigate();
-	const { nonFollowingUsers } = useAuth();
+	const { nonFollowingUsers, authUser } = useAuth();
+	const location = useLocation();
+	const profileParam = location.pathname.split("/")[2];
 	const navLinkCssClasses = ({ isActive }: { isActive: boolean }): string => {
 		return `text-color no-underline text-lg flex ${
 			isActive ? "opacity-70" : ""
+		}`;
+	};
+
+	const navLinkCssClassesProfile = (props: any): string => {
+		return `text-color no-underline text-lg flex ${
+			props.isActive && (!profileParam || profileParam === authUser!.userId)
+				? "opacity-70"
+				: ""
 		}`;
 	};
 	return (
@@ -42,7 +52,7 @@ const SideBar = () => {
 						</NavLink>
 					</li>
 					<li className="mb-4 flex">
-						<NavLink to="/profile" className={navLinkCssClasses}>
+						<NavLink to="/profile" className={navLinkCssClassesProfile}>
 							<PersonIcon className="-mb-1" />
 							<span className="ml-3">Profile</span>
 						</NavLink>

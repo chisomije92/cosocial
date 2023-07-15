@@ -2,20 +2,29 @@
 
 import { Avatar } from "primereact/avatar";
 import classes from "./userbox.module.css";
+import { FC } from "react";
+import ReactTimeAgo from "react-time-ago";
 
-const UserBox = () => {
+type UserBoxProps = {
+	message: string;
+	timeOfMessage: string;
+};
+
+const UserBox: FC<UserBoxProps> = ({ message, timeOfMessage }) => {
 	return (
 		<div
-			className={`flex flex-column align-items-start ${classes.userbox} mt-1`}
+			className={`flex flex-column align-items-end mr-2 ${classes.userbox} mt-1`}
 		>
 			<div className="flex gap-1">
-				<Avatar image="/assets/person/1.jpeg" shape="circle" size="large" />
-				<p className="p-2 border-1 border-200 border-round-xl font-light text-lg bg-white-alpha-90 text-black-alpha-80">
-					Hi! This is from user
+				{/*<Avatar image="/assets/person/1.jpeg" shape="circle" size="large" />*/}
+				<p className="surface-400 p-2 border-1 border-200 border-round-md  text-lg">
+					{message}
 				</p>
 			</div>
 
-			<p className="font-light opacity-70 -mt-3">13 minutes ago</p>
+			<p className="font-light opacity-70 -mt-3">
+				{<ReactTimeAgo date={new Date(timeOfMessage)} locale="en-US" />}
+			</p>
 		</div>
 	);
 };
