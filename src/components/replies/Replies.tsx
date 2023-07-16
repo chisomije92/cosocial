@@ -5,7 +5,6 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { useState, FC } from "react";
 import classes from "./replies.module.css";
 import Reply from "./reply/Reply";
-//import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
 import { Reply as ReplyType } from "../../models/post";
 import { useSocketCtx } from "../../hooks/socket/useSocket";

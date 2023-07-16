@@ -6,12 +6,9 @@ import {
 	SetStateAction,
 	createContext,
 	useContext,
-	useEffect,
 	useState,
 } from "react";
-import { Socket, io } from "socket.io-client";
-import { socketUrl } from "../../utils/constants/constants";
-import { getDataFromLocalStorage } from "../../utils/util";
+import { Socket } from "socket.io-client";
 
 const SocketContext = createContext<{
 	socket: Socket<DefaultEventsMap, DefaultEventsMap> | undefined;
@@ -28,19 +25,6 @@ export const SocketContextProvider: React.FC<{
 }> = ({ children }) => {
 	const [socket, setSocket] =
 		useState<Socket<DefaultEventsMap, DefaultEventsMap>>();
-
-	//const userId = getDataFromLocalStorage()?.userId;
-
-	//useEffect(() => {
-	//setSocket(
-	//	io(socketUrl, {
-	//		//autoConnect: true
-	//		auth: {
-	//			userId: userId ? userId : null,
-	//		},
-	//	})
-	//);
-	//}, [userId]);
 
 	const value = {
 		socket,

@@ -8,20 +8,19 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { useChatCtx } from "../../context/ChatContext";
 import { useAuth } from "../../hooks/auth/useAuth";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSocketCtx } from "../../hooks/socket/useSocket";
-//import { socket } from "../../utils/constants/constants";
 
 const ChatBox = () => {
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const { socket } = useSocketCtx();
-	const { getConversation, chatWithUser } = useChatCtx();
-	const { authUser } = useAuth();
+	const { getConversation, chatWithUser, getOneChatUser } = useChatCtx();
+	const { authUser, currentUser } = useAuth();
 	const { id } = useParams();
 	const [chats, setChats] = useState<any[]>([]);
 	const [text, setText] = useState("");
-	const [room, setRoom] = useState("");
-	const [chatMembers, setChatMembers] = useState<any[]>([]);
+	const [chatUser, setChatUser] = useState<any>();
+
 	const [isSent, setIsSent] = useState(false);
 
 	useEffect(() => {
@@ -29,92 +28,31 @@ const ChatBox = () => {
 	}, [chats]);
 
 	useEffect(() => {
-		if (chatMembers.length > 0 && room !== "") {
-			socket?.emit("join_room", room);
-		}
-	}, [chatMembers, room]);
-
-	//useEffect(() => {
-	//	//if (
-	//	//	isSent &&
-	//	//	chatMembers.includes(authUser?.userId) &&
-	//	//	chatMembers.includes(id)
-	//	//) {
-	//	socket.on("receiveMessage", data => {
-	//		//console.log(data.room === room);
-	//		//if (room === data.room) {
-	//		//	//console.log("dont show messages");
-	//		//	setChats(prev => prev.concat(data));
-	//		//} else {
-	//		//	setChats(prev => prev);
-	//		//}
-	//	});
-	//	//}
-	//}, [isSent]);
-
-	//useEffect(() => {
-	//	if (isSent) {
-	//		console.log("Sent");
-	//		socket.on("receiveMessage", data => {
-	//			console.log(data);
-	//			//console.log(data.messages);
-	//			setChats(prev => prev.concat(data));
-	//		});
-	//	}
-	//}, [isSent]);
-
-	//useEffect(() => {
-	//if (chatMembers.includes(id)) {
-	//	console.log(chatMembers);
-	//}
-	//}, [chatMembers, id]);
-
-	//useEffect(() => {
-	//	socket.emit("usersAdd", authUser?.userId);
-	//}, [authUser?.userId]);
-
-	//useEffect(() => {
-	//	socket.on("getUsers", data => {
-	//		console.log(data);
-	//	});
-	//}, []);
-
-	useEffect(() => {
 		id &&
 			getConversation(id).then((m: any) => {
-				//console.log(m);
-				setRoom(m._id);
-				setChats(m.messages);
-				setChatMembers(m.members);
+				m && setChats(m.messages);
+			});
+		id &&
+			getOneChatUser(id).then((user: any) => {
+				setChatUser(user);
 			});
 	}, [id]);
 
 	useEffect(() => {
-		if (isSent)
-			//id &&
-			//	getConversation(id).then((m: any) => {
-			//		//console.log(m);
-			//		setChats(m.messages);
-			//	});
-
+		if (isSent) {
 			socket?.on("messages", data => {
 				if (data.action === "sendMessage") {
-					//console.log("data");
-					//setIsSent(true);
 					id &&
 						getConversation(id).then((m: any) => {
-							//console.log(m);
-							setChats(m.messages);
+							m && setChats(m.messages);
 						});
-					//console.log(data.messages);
-					//setChats(data.messages);
 				}
 			});
+		}
 	}, [id, isSent]);
 
 	const onSendText = () => {
 		setIsSent(false);
-
 		if (id) {
 			const messageData = {
 				receiverId: id,
@@ -124,72 +62,51 @@ const ChatBox = () => {
 			chatWithUser(messageData);
 			setIsSent(true);
 			setText("");
-
-			//console.log(chatMembers);
-			//socket.on("messages", data => {
-			//	if (data.action === "sendMessage") {
-			//		//console.log("data");
-			//		setIsSent(true);
-			//		//console.log(data.messages);
-			//		//setChats(data.messages);
-			//	}
-			//});
-
-			//socket.emit("sendMessage", {
-			//	receiverId: id,
-			//	senderId: authUser!.userId,
-			//	text: text,
-			//	room: room,
-			//});
-			//socket.on("receiveMessage", data => {
-			//	console.log(data);
-			//	//console.log(data.messages);
-			//	setChats(prev => [...prev, data]);
-			//});
 		}
 	};
 
 	return (
 		<div className={`${classes.container} w-7 h-7`}>
 			<div
-				className={`${classes.header} w-12 surface-500 p-2 text-3xl font-bold h-3rem`}
+				className={`${classes.header} w-12 surface-500 p-2 text-2xl font-bold h-3rem`}
 			>
-				Chat
+				<Link to="/messages" className={classes["back-link"]}>
+					<i className="pi pi-arrow-left" style={{ fontSize: "1.3rem" }}></i>
+				</Link>
+				<span>{`Chat with ${
+					!chatUser?.username ? "" : chatUser.username
+				}`}</span>
 			</div>
+
 			<ul className={classes["list"]}>
 				{chats.map(m => {
 					return (
 						<li className="list-none" key={m._id}>
 							{m.senderId === authUser?.userId && (
-								<UserBox message={m.text} timeOfMessage={m.dateOfAction} />
+								<UserBox
+									userImage={
+										!currentUser?.profilePicture
+											? "images/transparent-avatar.png"
+											: currentUser?.profilePicture
+									}
+									message={m.text}
+									timeOfMessage={m.dateOfAction}
+								/>
 							)}
 							{m.senderId !== authUser?.userId && (
-								<FriendBox message={m.text} timeOfMessage={m.dateOfAction} />
+								<FriendBox
+									userImage={
+										!chatUser?.profilePicture
+											? "images/transparent-avatar.png"
+											: chatUser?.profilePicture
+									}
+									message={m.text}
+									timeOfMessage={m.dateOfAction}
+								/>
 							)}
 						</li>
 					);
 				})}
-				{/*<li className="list-none">
-					<FriendBox />
-				</li>
-				<li className="list-none">
-					<UserBox />
-				</li>
-				<li className="list-none">
-					<FriendBox />
-				</li>
-				<li className="list-none">
-					<UserBox />
-				</li>
-				<li className="list-none">
-					<FriendBox />
-				</li>
-				<li className="list-none">
-					<UserBox />
-				</li>
-				<li className="list-none">
-					<FriendBox />
-				</li>*/}
 			</ul>
 
 			<div

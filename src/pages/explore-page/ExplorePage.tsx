@@ -10,7 +10,6 @@ import { getPostsOnExplore } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
-//import { socket } from "../../utils/constants/constants";
 
 import { usePostCtx } from "../../context/PostContext";
 import { User } from "../../models/user";

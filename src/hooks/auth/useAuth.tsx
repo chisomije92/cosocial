@@ -23,7 +23,6 @@ import { PasswordValues } from "../../models/password";
 import { useSocketCtx } from "../socket/useSocket";
 import { io } from "socket.io-client";
 import { socketUrl } from "../../utils/constants/constants";
-//import { socket } from "../../utils/constants/constants";
 
 const AuthContext = createContext<{
 	authUser: AuthUser | null;
@@ -109,6 +108,18 @@ export const AuthProvider: React.FC<{
 
 	const navigate = useNavigate();
 
+	//const checkApiUrl = () => {
+	//	let apiUrl: string = socketUrl;
+	//	if (process.env.NODE_ENV === "development") {
+	//		apiUrl = socketUrl;
+	//	} else {
+	//		apiUrl = process.env.REACT_APP_SERVER_URL
+	//			? process.env.REACT_APP_SERVER_URL
+	//			: socketUrl;
+	//	}
+	//	return apiUrl;
+	//};
+
 	const authenticateUser = async (
 		data: { email: string; password: string; username?: string },
 		isSignUp: boolean
@@ -140,7 +151,6 @@ export const AuthProvider: React.FC<{
 			});
 			setSocket(
 				io(socketUrl, {
-					//autoConnect: true
 					auth: {
 						userId: resData.userId,
 					},
@@ -210,12 +220,19 @@ export const AuthProvider: React.FC<{
 	}, [isSubmitting]);
 
 	useEffect(() => {
+		if (!socket && authUser) {
+			setSocket(
+				io(socketUrl, {
+					auth: {
+						userId: authUser.userId,
+					},
+				})
+			);
+		}
+	}, [socket, authUser]);
+
+	useEffect(() => {
 		if (authUser && authUser.userId) {
-			//socket?.connect();
-			//socket.emit("addUser", authUser.userId);
-			//socket.on("getUsers", users => {
-			//	console.log(users);
-			//});
 			setUserId(authUser.userId);
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);
@@ -233,19 +250,9 @@ export const AuthProvider: React.FC<{
 			setUserId(null);
 			setFollowingUsers([]);
 			navigate("/login", { replace: true });
-			//socket?.disconnect();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser]);
-
-	//useEffect(() => {
-	//	if (socket.connected) {
-	//		socket.emit("addUser", authUser!.userId);
-	//		socket.on("getUsers", users => {
-	//			console.log(users);
-	//		});
-	//	}
-	//}, [authUser]);
 
 	useEffect(() => {
 		let timer: NodeJS.Timeout;
