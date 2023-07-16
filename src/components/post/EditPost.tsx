@@ -7,8 +7,9 @@ import classes from "./post.module.css";
 import { ImageFileType } from "../../models/imageFileType";
 import { Button } from "primereact/button";
 import { useAuth } from "../../hooks/auth/useAuth";
-import { socket } from "../../utils/constants/constants";
+//import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
+import { useSocketCtx } from "../../hooks/socket/useSocket";
 
 const EditPost: React.FC<{
 	postId: string;
@@ -35,6 +36,7 @@ const EditPost: React.FC<{
 	setSelectedPostImageFile,
 	setEditing,
 }) => {
+	const { socket } = useSocketCtx();
 	const { setIsSubmitting, isLoading, setIsLoading } = useAuth();
 
 	const { loadedPosts, setLoadedPosts, updatePost } = usePostCtx();
@@ -69,7 +71,7 @@ const EditPost: React.FC<{
 					post: description,
 				});
 
-				socket.on("posts", data => {
+				socket?.on("posts", data => {
 					if (data.action === "update") {
 						const index = loadedPosts.findIndex(p => p._id === data.post._id);
 						const updatedPosts = [...loadedPosts];

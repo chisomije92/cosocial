@@ -5,15 +5,17 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { useState, FC } from "react";
 import classes from "./replies.module.css";
 import Reply from "./reply/Reply";
-import { socket } from "../../utils/constants/constants";
+//import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
 import { Reply as ReplyType } from "../../models/post";
+import { useSocketCtx } from "../../hooks/socket/useSocket";
 
 interface RepliesProp {
 	replies?: ReplyType[];
 }
 
 const Replies: FC<RepliesProp> = ({ replies }) => {
+	const { socket } = useSocketCtx();
 	const [comment, setComment] = useState<string>("");
 	const [loading, setLoading] = useState(false);
 	const { handleCommentOnPost, setLoadedPosts, loadedPosts } = usePostCtx();
@@ -24,7 +26,7 @@ const Replies: FC<RepliesProp> = ({ replies }) => {
 		if (comment.length > 0) {
 			handleCommentOnPost(replyId, comment);
 
-			socket.on("posts", data => {
+			socket?.on("posts", data => {
 				if (data.action === "comment") {
 					console.log("comment");
 					const updatedPost = [...loadedPosts];

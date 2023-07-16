@@ -5,7 +5,7 @@ import { Avatar } from "primereact/avatar";
 import React, { FC, useEffect, useState } from "react";
 import ReactTimeAgo from "react-time-ago";
 
-import { socket, urlImgString } from "../../../utils/constants/constants";
+import { urlImgString } from "../../../utils/constants/constants";
 
 import classes from "./reply.module.css";
 import { useAuth } from "../../../hooks/auth/useAuth";
@@ -14,12 +14,14 @@ import Likes from "../../likes/Likes";
 import { usePostCtx } from "../../../context/PostContext";
 import { Reply as ReplyType } from "../../../models/post";
 import { useNavigate } from "react-router-dom";
+import { useSocketCtx } from "../../../hooks/socket/useSocket";
 
 interface ReplyProp {
 	reply: ReplyType;
 }
 
 const Reply: FC<ReplyProp> = ({ reply }) => {
+	const { socket } = useSocketCtx();
 	const [isLiked, setIsLiked] = useState(false);
 	const [visible, setVisible] = useState(false);
 
@@ -31,7 +33,7 @@ const Reply: FC<ReplyProp> = ({ reply }) => {
 
 	const handleReplyLike = () => {
 		handleLikeReply(loadedPosts[0]._id, reply._id);
-		socket.on("posts", data => {
+		socket?.on("posts", data => {
 			if (data.action === "likeReply") {
 				const updatedPosts = [...loadedPosts];
 				const commentIndex = updatedPosts[0]?.comments.findIndex(

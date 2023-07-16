@@ -8,16 +8,21 @@ import { useState, FC } from "react";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { Avatar } from "primereact/avatar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { urlImgString, socket } from "../../utils/constants/constants";
+import {
+	urlImgString,
+	//socket
+} from "../../utils/constants/constants";
 import { Skeleton } from "primereact/skeleton";
 import { ImageFileType } from "../../models/imageFileType";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { usePostCtx } from "../../context/PostContext";
 import { User as UserType } from "../../models/user";
+import { useSocketCtx } from "../../hooks/socket/useSocket";
 
 const Share: FC<{
 	currentUser: Partial<UserType>;
 }> = ({ currentUser }) => {
+	const { socket } = useSocketCtx();
 	const { isLoading, setIsLoading, setIsSubmitting } = useAuth();
 	const { setPost, createPost } = usePostCtx();
 
@@ -57,7 +62,7 @@ const Share: FC<{
 				post: inputText,
 			});
 		}
-		socket.on("posts", data => {
+		socket?.on("posts", data => {
 			if (data.action === "create") {
 				setPost(data.post);
 			}

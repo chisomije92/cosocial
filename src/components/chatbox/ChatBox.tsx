@@ -9,10 +9,12 @@ import { Button } from "primereact/button";
 import { useChatCtx } from "../../context/ChatContext";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { useParams } from "react-router-dom";
-import { socket } from "../../utils/constants/constants";
+import { useSocketCtx } from "../../hooks/socket/useSocket";
+//import { socket } from "../../utils/constants/constants";
 
 const ChatBox = () => {
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const { socket } = useSocketCtx();
 	const { getConversation, chatWithUser } = useChatCtx();
 	const { authUser } = useAuth();
 	const { id } = useParams();
@@ -28,7 +30,7 @@ const ChatBox = () => {
 
 	useEffect(() => {
 		if (chatMembers.length > 0 && room !== "") {
-			socket.emit("join_room", room);
+			socket?.emit("join_room", room);
 		}
 	}, [chatMembers, room]);
 
@@ -95,7 +97,7 @@ const ChatBox = () => {
 			//		setChats(m.messages);
 			//	});
 
-			socket.on("messages", data => {
+			socket?.on("messages", data => {
 				if (data.action === "sendMessage") {
 					//console.log("data");
 					//setIsSent(true);

@@ -10,12 +10,13 @@ import Likes from "../likes/Likes";
 import { Link } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import ReactTimeAgo from "react-time-ago";
-import { socket, urlImgString } from "../../utils/constants/constants";
+import { urlImgString } from "../../utils/constants/constants";
 import { useAuth } from "../../hooks/auth/useAuth";
 import EditPost from "./EditPost";
 import { usePostCtx } from "../../context/PostContext";
 import { Post as PostType } from "../../models/post";
 import { User } from "../../models/user";
+import { useSocketCtx } from "../../hooks/socket/useSocket";
 
 interface PostProp {
 	noPostObj?: Partial<PostType>;
@@ -33,6 +34,7 @@ const Post: FC<PostProp> = ({
 	noPostObj,
 }) => {
 	const op = useRef<any>(null);
+	const { socket } = useSocketCtx();
 	const { currentUser, setCurrentUser, userId } = useAuth();
 	const { handleBookmarkPost } = usePostCtx();
 
@@ -60,7 +62,7 @@ const Post: FC<PostProp> = ({
 
 	const handleLike = () => {
 		post && handleLikePost(post._id);
-		socket.on("posts", data => {
+		socket?.on("posts", data => {
 			if (data.action === "like") {
 				const index =
 					loadedPosts && loadedPosts.findIndex(p => p._id === data.post._id);
@@ -74,7 +76,7 @@ const Post: FC<PostProp> = ({
 
 	const handleBookmark = () => {
 		post && handleBookmarkPost(post._id);
-		socket.on("posts", data => {
+		socket?.on("posts", data => {
 			if (data.action === "bookmark" && data.user._id === currentUser?._id) {
 				setCurrentUser(data.user);
 			}
@@ -126,7 +128,7 @@ const Post: FC<PostProp> = ({
 
 	const handleDelete = () => {
 		post && deletePost(post._id);
-		socket.on("posts", data => {
+		socket?.on("posts", data => {
 			if (data.action === "delete") {
 				setIsPostDeleted(true);
 				setPost(data.post);

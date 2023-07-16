@@ -20,7 +20,10 @@ import { addMinutes, getDataFromLocalStorage } from "../../utils/util";
 import { AuthUser, User } from "../../models/user";
 import { ProfileType } from "../../models/profile";
 import { PasswordValues } from "../../models/password";
-import { socket } from "../../utils/constants/constants";
+import { useSocketCtx } from "../socket/useSocket";
+import { io } from "socket.io-client";
+import { socketUrl } from "../../utils/constants/constants";
+//import { socket } from "../../utils/constants/constants";
 
 const AuthContext = createContext<{
 	authUser: AuthUser | null;
@@ -89,6 +92,7 @@ export const AuthProvider: React.FC<{
 		loggedInTime: string;
 	};
 }> = ({ children, user }) => {
+	const { socket, setSocket } = useSocketCtx();
 	const [authUser, setAuthUser] = useLocalStorage<{
 		token: string;
 		userId: string;
@@ -134,12 +138,20 @@ export const AuthProvider: React.FC<{
 				expirationTimer: expiryDate.toISOString(),
 				loggedInTime: addMinutes(expiryDate.toString(), 2879).toISOString(),
 			});
-			socket.emit("usersAdd", resData.userId);
+			setSocket(
+				io(socketUrl, {
+					//autoConnect: true
+					auth: {
+						userId: resData.userId,
+					},
+				})
+			);
+			socket?.emit("usersAdd", resData.userId);
 		}
 	};
 
 	const logout = () => {
-		socket.emit("removeUser", authUser!.userId);
+		socket?.emit("removeUser", authUser!.userId);
 		setAuthUser(null);
 		setUserId(null);
 		setCurrentUser(null);
@@ -199,7 +211,7 @@ export const AuthProvider: React.FC<{
 
 	useEffect(() => {
 		if (authUser && authUser.userId) {
-			socket.connect();
+			//socket?.connect();
 			//socket.emit("addUser", authUser.userId);
 			//socket.on("getUsers", users => {
 			//	console.log(users);
@@ -221,7 +233,7 @@ export const AuthProvider: React.FC<{
 			setUserId(null);
 			setFollowingUsers([]);
 			navigate("/login", { replace: true });
-			socket.disconnect();
+			//socket?.disconnect();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser]);

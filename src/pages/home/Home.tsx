@@ -9,16 +9,18 @@ import { getPostsOnTl } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
-import { socket } from "../../utils/constants/constants";
+//import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
 import { LoaderData } from "../../models/loader-data";
+import { useSocketCtx } from "../../hooks/socket/useSocket";
 
 export default function Home() {
+	const { socket } = useSocketCtx();
 	const { data } = useLoaderData() as LoaderData;
 	const { setLoadedPosts, loadedPosts } = usePostCtx();
 
 	useEffect(() => {
-		socket.on("posts", data => {
+		socket?.on("posts", data => {
 			if (data.action === "getPostsOnTL") {
 				setLoadedPosts(data.posts);
 			}
