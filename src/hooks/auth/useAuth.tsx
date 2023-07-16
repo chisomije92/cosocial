@@ -134,10 +134,12 @@ export const AuthProvider: React.FC<{
 				expirationTimer: expiryDate.toISOString(),
 				loggedInTime: addMinutes(expiryDate.toString(), 2879).toISOString(),
 			});
+			socket.emit("usersAdd", resData.userId);
 		}
 	};
 
 	const logout = () => {
+		socket.emit("removeUser", authUser!.userId);
 		setAuthUser(null);
 		setUserId(null);
 		setCurrentUser(null);
@@ -198,10 +200,10 @@ export const AuthProvider: React.FC<{
 	useEffect(() => {
 		if (authUser && authUser.userId) {
 			socket.connect();
-			socket.emit("addUser", authUser.userId);
-			socket.on("getUsers", users => {
-				console.log(users);
-			});
+			//socket.emit("addUser", authUser.userId);
+			//socket.on("getUsers", users => {
+			//	console.log(users);
+			//});
 			setUserId(authUser.userId);
 			getAuthUser(authUser.token).then(res => {
 				setCurrentUser(res);

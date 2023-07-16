@@ -18,66 +18,132 @@ const ChatBox = () => {
 	const { id } = useParams();
 	const [chats, setChats] = useState<any[]>([]);
 	const [text, setText] = useState("");
+	const [room, setRoom] = useState("");
+	const [chatMembers, setChatMembers] = useState<any[]>([]);
 	const [isSent, setIsSent] = useState(false);
-
-	//const { userId } = authUser!;
-	//useEffect(() => {
-	//	socket.emit("addUser", userId);
-	//	socket.on("getUsers", users => {
-	//		console.log(users);
-	//	});
-	//}, [userId]);
 
 	useEffect(() => {
 		inputRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [chats]);
 
+	useEffect(() => {
+		if (chatMembers.length > 0 && room !== "") {
+			socket.emit("join_room", room);
+		}
+	}, [chatMembers, room]);
+
 	//useEffect(() => {
-	//	if (isSent)
-	//		socket.on("messages", data => {
-	//			if (data.action === "sendMessages") {
-	//				console.log("data");
-	//				console.log(data.messages);
-	//				setChats(data.messages);
-	//			}
-	//		});
+	//	//if (
+	//	//	isSent &&
+	//	//	chatMembers.includes(authUser?.userId) &&
+	//	//	chatMembers.includes(id)
+	//	//) {
+	//	socket.on("receiveMessage", data => {
+	//		//console.log(data.room === room);
+	//		//if (room === data.room) {
+	//		//	//console.log("dont show messages");
+	//		//	setChats(prev => prev.concat(data));
+	//		//} else {
+	//		//	setChats(prev => prev);
+	//		//}
+	//	});
+	//	//}
 	//}, [isSent]);
+
+	//useEffect(() => {
+	//	if (isSent) {
+	//		console.log("Sent");
+	//		socket.on("receiveMessage", data => {
+	//			console.log(data);
+	//			//console.log(data.messages);
+	//			setChats(prev => prev.concat(data));
+	//		});
+	//	}
+	//}, [isSent]);
+
+	//useEffect(() => {
+	//if (chatMembers.includes(id)) {
+	//	console.log(chatMembers);
+	//}
+	//}, [chatMembers, id]);
+
+	//useEffect(() => {
+	//	socket.emit("usersAdd", authUser?.userId);
+	//}, [authUser?.userId]);
+
+	//useEffect(() => {
+	//	socket.on("getUsers", data => {
+	//		console.log(data);
+	//	});
+	//}, []);
 
 	useEffect(() => {
 		id &&
 			getConversation(id).then((m: any) => {
 				//console.log(m);
+				setRoom(m._id);
 				setChats(m.messages);
+				setChatMembers(m.members);
 			});
 	}, [id]);
 
-	//useEffect(() => {
+	useEffect(() => {
+		if (isSent)
+			//id &&
+			//	getConversation(id).then((m: any) => {
+			//		//console.log(m);
+			//		setChats(m.messages);
+			//	});
 
-	//	if(setIsSent)
-	//	id &&
-	//		getConversation(id).then((m: any) => {
-	//			console.log(m);
-	//			setChats(m.messages);
-	//		});
-	//}, [id]);
+			socket.on("messages", data => {
+				if (data.action === "sendMessage") {
+					//console.log("data");
+					//setIsSent(true);
+					id &&
+						getConversation(id).then((m: any) => {
+							//console.log(m);
+							setChats(m.messages);
+						});
+					//console.log(data.messages);
+					//setChats(data.messages);
+				}
+			});
+	}, [id, isSent]);
 
 	const onSendText = () => {
 		setIsSent(false);
+
 		if (id) {
-			chatWithUser({
+			const messageData = {
 				receiverId: id,
 				senderId: authUser!.userId,
 				text: text,
-			});
+			};
+			chatWithUser(messageData);
 			setIsSent(true);
 			setText("");
-			socket.on("messages", data => {
-				if (data.action === "sendMessage") {
-					console.log("data");
-					console.log(data.messages);
-					setChats(data.messages);
-				}
-			});
+
+			//console.log(chatMembers);
+			//socket.on("messages", data => {
+			//	if (data.action === "sendMessage") {
+			//		//console.log("data");
+			//		setIsSent(true);
+			//		//console.log(data.messages);
+			//		//setChats(data.messages);
+			//	}
+			//});
+
+			//socket.emit("sendMessage", {
+			//	receiverId: id,
+			//	senderId: authUser!.userId,
+			//	text: text,
+			//	room: room,
+			//});
+			//socket.on("receiveMessage", data => {
+			//	console.log(data);
+			//	//console.log(data.messages);
+			//	setChats(prev => [...prev, data]);
+			//});
 		}
 	};
 

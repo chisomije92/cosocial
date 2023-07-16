@@ -141,12 +141,12 @@ const NavBar = () => {
 						className="pi pi-envelope p-overlay-badge mx-2"
 						style={{ fontSize: "1.3rem", cursor: "pointer" }}
 					>
-						<i
+						{/*<i
 							className={`pi pi-circle-fill ${
 								!isThemeDark ? "text-red-500" : "text-green-500"
 							} absolute -ml-1 -mt-1`}
 							style={{ fontSize: "0.5rem", cursor: "pointer" }}
-						></i>
+						></i>*/}
 					</i>
 				</NavLink>
 
