@@ -17,22 +17,22 @@ import { Post } from "../../models/post";
 import { useSocketCtx } from "../../hooks/socket/useSocket";
 
 const ExplorePage = () => {
-	const { socket } = useSocketCtx();
+	//const { socket } = useSocketCtx();
 	const { data } = useLoaderData() as {
 		data: {
 			userData: User;
 			loadedPosts: Post[];
 		};
 	};
-	const { setLoadedPosts, loadedPosts } = usePostCtx();
+	//const { setLoadedPosts, loadedPosts } = usePostCtx();
 
-	useEffect(() => {
-		socket?.on("posts", data => {
-			if (data.action === "getPostsOnExplore") {
-				setLoadedPosts(data.posts);
-			}
-		});
-	}, [socket, setLoadedPosts]);
+	//useEffect(() => {
+	//	socket?.on("posts", data => {
+	//		if (data.action === "getPostsOnExplore") {
+	//			setLoadedPosts(data.posts);
+	//		}
+	//	});
+	//}, [socket]);
 
 	return (
 		<>
@@ -43,7 +43,7 @@ const ExplorePage = () => {
 						<>
 							<SideBar />
 							<Feeds
-								posts={loadedPosts}
+								posts={data.loadedPosts}
 								areTherePosts={data.loadedPosts.length > 0}
 								currentUser={data.userData}
 							/>

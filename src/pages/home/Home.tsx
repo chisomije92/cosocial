@@ -22,6 +22,7 @@ export default function Home() {
 	useEffect(() => {
 		socket?.on("posts", data => {
 			if (data.action === "getPostsOnTL") {
+				//console.log(data.posts);
 				setLoadedPosts(data.posts);
 			}
 		});

@@ -49,7 +49,7 @@ const ChatBox = () => {
 				}
 			});
 		}
-	}, [id, isSent]);
+	}, [id, isSent, socket]);
 
 	const onSendText = () => {
 		setIsSent(false);
