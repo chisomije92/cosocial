@@ -32,7 +32,7 @@ const ExplorePage = () => {
 				setLoadedPosts(data.posts);
 			}
 		});
-	}, []);
+	}, [socket, setLoadedPosts]);
 
 	return (
 		<>
