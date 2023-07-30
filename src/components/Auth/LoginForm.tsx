@@ -12,11 +12,15 @@ import { Card } from "primereact/card";
 import cosocialImg from "../../images/CO-1.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { urlString } from "../../utils/constants/constants";
 
 const LoginForm = () => {
 	const { authenticateUser, userId, errorMsg } = useAuth();
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		fetch(urlString);
+	}, []);
 	const onSubmit = async (values: LoginValues) => {
 		if (isValid) {
 			resetForm();

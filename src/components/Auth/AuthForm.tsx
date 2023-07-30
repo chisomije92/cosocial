@@ -13,10 +13,16 @@ import { RegisterValues } from "../../models/authForm";
 import cosocialImg from "../../images/CO-1.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { urlString } from "../../utils/constants/constants";
 
 const AuthForm = () => {
 	const { authenticateUser, userId, errorMsg } = useAuth();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		fetch(urlString);
+	}, []);
+
 	const onSubmit = (values: RegisterValues) => {
 		if (isValid) {
 			resetForm();
