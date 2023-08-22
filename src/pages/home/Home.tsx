@@ -9,7 +9,6 @@ import { getPostsOnTl } from "../../utils/post-api";
 import { getAuthUser } from "../../utils/user-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import HomeSkeleton from "../../components/loading-skeleton/HomeSkeleton";
-//import { socket } from "../../utils/constants/constants";
 import { usePostCtx } from "../../context/PostContext";
 import { LoaderData } from "../../models/loader-data";
 import { useSocketCtx } from "../../hooks/socket/useSocket";
@@ -22,11 +21,10 @@ export default function Home() {
 	useEffect(() => {
 		socket?.on("posts", data => {
 			if (data.action === "getPostsOnTL") {
-				//console.log(data.posts);
 				setLoadedPosts(data.posts);
 			}
 		});
-	}, [socket, setLoadedPosts]);
+	}, [socket]);
 	return (
 		<>
 			<Suspense fallback={<HomeSkeleton />}>

@@ -30,7 +30,9 @@ const SideBar = () => {
 
 	const navLinkCssClassesProfile = (props: any): string => {
 		return `text-color no-underline text-lg flex ${
-			props.isActive && (!profileParam || profileParam === authUser!.userId)
+			authUser?.userId &&
+			props.isActive &&
+			(!profileParam || profileParam === authUser.userId)
 				? "opacity-70"
 				: ""
 		}`;

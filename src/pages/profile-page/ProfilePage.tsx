@@ -12,24 +12,10 @@ import { getAuthUser, getUser } from "../../utils/user-api";
 import { getUserPosts } from "../../utils/post-api";
 import { getDataFromLocalStorage, sortData } from "../../utils/util";
 import ProfilePageSkeleton from "../../components/loading-skeleton/ProfilePageSkeleton";
-//import { socket } from "../../utils/constants/constants";
-import { useAuth } from "../../hooks/auth/useAuth";
-import { usePostCtx } from "../../context/PostContext";
 import { LoaderData } from "../../models/loader-data";
-import { useSocketCtx } from "../../hooks/socket/useSocket";
 
 const ProfilePage = () => {
 	const { data } = useLoaderData() as LoaderData;
-	const { socket } = useSocketCtx();
-	const { setLoadedPosts, loadedPosts } = usePostCtx();
-
-	useEffect(() => {
-		socket?.on("posts", data => {
-			if (data.action === "getUserPosts") {
-				setLoadedPosts(data.posts);
-			}
-		});
-	}, []);
 
 	return (
 		<>
@@ -41,7 +27,7 @@ const ProfilePage = () => {
 							<SideBar />
 							<Profile
 								user={data.userData}
-								userPosts={sortData(loadedPosts, "createdAt")}
+								userPosts={sortData(data.loadedPosts, "createdAt")}
 							/>
 							<SearchFriend />
 						</>

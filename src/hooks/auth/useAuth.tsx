@@ -32,8 +32,10 @@ const AuthContext = createContext<{
 	followingUsers: User[];
 	nonFollowingUsers: User[];
 	isLoading: boolean;
+	isAuthLoading: boolean;
 	isSubmitting: boolean;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsAuthLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	setFollowingUsers: React.Dispatch<React.SetStateAction<User[]>>;
 	setNonFollowingUsers: React.Dispatch<React.SetStateAction<User[]>>;
@@ -65,6 +67,7 @@ const AuthContext = createContext<{
 	nonFollowingUsers: [],
 	isLoading: false,
 	isSubmitting: false,
+	isAuthLoading: false,
 	authenticateUser: async () => {},
 	logout: () => {},
 	autoLogout: () => {},
@@ -80,6 +83,7 @@ const AuthContext = createContext<{
 	setCurrentUser: () => {},
 	setFollowingUsers: () => {},
 	setNonFollowingUsers: () => {},
+	setIsAuthLoading: () => {},
 });
 
 export const AuthProvider: React.FC<{
@@ -105,20 +109,9 @@ export const AuthProvider: React.FC<{
 	const [nonFollowingUsers, setNonFollowingUsers] = useState<User[]>([]);
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
 
 	const navigate = useNavigate();
-
-	//const checkApiUrl = () => {
-	//	let apiUrl: string = socketUrl;
-	//	if (process.env.NODE_ENV === "development") {
-	//		apiUrl = socketUrl;
-	//	} else {
-	//		apiUrl = process.env.REACT_APP_SERVER_URL
-	//			? process.env.REACT_APP_SERVER_URL
-	//			: socketUrl;
-	//	}
-	//	return apiUrl;
-	//};
 
 	const authenticateUser = async (
 		data: { email: string; password: string; username?: string },
@@ -126,9 +119,11 @@ export const AuthProvider: React.FC<{
 	) => {
 		let resData;
 		if (!isSignUp) {
+			setIsAuthLoading(true);
 			resData = await signIn(data);
 		} else {
 			if (data.username) {
+				setIsAuthLoading(true);
 				resData = await signUp({
 					email: data.email,
 					password: data.password,
@@ -139,6 +134,7 @@ export const AuthProvider: React.FC<{
 		if (!resData?.userId) {
 			setErrorMsg(resData);
 			setAuthUser(null);
+			setIsAuthLoading(false);
 		}
 		const expiryDate = addMinutes(new Date().toString(), 60);
 
@@ -157,6 +153,7 @@ export const AuthProvider: React.FC<{
 				})
 			);
 			socket?.emit("usersAdd", resData.userId);
+			setIsAuthLoading(false);
 		}
 	};
 
@@ -273,6 +270,7 @@ export const AuthProvider: React.FC<{
 		currentUser,
 		isSubmitting,
 		isLoading,
+		isAuthLoading,
 		followingUsers,
 		nonFollowingUsers,
 		setNonFollowingUsers,
@@ -290,6 +288,7 @@ export const AuthProvider: React.FC<{
 		setCurrentUser,
 		setIsLoading,
 		setIsSubmitting,
+		setIsAuthLoading,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

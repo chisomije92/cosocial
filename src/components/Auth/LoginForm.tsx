@@ -15,7 +15,7 @@ import { useAuth } from "../../hooks/auth/useAuth";
 import { urlString } from "../../utils/constants/constants";
 
 const LoginForm = () => {
-	const { authenticateUser, userId, errorMsg } = useAuth();
+	const { authenticateUser, userId, errorMsg, isAuthLoading } = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -141,7 +141,8 @@ const LoginForm = () => {
 						label="Login"
 						type="submit"
 						className="w-23rem font-bold"
-						disabled={isSubmitting || !isValid}
+						disabled={isSubmitting || !isValid || isAuthLoading}
+						loading={isAuthLoading}
 					/>
 					<span className="text-center text-red-500">{errorMsg}</span>
 					<div className="flex gap-1">

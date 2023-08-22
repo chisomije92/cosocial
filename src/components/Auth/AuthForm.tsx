@@ -16,7 +16,7 @@ import { useAuth } from "../../hooks/auth/useAuth";
 import { urlString } from "../../utils/constants/constants";
 
 const AuthForm = () => {
-	const { authenticateUser, userId, errorMsg } = useAuth();
+	const { authenticateUser, userId, errorMsg, isAuthLoading } = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -167,9 +167,12 @@ const AuthForm = () => {
 
 					<Button
 						label="Sign up"
-						disabled={isSubmitting || !isValid || !isAllFieldTouched()}
+						disabled={
+							isSubmitting || !isValid || isAuthLoading || !isAllFieldTouched()
+						}
 						className="w-23rem font-bold my-2"
 						type="submit"
+						loading={isAuthLoading}
 					/>
 					<span className="text-center text-red-500">{errorMsg}</span>
 
