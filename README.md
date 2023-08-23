@@ -1,7 +1,7 @@
 # Cosocial
 This is a demo social media app that enables users to share posts and communicate with their loved ones.
-![image](https://github.com/chisomije92/cosocial/assets/68636386/aa5eca1f-a95b-4c97-b697-83c37c6534bd)
 
+![Screenshot 2023-08-23 142935](https://github.com/chisomije92/cosocial/assets/68636386/9073bcd7-4a9c-44a8-9cc9-53aac0a18583)
 ## Table of contents
 
 - [Cosocial](#cosocial)
@@ -13,12 +13,13 @@ This is a demo social media app that enables users to share posts and communicat
     - [Built with](#built-with)
   - [Author](#author)
 
+
 ## Overview
 
 ### Links
 
 - Repo: [Github repo](https://github.com/chisomije92/cosocial)
-- Live Site URL: [Netlify Web Url](https://cosocial.vercel.app/)
+- Live Site URL: [Vercel Web Url](https://cosocial.vercel.app/)
 
 ### Features
 - Authentication
