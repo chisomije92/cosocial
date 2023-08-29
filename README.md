@@ -23,7 +23,7 @@ This is a demo social media app that enables users to share posts and communicat
 
 ### Features
 - Authentication
-- Create, share and edit post
+- Create, share and edit post with images
 - Get notifications
 - Follow and unfollow users
 - View posts of other users
