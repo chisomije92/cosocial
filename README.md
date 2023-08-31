@@ -39,6 +39,7 @@ This is a demo social media app that enables users to share posts and communicat
 - Semantic HTML5 markup
 - [Prime React](https://primereact.org/) - UI component library
 - [React](https://react.dev/) - JS library
+- [React Router v6](https://reactrouter.com/en/main) - Client side routing
 - [Typescript](https://react.dev/) - JS with syntax for types
 - [React-Router](https://reactrouter.com/) - JS framework for routing
 - [CSS](https://sass-lang.com/) - Styling
