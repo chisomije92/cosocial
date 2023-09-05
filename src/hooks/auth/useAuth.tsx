@@ -171,18 +171,23 @@ export const AuthProvider: React.FC<{
 	};
 
 	const handleUpdateUser = async (data: Partial<ProfileType>) => {
+		setIsLoading(true)
 		const parsedUser = getDataFromLocalStorage();
 		const extractedUser = await updateUser(
 			parsedUser.userId,
 			parsedUser.token,
 			data
 		);
+		setIsLoading(false)
 		return extractedUser;
 	};
 
 	const handleUpdatePassword = async (data: PasswordValues) => {
+		setIsLoading(true)
 		const parsedUser = getDataFromLocalStorage();
-		return await updatePassword(parsedUser.token, data);
+		const updatedPassword = await updatePassword(parsedUser.token, data);
+		setIsLoading(false)
+		return updatedPassword
 	};
 
 	const handleFollowUser = async (id: string) => {

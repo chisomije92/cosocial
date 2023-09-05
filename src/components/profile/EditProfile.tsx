@@ -18,9 +18,10 @@ import { User } from "../../models/user";
 const EditProfile: React.FC<{
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ setVisible }) => {
+
 	const [selectedImageFile, setSelectedImageFile] =
 		React.useState<ImageFileType>({ preview: "", data: null, text: null });
-	const { handleUpdateUser, setCurrentUser, currentUser } = useAuth();
+	const { handleUpdateUser, setCurrentUser, currentUser, isLoading } = useAuth();
 	const navigate = useNavigate();
 
 	const allValuesEmpty = () => {
@@ -61,17 +62,20 @@ const EditProfile: React.FC<{
 		if (selectedImageFile.data) {
 			requestObj.image = selectedImageFile.data;
 		}
+		
 		handleUpdateUser(requestObj).then((user: User | void) => {
+			
 			if (user) {
 				const updatedUser = {
 					...user,
 				};
-
 				setCurrentUser(updatedUser);
 				navigate("/profile");
 				setVisible(false);
+
 			}
 		});
+		
 	};
 
 	const {
@@ -223,7 +227,9 @@ const EditProfile: React.FC<{
 				<Button
 					label="Update"
 					type="submit"
-					disabled={allValuesEmpty() || isSubmitting}
+					disabled={allValuesEmpty() || isSubmitting || isLoading}
+					loading={isLoading}
+					// loading
 				/>
 			</form>
 		</div>
